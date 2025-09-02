@@ -228,6 +228,15 @@ function getRangeParts(xc: string, zone: UnboundedZone): RangePart[] {
   return parts;
 }
 
+export function positionToRange(position: CellPosition): Range {
+  const zone = { left: position.col, top: position.row, right: position.col, bottom: position.row };
+  return {
+    sheetId: position.sheetId,
+    zone: zone,
+    unboundedZone: zone,
+  };
+}
+
 /**
  * Check that a zone is valid regarding the order of top-bottom and left-right.
  * Left should be smaller than right, top should be smaller than bottom.

@@ -628,6 +628,7 @@ describe("evaluate formulas that return an array", () => {
       expect(c).toEqual(3);
     });
 
+    // TODO FIXME
     test("array formula depending on array formula result is evaluated once", () => {
       const mockCompute = jest.fn().mockImplementation((values) => values);
 
