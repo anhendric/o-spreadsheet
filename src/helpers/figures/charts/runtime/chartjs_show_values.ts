@@ -4,6 +4,7 @@ import { ChartSunburstLabelsPluginOptions } from "../../../../components/figures
 import {
   ChartRuntimeGenerationArgs,
   ChartWithDataSetDefinition,
+  schemeToColorScale,
   SunburstChartDefaults,
   SunburstChartDefinition,
   WaterfallChartDefinition,
@@ -43,7 +44,11 @@ export function getCalendarChartShowValues(
   if (values.length) {
     const min = Math.min(...values);
     const max = Math.max(...values);
-    const colorScale = getRuntimeColorScale(definition.colorScale ?? "oranges", min, max);
+    const colorScale = getRuntimeColorScale(
+      definition.colorScale ?? schemeToColorScale("oranges")!,
+      min,
+      max
+    );
     background = (_value: number | string, dataset: ChartMeta<any>, index) => {
       const value = dataset._dataset.values[index];
       if (value === undefined) {
