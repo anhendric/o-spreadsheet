@@ -60,9 +60,7 @@ export interface SheetDependentCommand {
   sheetId: UID;
 }
 
-export function isSheetDependent(
-  cmd: CoreCommand
-): cmd is Extract<CoreCommand, SheetDependentCommand> {
+export function isSheetDependent(cmd: Command): cmd is Extract<CoreCommand, SheetDependentCommand> {
   return "sheetId" in cmd;
 }
 
@@ -1454,6 +1452,7 @@ export const enum CommandResult {
   InvalidPivotCustomField = "InvalidPivotCustomField",
   MissingFigureArguments = "MissingFigureArguments",
   InvalidCarouselItem = "InvalidCarouselItem",
+  SheetLocked = "SheetLocked",
 }
 
 export interface CommandHandler<T> {

@@ -50,6 +50,7 @@ import { CheckboxTogglePlugin } from "./ui_feature/checkbox_toggle";
 import { DataValidationInsertionPlugin } from "./ui_feature/datavalidation_insertion";
 import { DynamicTranslate } from "./ui_feature/dynamic_translate";
 import { HistoryPlugin } from "./ui_feature/local_history";
+import { LockSheetPlugin } from "./ui_feature/lock_sheet";
 import { PivotPresencePlugin } from "./ui_feature/pivot_presence_plugin";
 import { SplitToColumnsPlugin } from "./ui_feature/split_to_columns";
 import { SubtotalEvaluationPlugin } from "./ui_feature/subtotal_evaluation";
@@ -106,7 +107,8 @@ export const featurePluginRegistry = new Registry<UIPluginConstructor>()
   .add("datavalidation_insert", DataValidationInsertionPlugin)
   .add("checkbox_toggle", CheckboxTogglePlugin)
   .add("dynamic_translate", DynamicTranslate)
-  .add("geo_features", GeoFeaturePlugin);
+  .add("geo_features", GeoFeaturePlugin)
+  .add("lock_sheet", LockSheetPlugin);
 
 // Plugins which have a state, but which should not be shared in collaborative
 export const statefulUIPluginRegistry = new Registry<UIPluginConstructor>()

@@ -246,6 +246,7 @@ exports[`BottomBar component simple rendering 1`] = `
             >
               Sheet1
             </span>
+            
             <span
               class="o-sheet-icon ms-1"
               tabindex="-1"

@@ -80,6 +80,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
     "getUnboundedZone",
     "checkElementsIncludeAllNonFrozenHeaders",
     "getDuplicateSheetName",
+    "isSheetLocked",
   ] as const;
 
   readonly sheetIdsMapName: Record<string, UID | undefined> = {};
@@ -273,6 +274,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
           ySplit: sheetData.panes?.ySplit || 0,
         },
         color: sheetData.color,
+        isLocked: sheetData.isLocked || false,
       };
       this.orderedSheetIds.push(sheet.id);
       this.sheets[sheet.id] = sheet;
@@ -324,6 +326,10 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
 
   getGridLinesVisibility(sheetId: UID): boolean {
     return this.getSheet(sheetId).areGridLinesVisible;
+  }
+
+  isSheetLocked(sheetId: UID): boolean {
+    return this.tryGetSheet(sheetId)?.isLocked || false;
   }
 
   tryGetSheet(sheetId: UID): Sheet | undefined {
@@ -604,6 +610,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
         xSplit: 0,
         ySplit: 0,
       },
+      isLocked: false,
     };
     const orderedSheetIds = this.orderedSheetIds.slice();
     orderedSheetIds.splice(position, 0, sheet.id);

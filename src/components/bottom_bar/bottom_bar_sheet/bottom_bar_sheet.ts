@@ -220,4 +220,8 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
     const color = this.env.model.getters.getSheet(this.props.sheetId).color || "";
     return cssPropertiesToCss({ background: color });
   }
+
+  get isSheetLocked() {
+    return this.env.model.getters.isSheetLocked(this.props.sheetId);
+  }
 }

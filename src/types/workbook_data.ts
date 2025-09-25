@@ -60,6 +60,7 @@ export interface SheetData {
   panes?: PaneDivision;
   headerGroups?: Record<Dimension, HeaderGroup[]>;
   color?: Color;
+  isLocked?: boolean;
 }
 
 interface WorkbookSettings {

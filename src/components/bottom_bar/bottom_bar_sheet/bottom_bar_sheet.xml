@@ -24,6 +24,9 @@
           t-on-keydown="(ev) => this.onKeyDown(ev)"
           t-att-contenteditable="state.isEditing ? 'plaintext-only': 'false'"
         />
+        <span t-if="isSheetLocked" class="ms-1">
+          <i class="fa fa-lock"/>
+        </span>
         <span
           class="o-sheet-icon ms-1"
           tabindex="-1"

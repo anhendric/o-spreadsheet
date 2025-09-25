@@ -916,6 +916,7 @@ export const demoData = {
       name: "Split Panes",
       colNumber: 41,
       rowNumber: 60,
+      isLocked: true,
       rows: {},
       cols: {
         0: {
