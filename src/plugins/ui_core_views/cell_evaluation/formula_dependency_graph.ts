@@ -1,6 +1,6 @@
 import { positionToZone } from "../../../helpers";
 import { PositionMap } from "../../../helpers/cells/position_map";
-import { CellPosition, Range } from "../../../types";
+import { BoundedRange, CellPosition, Range } from "../../../types";
 import { RTreeBoundingBox, RTreeItem } from "./r_tree";
 import { RangeRTree } from "./range_r_tree";
 import { RangeSet } from "./range_set";
@@ -16,7 +16,7 @@ export class FormulaDependencyGraph {
   private readonly dependencies: PositionMap<RTreeItem<Range>[]> = new PositionMap();
   private readonly rTree: RangeRTree;
 
-  constructor(data: RTreeItem<Range>[] = []) {
+  constructor(data: RTreeItem<BoundedRange>[] = []) {
     this.rTree = new RangeRTree(data);
   }
 
@@ -63,9 +63,9 @@ export class FormulaDependencyGraph {
    * in the correct order they should be evaluated.
    * This is called a topological ordering (excluding cycles)
    */
-  getCellsDependingOn(ranges: Iterable<Range>): RangeSet {
+  getCellsDependingOn(ranges: Iterable<BoundedRange>): RangeSet {
     const visited = new RangeSet();
-    const queue: Range[] = Array.from(ranges).reverse();
+    const queue: BoundedRange[] = Array.from(ranges).reverse();
     while (queue.length > 0) {
       const range = queue.pop()!;
       visited.add(range);

@@ -1,24 +1,24 @@
 import { positionToRange } from "../../../helpers";
-import { CellPosition, Range, UID } from "../../../types";
+import { BoundedRange, CellPosition, UID } from "../../../types";
 import { ZoneSet } from "./zone_set";
 
 export class RangeSet {
   private setsBySheetId: Record<UID, ZoneSet> = {};
 
-  constructor(ranges: Iterable<Range> = []) {
+  constructor(ranges: Iterable<BoundedRange> = []) {
     for (const range of ranges) {
       this.add(range);
     }
   }
 
-  add(range: Range) {
+  add(range: BoundedRange) {
     if (!this.setsBySheetId[range.sheetId]) {
       this.setsBySheetId[range.sheetId] = new ZoneSet();
     }
-    this.setsBySheetId[range.sheetId].add(range.unboundedZone);
+    this.setsBySheetId[range.sheetId].add(range.zone);
   }
 
-  addMany(ranges: Iterable<Range>) {
+  addMany(ranges: Iterable<BoundedRange>) {
     for (const range of ranges) {
       this.add(range);
     }
@@ -34,7 +34,7 @@ export class RangeSet {
     }
   }
 
-  has(range: Range): boolean {
+  has(range: BoundedRange): boolean {
     if (!this.setsBySheetId[range.sheetId]) {
       return false;
     }
@@ -45,14 +45,14 @@ export class RangeSet {
     return this.has(positionToRange(position));
   }
 
-  delete(range: Range) {
+  delete(range: BoundedRange) {
     if (!this.setsBySheetId[range.sheetId]) {
       return;
     }
-    this.setsBySheetId[range.sheetId].delete(range.unboundedZone);
+    this.setsBySheetId[range.sheetId].delete(range.zone);
   }
 
-  deleteMany(ranges: Iterable<Range>) {
+  deleteMany(ranges: Iterable<BoundedRange>) {
     for (const range of ranges) {
       this.delete(range);
     }
@@ -95,10 +95,10 @@ export class RangeSet {
   /**
    * iterator of all the ranges in the RangeSet
    */
-  *[Symbol.iterator](): IterableIterator<Range> {
+  *[Symbol.iterator](): IterableIterator<BoundedRange> {
     for (const sheetId in this.setsBySheetId) {
       for (const zone of this.setsBySheetId[sheetId]) {
-        yield { sheetId: sheetId, zone, unboundedZone: zone };
+        yield { sheetId: sheetId, zone };
       }
     }
   }

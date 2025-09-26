@@ -8,6 +8,7 @@ import { ModelConfig } from "../../../model";
 import { onIterationEndEvaluationRegistry } from "../../../registries/evaluation_registry";
 import { _t } from "../../../translation";
 import {
+  BoundedRange,
   CellPosition,
   CellValueType,
   EvaluatedCell,
@@ -183,7 +184,7 @@ export class Evaluator {
     this.blockedArrayFormulas = this.createEmptyPositionSet();
     this.spreadingRelations = new SpreadingRelation();
     this.formulaDependencies = lazy(() => {
-      const rTreeItems: RTreeItem<Range>[] = [];
+      const rTreeItems: RTreeItem<BoundedRange>[] = [];
       for (const sheetId of this.getters.getSheetIds()) {
         const cells = this.getters.getCells(sheetId);
         for (const cellId in cells) {
@@ -194,12 +195,10 @@ export class Evaluator {
               if (range.invalidSheetName || range.invalidXc) {
                 continue;
               }
-              const zone = positionToZone(this.getters.getCellPosition(cellId));
               rTreeItems.push({
                 data: {
                   sheetId,
-                  zone,
-                  unboundedZone: zone,
+                  zone: positionToZone(this.getters.getCellPosition(cellId)),
                 },
                 boundingBox: { sheetId: range.sheetId, zone: range.zone },
               });
@@ -288,7 +287,7 @@ export class Evaluator {
   private cellsBeingComputed = new Set<UID>();
   private symbolsBeingComputed = new Set<string>();
 
-  private evaluate(ranges: Iterable<Range>) {
+  private evaluate(ranges: Iterable<BoundedRange>) {
     this.cellsBeingComputed = new Set<UID>();
     this.nextRangesToUpdate = new RangeSet(ranges);
 
@@ -321,7 +320,7 @@ export class Evaluator {
     }
   }
 
-  private clearEvaluatedRanges(ranges: Iterable<Range>) {
+  private clearEvaluatedRanges(ranges: Iterable<BoundedRange>) {
     for (const range of ranges) {
       const { left, bottom, right, top } = range.zone;
       for (let col = left; col <= right; col++) {
@@ -432,9 +431,9 @@ export class Evaluator {
   private invalidatePositionsDependingOnSpread(sheetId: UID, resultZone: Zone) {
     // the result matrix is split in 2 zones to exclude the array formula position
     const invalidatedPositions = this.formulaDependencies().getCellsDependingOn(
-      excludeTopLeft(resultZone).map((zone) => ({ sheetId, zone, unboundedZone: zone }))
+      excludeTopLeft(resultZone).map((zone) => ({ sheetId, zone }))
     );
-    invalidatedPositions.delete({ sheetId, zone: resultZone, unboundedZone: resultZone });
+    invalidatedPositions.delete({ sheetId, zone: resultZone });
     this.nextRangesToUpdate.addMany(invalidatedPositions);
   }
 
@@ -588,7 +587,7 @@ export class Evaluator {
     return cell.compiledFormula.dependencies;
   }
 
-  private getCellsDependingOn(ranges: Iterable<Range>): Iterable<Range> {
+  private getCellsDependingOn(ranges: Iterable<BoundedRange>): Iterable<BoundedRange> {
     return this.formulaDependencies().getCellsDependingOn(ranges);
   }
 }

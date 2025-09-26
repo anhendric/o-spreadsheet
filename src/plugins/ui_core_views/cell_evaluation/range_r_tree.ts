@@ -1,5 +1,5 @@
 import { deepEquals } from "../../../helpers/misc";
-import { Range, UID } from "../../../types";
+import { BoundedRange, UID } from "../../../types";
 import { RTreeBoundingBox, RTreeItem, SpreadsheetRTree } from "./r_tree";
 import { RangeSet } from "./range_set";
 
@@ -8,7 +8,7 @@ interface CompactZoneItem {
   data: RangeSet;
 }
 
-type RTreeRangeItem = RTreeItem<Range>;
+type RTreeRangeItem = RTreeItem<BoundedRange>;
 
 /**
  * R-Tree of ranges, mapping zones (r-tree bounding boxes) to ranges (data of the r-tree item).
