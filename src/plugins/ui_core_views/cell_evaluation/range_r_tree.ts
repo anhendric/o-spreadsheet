@@ -19,7 +19,7 @@ export class RangeRTree {
   private readonly rTree: SpreadsheetRTree<RangeSet>;
 
   constructor(items: RTreeRangeItem[] = []) {
-    const compactedItems = compactRangeItems(items);
+    const compactedItems = groupDataPointingToSameBoundingBox(items);
     this.rTree = new SpreadsheetRTree(compactedItems);
   }
 
@@ -34,6 +34,7 @@ export class RangeRTree {
   }
 
   search({ zone, sheetId }: RTreeBoundingBox): RTreeRangeItem[] {
+    // TODO return RangeSet?
     const results: RTreeRangeItem[] = [];
     for (const { boundingBox, data } of this.rTree.search({ zone, sheetId })) {
       for (const range of data) {
@@ -49,7 +50,7 @@ export class RangeRTree {
   }
 }
 
-function compactRangeItems(items: RTreeRangeItem[]): CompactZoneItem[] {
+function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZoneItem[] {
   // This function must be as fast as possible.
   // It's critical to efficiently build the optimized R-tree.
   // If it's slow, there's no point at using an optimized R-tree.

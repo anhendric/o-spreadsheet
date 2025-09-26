@@ -70,6 +70,8 @@ export class FormulaDependencyGraph {
       const range = queue.pop()!;
       visited.add(range);
       const impactedRanges = this.rTree.search(range).map(({ data }) => data);
+      console.log("impactedRanges", impactedRanges.length);
+      console.log("pushed to queue", [...new RangeSet(impactedRanges).difference(visited)].length);
       queue.push(...new RangeSet(impactedRanges).difference(visited));
     }
 
