@@ -50,6 +50,19 @@ export class RangeRTree {
   }
 }
 
+/**
+ * The goal is to optimize the following case:
+ * - if any cell in B1:B1000 changes, C1 must be recomputed
+ * - if any cell in B1:B1000 changes, C2 must be recomputed
+ * - if any cell in B1:B1000 changes, C3 must be recomputed
+ * ...
+ * - if any cell in B1:B1000 changes, C1000 must be recomputed
+ *
+ * Instead of having 1000 entries in the R-tree, we want to have a single entry
+ * with B1:B1000 (bounding box) pointing to C1:C1000 (data).
+ *
+ * This function groups together all data pointing to the exact same bounding box.
+ */
 function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZoneItem[] {
   // This function must be as fast as possible.
   // It's critical to efficiently build the optimized R-tree.
