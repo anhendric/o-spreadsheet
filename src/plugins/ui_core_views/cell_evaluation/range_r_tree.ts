@@ -101,40 +101,62 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
     maxCol + maxRow * maxCol + maxCol * maxCol * maxRow + maxRow * maxCol * maxRow * maxCol;
   const useFastKey = maxPossibleKey <= Number.MAX_SAFE_INTEGER;
   if (!useFastKey) {
-    console.warn("Too large zones to compact, using slow zone key");
+    console.warn("Max col/row size exceeded, using slow zone key");
   }
-  const compactedMap: Record<UID, Record<string, CompactZoneItem>> = {};
+  const groupedByBBox: Record<UID, Record<string, CompactZoneItem>> = {};
+  // const groupedData = new RangeSet();
   for (const item of items) {
     const sheetId = item.boundingBox.sheetId;
-    if (!compactedMap[sheetId]) {
-      compactedMap[sheetId] = {};
+    if (!groupedByBBox[sheetId]) {
+      groupedByBBox[sheetId] = {};
     }
-    const zone = item.boundingBox.zone;
-    let key: number | string = 0;
+    const bBox = item.boundingBox.zone;
+    let bBoxKey: number | string = 0;
     if (useFastKey) {
-      key =
-        zone.left +
-        zone.top * maxCol +
-        zone.right * maxCol * maxRow +
-        zone.bottom * maxCol * maxRow * maxCol;
+      bBoxKey =
+        bBox.left +
+        bBox.top * maxCol +
+        bBox.right * maxCol * maxRow +
+        bBox.bottom * maxCol * maxRow * maxCol;
     } else {
-      key = `${zone.left},${zone.top},${zone.right},${zone.bottom}`;
+      bBoxKey = `${bBox.left},${bBox.top},${bBox.right},${bBox.bottom}`;
     }
-    if (compactedMap[sheetId][key]) {
-      compactedMap[sheetId][key].data.add(item.data);
+    if (groupedByBBox[sheetId][bBoxKey]) {
+      const ranges = groupedByBBox[sheetId][bBoxKey].data;
+      // group data pointing to the same bounding box
+      ranges.add(item.data);
+      // groupedData.addMany(ranges);
     } else {
-      compactedMap[sheetId][key] = {
+      groupedByBBox[sheetId][bBoxKey] = {
         boundingBox: item.boundingBox,
         data: new RangeSet([item.data]),
       };
     }
   }
+
+  // const groupedByData = new Map<RangeSet, CompactZoneItem[]>();
+  // for (const sheetId in groupedByBBox) {
+  //   const map = groupedByBBox[sheetId];
+  //   for (const key in map) {
+  //     const item = map[key];
+  //     const { boundingBox, data } = item;
+  //     if (groupedData.has(boundingBox)) {
+  //       // we should get the bigger RangeSet which contains this boundingBox
+  //       if (!groupedByData.has(data)) {
+  //         groupedByData.set(data, []);
+  //       }
+  //       groupedByData.get(data)?.push({ boundingBox, data });
+  //       // bounding box is grouped with all bounding boxes within the same data.
+  //     }
+  //   }
+  // }
   const result: CompactZoneItem[] = [];
-  for (const sheetId in compactedMap) {
-    const map = compactedMap[sheetId];
+  for (const sheetId in groupedByBBox) {
+    const map = groupedByBBox[sheetId];
     for (const key in map) {
       result.push(map[key]);
     }
   }
+  // console.log(`Grouped data in R-tree: ${groupedData.size} sets of ranges`);
   return result;
 }
