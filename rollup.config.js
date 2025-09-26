@@ -17,7 +17,7 @@ const outro = bundle.outro();
  */
 function getConfigForFormat(format, minified = false) {
   return {
-    file: minified ? `dist/o-spreadsheet.${format}.min.js` : `dist/o-spreadsheet.${format}.js`,
+    file: minified ? `dist/o_spreadsheet.${format}.min.js` : `dist/o_spreadsheet.${format}.js`,
     format,
     name: "o_spreadsheet",
     extend: true,
@@ -60,7 +60,7 @@ export default (commandLineArgs) => {
           outro,
           banner: bundle.jsBanner(),
           globals: { "@odoo/owl": "owl" },
-          file: `build/o-spreadsheet.${commandLineArgs.format}.js`,
+          file: `build/o_spreadsheet.${commandLineArgs.format}.js`,
           format: commandLineArgs.format,
         },
       ],
