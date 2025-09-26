@@ -45,7 +45,7 @@ export class RangeRTree {
   }
 
   remove(item: RTreeRangeItem) {
-    // FIXME. It doesn't work, but rTree.remove doesn't work either.
+    // FIXME. It doesn't work, but rTree.remove doesn't work either ¯_ (ツ)_/¯
     this.rTree.remove({ ...item, data: new RangeSet([item.data]) });
   }
 }
@@ -64,6 +64,20 @@ export class RangeRTree {
  * This function groups together all data pointing to the exact same bounding box.
  */
 function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZoneItem[] {
+  /**
+   * Random notes;
+   * if data is grouped (C1:C1000), it's very likely that C1:C1000 will all change together.
+   * Which means that the following case is very likely to be optimizable:
+   * - if C1 changes, D1 must be recomputed
+   * - if C2 changes, D2 must be recomputed
+   * ...
+   * - if C1000 changes, D1000 must be recomputed
+   * We would like to group all bounding boxes (C1, C2, ..., C1000) into a single bounding box (C1:C1000)
+   * pointing to D1:D1000.
+   * This is not strictly speaking correct, because if only C1 changes, we will recompute D1:D1000 instead of only D1.
+   * But in practice, it's likely that if C1 changes, C2:C1000 will change too.
+   * So it's a trade-off between accuracy and performance.
+   */
   // This function must be as fast as possible.
   // It's critical to efficiently build the optimized R-tree.
   // If it's slow, there's no point at using an optimized R-tree.
