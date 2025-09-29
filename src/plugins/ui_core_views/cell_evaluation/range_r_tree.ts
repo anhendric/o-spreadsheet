@@ -1,4 +1,3 @@
-import { zoneToXc } from "../../../helpers";
 import { deepEquals } from "../../../helpers/misc";
 import { BoundedRange, UID } from "../../../types";
 import { RTreeBoundingBox, RTreeItem, SpreadsheetRTree } from "./r_tree";
@@ -159,7 +158,7 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
       result.push(map[key]);
     }
   }
-  // console.log(`Grouped data in R-tree: ${groupedData.size} sets of ranges`);
+  console.log(`Grouped data in R-tree: ${result.length} sets of ranges`);
   // const grouped = groupContiguousCompactZones(result);
   // console.log(`Grouped data in R-tree: ${grouped.length} sets of ranges (from ${items.length} items and ${result.length} compact zones)`);
   return result;
@@ -189,16 +188,17 @@ function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] 
     return a.boundingBox.zone.left - b.boundingBox.zone.left;
   });
   // check B0
-  console.log(sorted.map((i) => zoneToXc(i.boundingBox.zone)));
+  // console.log(sorted.map((i) => zoneToXc(i.boundingBox.zone)));
   let currentGroup: RTreeRangeItem = sorted[0];
   const grouped: RTreeRangeItem[] = [];
   for (const item of sorted) {
     const { zone } = item.boundingBox;
+    const currentBBoxZone = currentGroup.boundingBox.zone;
     if (
+      zone.left === currentBBoxZone.left &&
+      zone.right === currentBBoxZone.right &&
+      zone.top === currentBBoxZone.bottom + 1 &&
       currentGroup.boundingBox.sheetId === item.boundingBox.sheetId &&
-      zone.left === currentGroup.boundingBox.zone.left &&
-      zone.right === currentGroup.boundingBox.zone.right &&
-      zone.top === currentGroup.boundingBox.zone.bottom + 1 &&
       currentGroup.data.sheetId === item.data.sheetId &&
       currentGroup.data.zone.left === item.data.zone.left &&
       currentGroup.data.zone.right === item.data.zone.right &&
@@ -212,7 +212,7 @@ function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] 
     }
   }
   // debugger;
-  // console.log(`Grouped data in R-tree: ${grouped.length} sets of ranges ${items.length}`);
+  console.log(`Grouped bbox in R-tree: ${grouped.length} sets of ranges ${items.length}`);
   // console.log(grouped.map(i => zoneToXc(i.boundingBox.zone)));
   return grouped;
 }

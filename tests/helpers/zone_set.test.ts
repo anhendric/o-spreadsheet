@@ -202,4 +202,48 @@ describe("ZoneSet", () => {
     set.delete(toZone("B2"));
     expect(set.isEmpty()).toBe(true);
   });
+
+  test("size with individual cells", () => {
+    const set = new ZoneSet();
+    expect(set.size()).toBe(0);
+    set.add(toZone("A1"));
+    set.add(toZone("B2"));
+    expect(set.size()).toBe(2);
+    // set.delete(toZone("A1"));
+    // expect(set.size()).toBe(1);
+    // set.delete(toZone("B2"));
+    // expect(set.size()).toBe(0);
+  });
+
+  test("size with adjacent cells", () => {
+    const set = new ZoneSet();
+    set.add(toZone("A1"));
+    set.add(toZone("A2"));
+    expect(set.size()).toBe(1);
+    set.add(toZone("B1"));
+    set.add(toZone("B2"));
+    expect(set.size()).toBe(1);
+    set.add(toZone("B3"));
+    expect(set.size()).toBe(2);
+  });
+
+  test("size with multiple zones on the same column", () => {
+    const set = new ZoneSet();
+    set.add(toZone("A1:A3"));
+    expect(set.size()).toBe(1);
+    set.add(toZone("A5:A6"));
+    expect(set.size()).toBe(2);
+    set.add(toZone("A8:A10"));
+    expect(set.size()).toBe(3);
+  });
+
+  test("size with multiple zones on the same row", () => {
+    const set = new ZoneSet();
+    set.add(toZone("A1:C1"));
+    expect(set.size()).toBe(1);
+    set.add(toZone("E1:F1"));
+    expect(set.size()).toBe(2);
+    set.add(toZone("H1:J1"));
+    expect(set.size()).toBe(3);
+  });
 });

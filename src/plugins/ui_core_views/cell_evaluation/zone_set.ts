@@ -40,6 +40,15 @@ export class ZoneSet {
     return result;
   }
 
+  size() {
+    // reaaaally not sure about this.
+    let size = 0;
+    for (const profile of this.profiles.values()) {
+      size += profile.length;
+    }
+    return size / 2;
+  }
+
   /**
    * iterator of all the zones in the ZoneSet
    */
