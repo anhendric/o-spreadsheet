@@ -3981,7 +3981,7 @@ in C1, writ e=B2
 write a VLOOKUP that search in column C --> slow
 * */
   const cells = {};
-  for (let row = 0; row < rows; row++) {
+  for (let row = 1; row < rows; row++) {
     cells["A" + row] = { content: `=SPLIT("1 2", " ")` };
     cells["C" + row] = { content: `=B${row}` };
     cells["D" + row] = { content: `=vlookup("2",c1:c${rows},1)` };

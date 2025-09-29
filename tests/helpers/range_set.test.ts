@@ -13,7 +13,6 @@ function toRange(rangeStr: string) {
   return {
     sheetId: fullRange.sheetId,
     zone: fullRange.zone,
-    unboundedZone: fullRange.zone,
   };
 }
 

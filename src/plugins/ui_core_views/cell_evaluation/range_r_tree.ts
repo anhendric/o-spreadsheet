@@ -1,3 +1,4 @@
+import { zoneToXc } from "../../../helpers";
 import { deepEquals } from "../../../helpers/misc";
 import { BoundedRange, UID } from "../../../types";
 import { RTreeBoundingBox, RTreeItem, SpreadsheetRTree } from "./r_tree";
@@ -33,13 +34,14 @@ export class RangeRTree {
     }
   }
 
-  search({ zone, sheetId }: RTreeBoundingBox): RTreeRangeItem[] {
+  search({ zone, sheetId }: RTreeBoundingBox): RangeSet {
     // TODO return RangeSet?
-    const results: RTreeRangeItem[] = [];
-    for (const { boundingBox, data } of this.rTree.search({ zone, sheetId })) {
-      for (const range of data) {
-        results.push({ boundingBox, data: range });
-      }
+    const results: RangeSet = new RangeSet();
+    for (const { data } of this.rTree.search({ zone, sheetId })) {
+      results.addMany(data);
+      // for (const range of data) {
+      //   results.push({ boundingBox, data: range });
+      // }
     }
     return results;
   }
@@ -64,20 +66,7 @@ export class RangeRTree {
  * This function groups together all data pointing to the exact same bounding box.
  */
 function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZoneItem[] {
-  /**
-   * Random notes;
-   * if data is grouped (C1:C1000), it's very likely that C1:C1000 will all change together.
-   * Which means that the following case is very likely to be optimizable:
-   * - if C1 changes, D1 must be recomputed
-   * - if C2 changes, D2 must be recomputed
-   * ...
-   * - if C1000 changes, D1000 must be recomputed
-   * We would like to group all bounding boxes (C1, C2, ..., C1000) into a single bounding box (C1:C1000)
-   * pointing to D1:D1000.
-   * This is not strictly speaking correct, because if only C1 changes, we will recompute D1:D1000 instead of only D1.
-   * But in practice, it's likely that if C1 changes, C2:C1000 will change too.
-   * So it's a trade-off between accuracy and performance.
-   */
+  items = groupContiguousCompactZones(items);
   // This function must be as fast as possible.
   // It's critical to efficiently build the optimized R-tree.
   // If it's slow, there's no point at using an optimized R-tree.
@@ -133,6 +122,19 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
       };
     }
   }
+  /**
+   * if data is grouped (C1:C1000), it's very likely that C1:C1000 will all change together.
+   * Which means that the following case is very likely to be optimizable:
+   * - if C1 changes, D1 must be recomputed
+   * - if C2 changes, D2 must be recomputed
+   * ...
+   * - if C1000 changes, D1000 must be recomputed
+   * We would like to group all bounding boxes (C1, C2, ..., C1000) into a single bounding box (C1:C1000)
+   * pointing to D1:D1000.
+   * This is not strictly speaking correct, because if only C1 changes, we will recompute D1:D1000 instead of only D1.
+   * But in practice, it's likely that if C1 changes, C2:C1000 will change too.
+   * So it's a trade-off between accuracy and performance.
+   */
 
   // const groupedByData = new Map<RangeSet, CompactZoneItem[]>();
   // for (const sheetId in groupedByBBox) {
@@ -158,5 +160,59 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
     }
   }
   // console.log(`Grouped data in R-tree: ${groupedData.size} sets of ranges`);
+  // const grouped = groupContiguousCompactZones(result);
+  // console.log(`Grouped data in R-tree: ${grouped.length} sets of ranges (from ${items.length} items and ${result.length} compact zones)`);
   return result;
+}
+
+/**
+ * Groups contiguous CompactZoneItems (e.g., C1, C2, ..., C1000) into a single CompactZoneItem (C1:C1000)
+ * and merges their RangeSets (D1:D1000).
+ * This trades some accuracy for performance, as described above.
+ *
+ * Assumes bounding boxes are 1D (single row or column) for simplicity, but can be extended for 2D.
+ *
+ * @param items Array of CompactZoneItem
+ * @returns Array of CompactZoneItem with grouped bounding boxes and merged data
+ */
+function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] {
+  // Sort items by sheetId, then by bounding box position (top/left)
+  const sorted = items.sort((a, b) => {
+    if (a.boundingBox.sheetId !== b.boundingBox.sheetId) {
+      // mouais, not thanks chatGPT
+      return a.boundingBox.sheetId < b.boundingBox.sheetId ? -1 : 1;
+    }
+    // 1D: sort by top, then left
+    if (a.boundingBox.zone.right === b.boundingBox.zone.left) {
+      return a.boundingBox.zone.top - b.boundingBox.zone.top;
+    }
+    return a.boundingBox.zone.left - b.boundingBox.zone.left;
+  });
+  // check B0
+  console.log(sorted.map((i) => zoneToXc(i.boundingBox.zone)));
+  let currentGroup: RTreeRangeItem = sorted[0];
+  const grouped: RTreeRangeItem[] = [];
+  for (const item of sorted) {
+    const { zone } = item.boundingBox;
+    if (
+      currentGroup.boundingBox.sheetId === item.boundingBox.sheetId &&
+      zone.left === currentGroup.boundingBox.zone.left &&
+      zone.right === currentGroup.boundingBox.zone.right &&
+      zone.top === currentGroup.boundingBox.zone.bottom + 1 &&
+      currentGroup.data.sheetId === item.data.sheetId &&
+      currentGroup.data.zone.left === item.data.zone.left &&
+      currentGroup.data.zone.right === item.data.zone.right &&
+      currentGroup.data.zone.bottom + 1 === item.data.zone.top
+    ) {
+      currentGroup.boundingBox.zone.bottom = zone.bottom;
+      currentGroup.data.zone.bottom = item.data.zone.bottom;
+    } else {
+      currentGroup = item;
+      grouped.push(currentGroup);
+    }
+  }
+  // debugger;
+  // console.log(`Grouped data in R-tree: ${grouped.length} sets of ranges ${items.length}`);
+  // console.log(grouped.map(i => zoneToXc(i.boundingBox.zone)));
+  return grouped;
 }

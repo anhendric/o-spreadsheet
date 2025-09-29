@@ -43,7 +43,9 @@ export class ZoneSet {
   /**
    * iterator of all the zones in the ZoneSet
    */
-  *[Symbol.iterator](): IterableIterator<Zone> {
-    yield* constructZonesFromProfiles<Zone>(this.profilesStartingPosition, this.profiles);
+  [Symbol.iterator](): IterableIterator<Zone> {
+    return constructZonesFromProfiles<Zone>(this.profilesStartingPosition, this.profiles)[
+      Symbol.iterator
+    ]();
   }
 }

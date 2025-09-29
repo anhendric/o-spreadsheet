@@ -95,11 +95,13 @@ export class RangeSet {
   /**
    * iterator of all the ranges in the RangeSet
    */
-  *[Symbol.iterator](): IterableIterator<BoundedRange> {
+  [Symbol.iterator](): IterableIterator<BoundedRange> {
+    const result: BoundedRange[] = [];
     for (const sheetId in this.setsBySheetId) {
       for (const zone of this.setsBySheetId[sheetId]) {
-        yield { sheetId: sheetId, zone };
+        result.push({ sheetId: sheetId, zone });
       }
     }
+    return result[Symbol.iterator]();
   }
 }
