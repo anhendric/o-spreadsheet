@@ -91,6 +91,11 @@ export interface ASTSymbol extends ASTBase {
   value: string;
 }
 
+export interface ASTArray extends ASTBase {
+  type: "ARRAY";
+  rows: AST[][];
+}
+
 interface ASTEmpty extends ASTBase {
   type: "EMPTY";
   value: "";
@@ -101,6 +106,7 @@ export type AST =
   | ASTUnaryOperation
   | ASTFuncall
   | ASTSymbol
+  | ASTArray
   | ASTNumber
   | ASTBoolean
   | ASTString
@@ -219,6 +225,8 @@ function parseOperand(tokens: TokenList): AST {
         tokenStartIndex: current.tokenIndex,
         tokenEndIndex: rightParen.tokenIndex,
       };
+    case "LEFT_BRACE":
+      return parseArrayLiteral(tokens, current);
     case "OPERATOR":
       const operator = current.value;
       if (UNARY_OPERATORS_PREFIX.includes(operator)) {
@@ -274,6 +282,74 @@ function consumeOrThrow(tokens: TokenList, type, message?: string) {
     throw new BadExpressionError(message);
   }
   return token;
+}
+
+function createEmptyAst(token: RichToken): AST {
+  return {
+    type: "EMPTY",
+    value: "",
+    tokenStartIndex: token.tokenIndex,
+    tokenEndIndex: token.tokenIndex,
+  };
+}
+
+function parseArrayLiteral(tokens: TokenList, leftBrace: RichToken): ASTArray {
+  const rows: AST[][] = [];
+  let currentRow: AST[] = [];
+  let expectValue = true;
+  let lastSeparator: RichToken | undefined;
+
+  while (true) {
+    const nextToken = tokens.current;
+    if (!nextToken) {
+      throw new BadExpressionError(_t("Missing closing brace"));
+    }
+    if (nextToken.type === "RIGHT_BRACE") {
+      if (expectValue && lastSeparator) {
+        currentRow.push(createEmptyAst(lastSeparator));
+      }
+      const rightBrace = consumeOrThrow(tokens, "RIGHT_BRACE");
+      if (currentRow.length) {
+        rows.push(currentRow);
+      }
+      const expectedLength = rows[0]?.length ?? 0;
+      if (rows.some((row) => row.length !== expectedLength)) {
+        throw new BadExpressionError(
+          _t("Each row in an array literal must contain the same number of elements.")
+        );
+      }
+      return {
+        type: "ARRAY",
+        rows,
+        tokenStartIndex: leftBrace.tokenIndex,
+        tokenEndIndex: rightBrace.tokenIndex,
+      };
+    }
+    if (nextToken.type === "ARG_SEPARATOR") {
+      tokens.shift();
+      if (expectValue) {
+        currentRow.push(createEmptyAst(nextToken));
+      }
+      expectValue = true;
+      lastSeparator = nextToken;
+      continue;
+    }
+    if (nextToken.type === "ARRAY_ROW_SEPARATOR") {
+      tokens.shift();
+      if (expectValue) {
+        currentRow.push(createEmptyAst(nextToken));
+      }
+      rows.push(currentRow);
+      currentRow = [];
+      expectValue = true;
+      lastSeparator = undefined;
+      continue;
+    }
+    const value = parseExpression(tokens);
+    currentRow.push(value);
+    expectValue = false;
+    lastSeparator = undefined;
+  }
 }
 
 function parseExpression(tokens: TokenList, parent_priority: number = 0): AST {
@@ -376,6 +452,13 @@ function* astIterator(ast: AST): Iterable<AST> {
         yield* astIterator(arg);
       }
       break;
+    case "ARRAY":
+      for (const row of ast.rows) {
+        for (const cell of row) {
+          yield* astIterator(cell);
+        }
+      }
+      break;
     case "UNARY_OPERATION":
       yield* astIterator(ast.operand);
       break;
@@ -396,6 +479,11 @@ export function mapAst<T extends AST["type"]>(
       return {
         ...ast,
         args: ast.args.map((child) => mapAst(child, fn)),
+      };
+    case "ARRAY":
+      return {
+        ...ast,
+        rows: ast.rows.map((row) => row.map((cell) => mapAst(cell, fn))),
       };
     case "UNARY_OPERATION":
       return {

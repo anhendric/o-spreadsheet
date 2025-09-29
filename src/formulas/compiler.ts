@@ -188,6 +188,23 @@ function compileTokensOrThrow(tokens: Token[]): CompiledFormula {
           code.append(...args);
           const fnName = ast.value.toUpperCase();
           return code.return(`ctx['${fnName}'](${args.map((arg) => arg.returnExpression)})`);
+        case "ARRAY": {
+          const compiledRows = ast.rows.map((row) =>
+            row.map((cell) => compileAST(cell, false, false).assignResultToVariable())
+          );
+          for (const row of compiledRows) {
+            code.append(...row);
+          }
+          const columnCount = compiledRows.reduce((max, row) => Math.max(max, row.length), 0);
+          const columns: string[] = [];
+          for (let colIndex = 0; colIndex < columnCount; colIndex++) {
+            const columnCells = compiledRows.map(
+              (row) => row[colIndex]?.returnExpression ?? "undefined"
+            );
+            columns.push(`[${columnCells.join(", ")}]`);
+          }
+          return code.return(`[${columns.join(", ")}]`);
+        }
         case "UNARY_OPERATION": {
           const fnName = UNARY_OPERATOR_MAP[ast.value];
           const operand = compileAST(ast.operand, false, false).assignResultToVariable();

@@ -73,6 +73,11 @@ describe("expression compiler", () => {
     const compiledFormula = compiledBaseFunction("=sum(A1)");
     expect(compiledFormula.execute.toString()).toMatchSnapshot();
   });
+
+  test("array literal expression", () => {
+    const compiledFormula = compiledBaseFunction("={1,2;3,4}");
+    expect(compiledFormula.execute.toString()).toMatchSnapshot();
+  });
 });
 
 describe("compile functions", () => {

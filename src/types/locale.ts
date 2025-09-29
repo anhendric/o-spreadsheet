@@ -11,6 +11,7 @@ export interface Locale {
   dateFormat: string;
   timeFormat: string;
   formulaArgSeparator: string;
+  formulaArrayRowSeparator: string;
 }
 
 export const DEFAULT_LOCALES: Locale[] = [
@@ -23,6 +24,7 @@ export const DEFAULT_LOCALES: Locale[] = [
     dateFormat: "m/d/yyyy",
     timeFormat: "hh:mm:ss a",
     formulaArgSeparator: ",",
+    formulaArrayRowSeparator: ";",
   },
   {
     name: "French",
@@ -33,6 +35,7 @@ export const DEFAULT_LOCALES: Locale[] = [
     dateFormat: "dd/mm/yyyy",
     timeFormat: "hh:mm:ss",
     formulaArgSeparator: ";",
+    formulaArrayRowSeparator: "\\",
   },
 ];
 export const DEFAULT_LOCALE: Locale = DEFAULT_LOCALES[0];

@@ -246,6 +246,23 @@ function astToDoc(ast: AST): Doc {
         ast.value
       );
 
+    case "ARRAY": {
+      if (!ast.rows.length) {
+        return "{}";
+      }
+      const rowDocs = ast.rows.map((row) =>
+        concat(
+          row.map((cell, index) =>
+            index === 0 ? astToDoc(cell) : concat([", ", line(), astToDoc(cell)])
+          )
+        )
+      );
+      const body = concat(
+        rowDocs.map((doc, index) => (index === 0 ? doc : concat(["; ", line(), doc])))
+      );
+      return wrapInBraces(body);
+    }
+
     case "UNARY_OPERATION":
       const operandDoc = astToDoc(ast.operand);
       const needParenthesis = ast.postfix
@@ -289,6 +306,10 @@ function wrapInParentheses(doc: Doc, functionName: undefined | string = undefine
   return group(concat(docToConcat));
 }
 
+function wrapInBraces(doc: Doc): Doc {
+  return group(concat(["{", nest(1, concat([line(), doc])), line(), "}"]));
+}
+
 /**
  * Converts an ast formula to the corresponding string
  */
@@ -316,6 +337,13 @@ export function astToFormula(ast: AST): string {
         ? `(${astToFormula(ast.operand)})`
         : astToFormula(ast.operand);
       return ast.value + rightOperand;
+    case "ARRAY":
+      if (!ast.rows.length) {
+        return "{}";
+      }
+      return (
+        "{" + ast.rows.map((row) => row.map((cell) => astToFormula(cell)).join(",")).join(";") + "}"
+      );
     case "BIN_OPERATION":
       const leftOperation = leftOperandNeedsParenthesis(ast)
         ? `(${astToFormula(ast.left)})`
@@ -332,20 +360,21 @@ export function astToFormula(ast: AST): string {
 function leftOperandNeedsParenthesis(operationAST: ASTOperation | ASTUnaryOperation): boolean {
   const mainOperator = operationAST.value;
   const leftOperation = "left" in operationAST ? operationAST.left : operationAST.operand;
+  if (leftOperation.type !== "BIN_OPERATION") {
+    return false;
+  }
   const leftOperator = leftOperation.value;
-  return (
-    leftOperation.type === "BIN_OPERATION" && OP_PRIORITY[leftOperator] < OP_PRIORITY[mainOperator]
-  );
+  return OP_PRIORITY[leftOperator] < OP_PRIORITY[mainOperator];
 }
 
 function rightOperandNeedsParenthesis(operationAST: ASTOperation | ASTUnaryOperation): boolean {
   const mainOperator = operationAST.value;
   const rightOperation = "right" in operationAST ? operationAST.right : operationAST.operand;
-  const rightPriority = OP_PRIORITY[rightOperation.value];
-  const mainPriority = OP_PRIORITY[mainOperator];
   if (rightOperation.type !== "BIN_OPERATION") {
     return false;
   }
+  const rightPriority = OP_PRIORITY[rightOperation.value];
+  const mainPriority = OP_PRIORITY[mainOperator];
   if (rightPriority < mainPriority) {
     return true;
   }

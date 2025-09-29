@@ -94,6 +94,11 @@ describe("evaluateCells", () => {
     });
   });
 
+  test("array literal as argument", () => {
+    expect(evaluateCell("A1", { A1: "=SUM({1,2,3})" })).toBe(6);
+    expect(evaluateCell("A2", { A2: "=INDEX({1,2;3,4},2,1)" })).toBe(3);
+  });
+
   test("With empty content", () => {
     const grid = { A1: "1", B1: "", C1: "=SUM(A1,B1)" };
     expect(evaluateCell("C1", grid)).toBe(1);

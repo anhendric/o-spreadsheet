@@ -682,6 +682,7 @@ describe("Replace", () => {
       decimalSeparator: ",",
       formulaArgSeparator: ";",
       thousandsSeparator: " ",
+      formulaArrayRowSeparator: "\\",
     });
     updateSearch(model, "2", { searchFormulas: true, searchScope: "activeSheet" });
     replaceSearch("2,5");

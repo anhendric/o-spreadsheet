@@ -560,6 +560,7 @@ export const FR_LOCALE: Locale = {
   dateFormat: "dd/mm/yyyy",
   timeFormat: "hh:mm:ss",
   formulaArgSeparator: ";",
+  formulaArrayRowSeparator: "\\",
 };
 
 export const CUSTOM_LOCALE: Locale = {
@@ -571,6 +572,7 @@ export const CUSTOM_LOCALE: Locale = {
   dateFormat: "dd/mm/yyyy",
   timeFormat: "hh:mm:ss a",
   formulaArgSeparator: ";",
+  formulaArrayRowSeparator: "\\",
 };
 
 export const TABLE_STYLE_ALL_RED: TableStyle = {

@@ -105,4 +105,8 @@ describe("formula formatter", () => {
         "\t)"
     );
   });
+
+  test("array literals are formatted", () => {
+    expect(prettifyContent("={1,2;3,4}")).toBe("={1, 2; 3, 4}");
+  });
 });
