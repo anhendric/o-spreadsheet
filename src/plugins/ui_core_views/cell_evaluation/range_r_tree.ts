@@ -65,7 +65,7 @@ export class RangeRTree {
  * This function groups together all data pointing to the exact same bounding box.
  */
 function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZoneItem[] {
-  items = groupContiguousCompactZones(items);
+  
   // This function must be as fast as possible.
   // It's critical to efficiently build the optimized R-tree.
   // If it's slow, there's no point at using an optimized R-tree.
@@ -158,10 +158,11 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
       result.push(map[key]);
     }
   }
-  console.log(`Grouped data in R-tree: ${result.length} sets of ranges`);
+  console.log(`Grouped data in R-tree: ${result.length} sets of ranges from ${items.length} items`);
   // const grouped = groupContiguousCompactZones(result);
   // console.log(`Grouped data in R-tree: ${grouped.length} sets of ranges (from ${items.length} items and ${result.length} compact zones)`);
-  return result;
+  // items = ;
+  return groupContiguousCompactZones(result);
 }
 
 /**
@@ -174,9 +175,19 @@ function groupDataPointingToSameBoundingBox(items: RTreeRangeItem[]): CompactZon
  * @param items Array of CompactZoneItem
  * @returns Array of CompactZoneItem with grouped bounding boxes and merged data
  */
-function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] {
+function groupContiguousCompactZones(items: CompactZoneItem[]): CompactZoneItem[] {
+
+  const multiRangeItems: CompactZoneItem[] = [];
+  const singleRangeItems: CompactZoneItem[] = [];
+  for (const item of items) {
+    if (item.data.size() === 1) {
+      singleRangeItems.push(item);
+    } else {
+      multiRangeItems.push(item);
+    }
+  }
   // Sort items by sheetId, then by bounding box position (top/left)
-  const sorted = items.sort((a, b) => {
+  const sorted = singleRangeItems.sort((a, b) => {
     if (a.boundingBox.sheetId !== b.boundingBox.sheetId) {
       // mouais, not thanks chatGPT
       return a.boundingBox.sheetId < b.boundingBox.sheetId ? -1 : 1;
@@ -189,23 +200,27 @@ function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] 
   });
   // check B0
   // console.log(sorted.map((i) => zoneToXc(i.boundingBox.zone)));
-  let currentGroup: RTreeRangeItem = sorted[0];
-  const grouped: RTreeRangeItem[] = [];
+  let currentGroup: CompactZoneItem = sorted[0];
+  const grouped: CompactZoneItem[] = [];
+  debugger;
   for (const item of sorted) {
     const { zone } = item.boundingBox;
     const currentBBoxZone = currentGroup.boundingBox.zone;
+    const currentData = [...currentGroup.data][0];
+    const range = [...item.data][0];
     if (
       zone.left === currentBBoxZone.left &&
       zone.right === currentBBoxZone.right &&
       zone.top === currentBBoxZone.bottom + 1 &&
       currentGroup.boundingBox.sheetId === item.boundingBox.sheetId &&
-      currentGroup.data.sheetId === item.data.sheetId &&
-      currentGroup.data.zone.left === item.data.zone.left &&
-      currentGroup.data.zone.right === item.data.zone.right &&
-      currentGroup.data.zone.bottom + 1 === item.data.zone.top
+      currentData.sheetId === range.sheetId &&
+      currentData.zone.left === range.zone.left &&
+      currentData.zone.right === range.zone.right &&
+      currentData.zone.bottom + 1 === range.zone.top
     ) {
       currentGroup.boundingBox.zone.bottom = zone.bottom;
-      currentGroup.data.zone.bottom = item.data.zone.bottom;
+      currentGroup.data.add(range);
+      // currentData.zone.bottom = range.zone.bottom; // doesn't work because it doesn't mutate the RangeSet
     } else {
       currentGroup = item;
       grouped.push(currentGroup);
@@ -214,5 +229,5 @@ function groupContiguousCompactZones(items: RTreeRangeItem[]): RTreeRangeItem[] 
   // debugger;
   console.log(`Grouped bbox in R-tree: ${grouped.length} sets of ranges ${items.length}`);
   // console.log(grouped.map(i => zoneToXc(i.boundingBox.zone)));
-  return grouped;
+  return multiRangeItems.concat(grouped);
 }
