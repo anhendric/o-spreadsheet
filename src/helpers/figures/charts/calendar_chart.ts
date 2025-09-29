@@ -201,8 +201,8 @@ export function createCalendarChartRuntime(
   const chartData = getCalendarChartData(definition, chart.dataSets, chart.labelRange, getters);
   const { labels, datasets } = getCalendarChartDatasetAndLabels(definition, chartData);
 
-  const config: ChartConfiguration = {
-    type: "bar",
+  const config: ChartConfiguration<"calendar"> = {
+    type: "calendar",
     data: {
       labels,
       datasets,
@@ -219,6 +219,7 @@ export function createCalendarChartRuntime(
         chartShowValuesPlugin: getCalendarChartShowValues(definition, chartData),
         chartColorScalePlugin: getCalendarColorScale(definition, chartData),
       },
+      chartBackground: definition.background || BACKGROUND_CHART_COLOR,
     },
   };
 

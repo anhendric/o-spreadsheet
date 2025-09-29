@@ -108,7 +108,7 @@ export function getCalendarChartDatasetAndLabels(
   definition: CalendarChartDefinition,
   args: ChartRuntimeGenerationArgs
 ): {
-  datasets: ChartDataset[];
+  datasets: ChartDataset<"calendar">[];
   labels: string[];
 } {
   const { labels, dataSetsValues } = args;
@@ -126,7 +126,7 @@ export function getCalendarChartDatasetAndLabels(
     maxValue
   );
 
-  const dataSets: ChartDataset[] = [];
+  const dataSets: ChartDataset<"calendar">[] = [];
   for (const dataSetValues of dataSetsValues) {
     dataSets.push({
       label: dataSetValues.label,
