@@ -476,6 +476,30 @@ topbarMenuRegistry
     sequence: 30,
     separator: true,
   })
+  .addChild("what_if", ["data"], {
+    name: _t("What-If Analysis"),
+    sequence: 35,
+    separator: true,
+    icon: "o-spreadsheet-Icon.WHAT_IF",
+  })
+  .addChild("goal_seek", ["data", "what_if"], {
+    name: _t("Goal Seek"),
+    execute: (env) => env.openSidePanel("GoalSeek"),
+    sequence: 10,
+    icon: "o-spreadsheet-Icon.GOAL_SEEK",
+  })
+  .addChild("scenario_manager", ["data", "what_if"], {
+    name: _t("Scenario Manager"),
+    execute: (env) => env.openSidePanel("Scenario"),
+    sequence: 20,
+    icon: "o-spreadsheet-Icon.SCENARIOS",
+  })
+  .addChild("data_table", ["data", "what_if"], {
+    name: _t("Data Table"),
+    execute: (env) => env.openSidePanel("DataTable"),
+    sequence: 30,
+    icon: "o-spreadsheet-Icon.DATA_TABLE",
+  })
   .addChild("add_remove_data_filter", ["data"], {
     ...ACTION_DATA.createRemoveFilter,
     sequence: 40,

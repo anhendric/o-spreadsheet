@@ -1,0 +1,58 @@
+<templates>
+  <t t-name="o-spreadsheet-GoalSeekPanel">
+    <div class="o-goal-seek">
+      <SidePanelCollapsible isInitiallyCollapsed="false" title.translate="Goal Seek">
+        <t t-set-slot="content">
+          <Section class="'py-0'" title.translate="Target Cell">
+            <SelectionInput
+              ranges="[state.setCell]"
+              onSelectionChanged="(ranges) => this.onSetCellChanged(ranges)"
+              required="true"
+              hasSingleRange="true"
+            />
+          </Section>
+          <Section class="'pt-1'" title.translate="Target Value">
+            <input type="number" class="o-input" t-model="state.toValue"/>
+          </Section>
+          <Section class="'py-0'" title.translate="Parameter Cell">
+            <SelectionInput
+              ranges="[state.byChangingCell]"
+              onSelectionChanged="(ranges) => this.onByChangingCellChanged(ranges)"
+              required="true"
+              hasSingleRange="true"
+            />
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+      <SidePanelCollapsible isInitiallyCollapsed="true" title.translate="Advanced parameters">
+        <t t-set-slot="content">
+          <Section class="'pt-0'" title.translate="Algorithm">
+            <select class="o-input" t-model="state.algorithm">
+              <option value="Secant">Secant (Fast)</option>
+              <option value="BinarySearch">Binary Search (Robust)</option>
+              <option value="Newton">Newton (Numerical)</option>
+              <option value="Brent">Brent (Hybrid/Standard)</option>
+            </select>
+          </Section>
+          <Section class="'pt-0'" title.translate="Accuracy">
+            <input type="number" class="o-input" t-model="state.epsilon" step="0.000000001"/>
+          </Section>
+          <Section class="'pt-0'" title.translate="Min Parameters Value">
+            <input type="number" class="o-input" t-model="state.minValue" placeholder="Optional"/>
+          </Section>
+          <Section class="'pt-0'" title.translate="Max Parameters Value">
+            <input type="number" class="o-input" t-model="state.maxValue" placeholder="Optional"/>
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+      <Section class="'py-0'">
+        <div class="o-sidePanelButtons mt-4">
+          <button t-on-click="start" class="o-button o-goal-seek-confirm">OK</button>
+          <button t-on-click="props.onCloseSidePanel" class="o-button o-goal-seek-cancel">
+            Cancel
+          </button>
+        </div>
+      </Section>
+    </div>
+  </t>
+</templates>
