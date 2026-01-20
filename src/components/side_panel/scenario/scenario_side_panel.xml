@@ -1,0 +1,79 @@
+<templates>
+  <t t-name="o-spreadsheet-ScenarioSidePanel">
+    <div class="o-scenario-manager">
+      <Section t-if="!state.isEditing" title.translate="Scenarios">
+        <div class="o-scenario-list">
+          <t t-if="!scenarios?.length">
+            <div class="text-muted italic px-2">
+              No scenarios defined based on current selection logic.
+            </div>
+          </t>
+          <t t-else="" t-foreach="scenarios" t-as="scenario" t-key="scenario.id">
+            <div
+              class="o-scenario-item d-flex align-items-center justify-content-between p-2 mb-1 border rounded o-hoverable"
+              style="cursor: pointer;"
+              t-att-class="state.activeScenarioId === scenario.id ? 'bg-light' : ''"
+              t-on-click="() => this.applyScenario(scenario.id)">
+              <span class="fw-bold" t-esc="scenario.name"/>
+              <div class="o-scenario-actions">
+                <i
+                  class="o-button-icon fa fa-eye"
+                  t-on-click.stop="() => this.editScenario(scenario.id)"
+                />
+                <i
+                  class="o-button-icon ps-2 fa fa-trash"
+                  t-on-click.stop="() => this.deleteScenario(scenario.id)"
+                />
+              </div>
+            </div>
+          </t>
+        </div>
+        <div class="mt-3">
+          <button class="o-button o-button-primary w-100" t-on-click="openAddDialog">
+            Add Scenario
+          </button>
+          <button
+            t-on-click="props.onCloseSidePanel"
+            class="w-100 mt-1 o-button o-goal-seek-cancel">
+            Close
+          </button>
+        </div>
+      </Section>
+
+      <div t-else="" class="o-scenario-editor">
+        <Section title.translate="Scenario Name">
+          <input
+            type="text"
+            class="o-input mb-2"
+            t-model="state.editingName"
+            placeholder="e.g. Best Case"
+          />
+        </Section>
+
+        <Section class="'pt-0'" title.translate="Changing Cells">
+          <SelectionInput
+            ranges="state.editingCells"
+            onSelectionChanged="(ranges) => this.onEditingCellsChanged(ranges)"
+            required="true"
+          />
+        </Section>
+
+        <Section class="'pt-0'" title.translate="Values">
+          <div class="o-scenario-values-list" style="max-height: 200px; overflow-y: auto;">
+            <t t-foreach="state.editingValues" t-as="val" t-key="val.xc">
+              <div class="d-flex align-items-center mb-1">
+                <span class="me-2 text-muted" style="width: 40px;" t-esc="val.xc"/>
+                <input type="text" class="o-input py-1" t-model="val.value"/>
+              </div>
+            </t>
+          </div>
+        </Section>
+
+        <div class="d-flex justify-content-end mt-3 mx-3">
+          <button class="o-button o-button-primary me-2" t-on-click="saveScenario">Save</button>
+          <button class="o-button o-button-secondary" t-on-click="cancelEdit">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

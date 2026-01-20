@@ -1,0 +1,42 @@
+<templates>
+  <t t-name="o-spreadsheet-DataTableSidePanel">
+    <div class="o-data-table">
+      <Section title.translate="Data Table">
+        <div class="mb-3 text-muted small">
+          Select the table range including formulas and input headers, then specify the input cells.
+        </div>
+
+        <div class="o-section-title">Row Input Cell</div>
+        <SelectionInput
+          ranges="[state.rowInput]"
+          onSelectionChanged="(ranges) => this.onRowInputChanged(ranges)"
+          required="false"
+          isInvalid="state.isInvalid"
+        />
+        <div class="text-muted small mb-3">
+          Input cell for values from the top row of the selection.
+        </div>
+
+        <div class="o-section-title">Column Input Cell</div>
+        <SelectionInput
+          ranges="[state.colInput]"
+          onSelectionChanged="(ranges) => this.onColInputChanged(ranges)"
+          required="false"
+          isInvalid="state.isInvalid"
+        />
+        <div class="text-muted small mb-3">
+          Input cell for values from the left column of the selection.
+        </div>
+
+        <div class="mt-4">
+          <button class="o-button o-button-primary w-100" t-on-click="fillTable">Fill Table</button>
+          <button
+            t-on-click="props.onCloseSidePanel"
+            class="w-100 mt-1 o-button o-goal-seek-cancel">
+            Close
+          </button>
+        </div>
+      </Section>
+    </div>
+  </t>
+</templates>
