@@ -8,10 +8,12 @@ import { ConditionalFormattingPanel } from "../components/side_panel/conditional
 import { DataValidationPanel } from "../components/side_panel/data_validation/data_validation_panel";
 import { DataValidationEditor } from "../components/side_panel/data_validation/dv_editor/dv_editor";
 import { FindAndReplacePanel } from "../components/side_panel/find_and_replace/find_and_replace";
+import { GoalSeekSidePanel } from "../components/side_panel/goal_seek/goal_seek_side_panel";
 import { MoreFormatsPanel } from "../components/side_panel/more_formats/more_formats";
 import { PivotMeasureDisplayPanel } from "../components/side_panel/pivot/pivot_measure_display_panel/pivot_measure_display_panel";
 import { PivotSidePanel } from "../components/side_panel/pivot/pivot_side_panel/pivot_side_panel";
 import { RemoveDuplicatesPanel } from "../components/side_panel/remove_duplicates/remove_duplicates";
+import { ScenarioSidePanel } from "../components/side_panel/scenario/scenario_side_panel";
 import { SettingsPanel } from "../components/side_panel/settings/settings_panel";
 import { SidePanelState } from "../components/side_panel/side_panel/side_panel_store";
 import { SplitIntoColumnsPanel } from "../components/side_panel/split_to_columns_panel/split_to_columns_panel";
@@ -60,6 +62,23 @@ sidePanelRegistry.add("ChartPanel", {
 sidePanelRegistry.add("FindAndReplace", {
   title: _t("Find and Replace"),
   Body: FindAndReplacePanel,
+});
+
+sidePanelRegistry.add("GoalSeek", {
+  title: _t("Goal Seek"),
+  Body: GoalSeekSidePanel,
+});
+
+import { DataTableSidePanel } from "../components/side_panel/data_table/data_table_side_panel";
+
+sidePanelRegistry.add("Scenario", {
+  title: _t("Scenario Manager"),
+  Body: ScenarioSidePanel,
+});
+
+sidePanelRegistry.add("DataTable", {
+  title: _t("Data Table"),
+  Body: DataTableSidePanel,
 });
 
 sidePanelRegistry.add("SplitToColumns", {

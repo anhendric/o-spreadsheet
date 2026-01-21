@@ -2,6 +2,7 @@
 .prettierignore
 COPYRIGHT
 LICENSE
+make.sh
 
 .husky/
 .github/
