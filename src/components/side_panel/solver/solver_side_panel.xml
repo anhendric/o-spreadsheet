@@ -1,0 +1,310 @@
+<templates>
+  <t t-name="o-spreadsheet-SolverSidePanel">
+    <div class="o-solver position-relative h-100 d-flex flex-column">
+      <SidePanelCollapsible title.translate="Problem Definition" isInitiallyCollapsed="false">
+        <t t-set-slot="content">
+          <Section class="'pt-0'" title.translate="Objective Cell">
+            <SelectionInput
+              ranges="Array.isArray(state.objectiveCell) ? state.objectiveCell : [state.objectiveCell]"
+              onSelectionChanged="(ranges) => this.onObjectiveCellChanged(ranges)"
+              required="true"
+              isInvalid="!state.objectiveCell"
+            />
+
+            <div class="o-section-title mt-3">To:</div>
+            <div class="d-flex align-items-center mb-2">
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="solverGoal"
+                  id="goalMax"
+                  value="max"
+                  t-model="state.goal"
+                />
+                <label class="form-check-label" for="goalMax">Max</label>
+              </div>
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="solverGoal"
+                  id="goalMin"
+                  value="min"
+                  t-model="state.goal"
+                />
+                <label class="form-check-label" for="goalMin">Min</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="solverGoal"
+                  id="goalValue"
+                  value="value"
+                  t-model="state.goal"
+                />
+                <label class="form-check-label" for="goalValue">Value Of:</label>
+              </div>
+            </div>
+            <input
+              t-if="state.goal === 'value'"
+              type="text"
+              class="o-input mb-2"
+              t-model="state.targetValue"
+              placeholder="0"
+            />
+
+            <div class="o-section-title mt-3">By Changing Cells</div>
+            <SelectionInput
+              ranges="state.changingCells"
+              onSelectionChanged="(ranges) => this.onChangingCellsChanged(ranges)"
+              required="true"
+            />
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+
+      <SidePanelCollapsible title.translate="Algorithm" isInitiallyCollapsed="true">
+        <t t-set-slot="content">
+          <Section class="'pt-0'">
+            <select class="o-input mb-2" t-model="state.algorithm">
+              <option value="Nelder-Mead">Nelder-Mead (Smooth Non-Linear)</option>
+              <option value="BFGS">BFGS (Gradient-Based)</option>
+              <option value="Gradient Descent">Gradient Descent (Simple)</option>
+              <option value="Genetic">Genetic Algorithm (Metaheuristic)</option>
+              <option value="PSO">Particle Swarm Optimization (Metaheuristic)</option>
+              <option value="SPEA2">SPEA2 (Multi-Objective)</option>
+              <option value="NSGA-II">NSGA-II (Multi-Objective)</option>
+            </select>
+
+            <div class="o-section-title mt-3">Options</div>
+            <div class="d-flex align-items-center mb-1">
+              <label class="small text-muted me-2" style="width: 100px;">Max Iterations</label>
+              <input type="number" class="o-input" t-model="state.maxIter"/>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+              <label class="small text-muted me-2" style="width: 100px;">Tolerance</label>
+              <input type="number" class="o-input" t-model="state.tol" step="0.000001"/>
+            </div>
+
+            <t t-if="state.algorithm === 'Genetic'">
+              <div class="o-section-title mt-3">Genetic Options</div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Population</label>
+                <input type="number" class="o-input" t-model="state.popSize"/>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Mutation</label>
+                <input type="number" class="o-input" t-model="state.mutationRate" step="0.01"/>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Crossover</label>
+                <input type="number" class="o-input" t-model="state.crossoverRate" step="0.01"/>
+              </div>
+            </t>
+
+            <t t-if="state.algorithm === 'PSO'">
+              <div class="o-section-title mt-3">PSO Options</div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Population</label>
+                <input type="number" class="o-input" t-model="state.popSize"/>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Inertia</label>
+                <input type="number" class="o-input" t-model="state.inertia" step="0.001"/>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Cognitive (c1)</label>
+                <input type="number" class="o-input" t-model="state.c1" step="0.001"/>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <label class="small text-muted me-2" style="width: 100px;">Social (c2)</label>
+                <input type="number" class="o-input" t-model="state.c2" step="0.001"/>
+              </div>
+            </t>
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+
+      <SidePanelCollapsible title.translate="Constraints" isInitiallyCollapsed="true">
+        <t t-set-slot="content">
+          <Section class="'pt-0'">
+            <div class="o-solver-constraints-list mb-2">
+              <t t-if="!state.constraints.length">
+                <div class="text-muted small fst-italic mb-2">No constraints added</div>
+              </t>
+              <t t-else="">
+                <t t-foreach="state.constraints" t-as="constraint" t-key="constraint_index">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-1 border-bottom pb-1">
+                    <span
+                      t-esc="constraint.param"
+                      class="ms-1 font-monospace small"
+                      style="width: 30%; overflow:hidden;"
+                    />
+                    <span t-esc="constraint.op" class="fw-bold" style="width: 20px;"/>
+                    <span
+                      t-esc="constraint.value"
+                      class="small"
+                      style="width: 30%; overflow:hidden;"
+                    />
+                    <i
+                      class="o-button-icon fa fa-trash text-danger"
+                      t-on-click="() => this.removeConstraint(constraint_index)"
+                    />
+                  </div>
+                </t>
+              </t>
+            </div>
+
+            <t t-if="state.isAddingConstraint">
+              <div class="p-2 bg-light border rounded mb-2">
+                <label class="small text-muted">Cell Reference</label>
+                <div class="mb-1">
+                  <SelectionInput
+                    ranges="[state.newConstraint.param]"
+                    onSelectionChanged="(ranges) => this.onNewConstraintParamChanged(ranges)"
+                  />
+                </div>
+                <div class="d-flex mb-1">
+                  <select
+                    class="o-input me-1"
+                    style="width: 60px;"
+                    t-model="state.newConstraint.op">
+                    <option value="&lt;=">&lt;=</option>
+                    <option value="=">=</option>
+                    <option value="&gt;=">&gt;=</option>
+                    <option value="int">int</option>
+                    <option value="bin">bin</option>
+                  </select>
+                  <input
+                    type="text"
+                    class="o-input flex-grow-1"
+                    t-model="state.newConstraint.value"
+                    placeholder="Value"
+                  />
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                  <button
+                    class="o-button o-button-secondary btn-sm me-1"
+                    t-on-click="cancelAddConstraint">
+                    Cancel
+                  </button>
+                  <button class="o-button o-button-primary btn-sm" t-on-click="addConstraint">
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </t>
+            <t t-else="">
+              <button
+                class="o-button o-button-secondary w-100 btn-sm"
+                t-on-click="openConstraintDialog">
+                Add Constraint
+              </button>
+            </t>
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+
+      <SidePanelCollapsible title.translate="Variable Bounds" isInitiallyCollapsed="true">
+        <t t-set-slot="content">
+          <Section class="'pt-0'">
+            <div class="o-solver-constraints-list mb-2">
+              <t t-if="!state.domain.length">
+                <div class="text-muted small fst-italic mb-2">No bounds set</div>
+              </t>
+              <t t-else="">
+                <t t-foreach="state.domain" t-as="d" t-key="d_index">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-1 border-bottom pb-1">
+                    <span
+                      t-esc="d.xc"
+                      class="ms-1 font-monospace small"
+                      style="width: 30%; overflow:hidden;"
+                    />
+                    <span class="small" style="width: 30%;">
+                      <t t-if="d.min !== undefined">
+                        Min:
+                        <t t-esc="d.min"/>
+                      </t>
+                      <t t-if="d.max !== undefined">
+                        Max:
+                        <t t-esc="d.max"/>
+                      </t>
+                    </span>
+                    <i
+                      class="o-button-icon fa fa-trash text-danger"
+                      t-on-click="() => this.removeBound(d_index)"
+                    />
+                  </div>
+                </t>
+              </t>
+            </div>
+
+            <t t-if="state.isAddingBound">
+              <div class="p-2 bg-light border rounded mb-2">
+                <label class="small text-muted">Cell Range</label>
+                <div class="mb-1">
+                  <SelectionInput
+                    ranges="[state.newBound.xc]"
+                    onSelectionChanged="(ranges) => this.onNewBoundXcChanged(ranges)"
+                  />
+                </div>
+                <div class="d-flex mb-1">
+                  <input
+                    type="number"
+                    class="o-input me-1 w-50"
+                    t-model="state.newBound.min"
+                    placeholder="Min (Optional)"
+                  />
+                  <input
+                    type="number"
+                    class="o-input w-50"
+                    t-model="state.newBound.max"
+                    placeholder="Max (Optional)"
+                  />
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                  <button
+                    class="o-button o-button-secondary btn-sm me-1"
+                    t-on-click="cancelAddBound">
+                    Cancel
+                  </button>
+                  <button class="o-button o-button-primary btn-sm" t-on-click="addBound">
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </t>
+            <t t-else="">
+              <button class="o-button o-button-secondary w-100 btn-sm" t-on-click="openBoundDialog">
+                Add Bound
+              </button>
+            </t>
+          </Section>
+        </t>
+      </SidePanelCollapsible>
+
+      <div class="mx-3 mt-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="recordingSheet"
+            t-model="state.recordingSheet"
+          />
+          <label class="form-check-label" for="recordingSheet">Create recording sheet</label>
+        </div>
+      </div>
+
+      <div class="mx-3 mt-4">
+        <button class="o-button o-button-primary w-100" t-on-click="solve">Solve</button>
+        <button t-on-click="props.onCloseSidePanel" class="w-100 mt-1 o-button o-goal-seek-cancel">
+          Close
+        </button>
+      </div>
+    </div>
+  </t>
+</templates>

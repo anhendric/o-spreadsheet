@@ -85,6 +85,7 @@ sidePanelRegistry.add("GoalSeek", {
 });
 
 import { DataTableSidePanel } from "../components/side_panel/data_table/data_table_side_panel";
+import { SolverSidePanel } from "../components/side_panel/solver/solver_side_panel";
 
 sidePanelRegistry.add("Scenario", {
   title: _t("Scenario Manager"),
@@ -94,6 +95,11 @@ sidePanelRegistry.add("Scenario", {
 sidePanelRegistry.add("DataTable", {
   title: _t("Data Table"),
   Body: DataTableSidePanel,
+});
+
+sidePanelRegistry.add("Solver", {
+  title: _t("Solver"),
+  Body: SolverSidePanel,
 });
 
 sidePanelRegistry.add("SplitToColumns", {

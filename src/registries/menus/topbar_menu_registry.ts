@@ -485,7 +485,6 @@ topbarMenuRegistry
   .addChild("what_if", ["data"], {
     name: _t("What-If Analysis"),
     sequence: 35,
-    separator: true,
     icon: "o-spreadsheet-Icon.WHAT_IF",
   })
   .addChild("goal_seek", ["data", "what_if"], {
@@ -505,6 +504,13 @@ topbarMenuRegistry
     execute: (env) => env.openSidePanel("DataTable"),
     sequence: 30,
     icon: "o-spreadsheet-Icon.DATA_TABLE",
+  })
+  .addChild("solver", ["data"], {
+    name: _t("Solver..."),
+    execute: (env) => env.openSidePanel("Solver"),
+    sequence: 36,
+    icon: "o-spreadsheet-Icon.SOLVER",
+    separator: true,
   })
   .addChild("add_remove_data_filter", ["data"], {
     ...ACTION_DATA.createRemoveFilter,
