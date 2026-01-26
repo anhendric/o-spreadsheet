@@ -1,0 +1,28 @@
+<templates>
+  <div
+    t-name="o-spreadsheet-LatexFigure"
+    class="o-figure o-latex-figure h-100 w-100 bg-white"
+    t-on-contextmenu.prevent="props.openContextMenu"
+    t-on-dblclick="onDoubleClick">
+    <input
+      type="text"
+      t-if="state.isEditing"
+      class="w-100 o-latex-input"
+      t-att-value="latex"
+      t-on-input="onInput"
+      t-on-keydown="onKeydown"
+      t-on-blur="onBlur"
+      t-ref="textarea"
+      style="resize: none; font-family: monospace; position: absolute; top: 100%; left:0; z-index: 10; height: 30px; background: white; border: 1px solid #ccc;"
+    />
+    <img
+      t-if="state.imgUrl"
+      t-att-src="state.imgUrl"
+      class="w-100 h-100"
+      style="object-fit: contain; pointer-events: none;"
+    />
+    <div t-else="" class="d-flex justify-content-center align-items-center h-100 text-muted">
+      Empty Equation
+    </div>
+  </div>
+</templates>

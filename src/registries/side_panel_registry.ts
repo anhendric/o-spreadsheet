@@ -10,6 +10,7 @@ import { DataValidationPanel } from "../components/side_panel/data_validation/da
 import { DataValidationEditor } from "../components/side_panel/data_validation/dv_editor/dv_editor";
 import { FindAndReplacePanel } from "../components/side_panel/find_and_replace/find_and_replace";
 import { GoalSeekSidePanel } from "../components/side_panel/goal_seek/goal_seek_side_panel";
+import { InsertSpecialCharacterPanel } from "../components/side_panel/insert_special_character/insert_special_character_panel";
 import { MoreFormatsPanel } from "../components/side_panel/more_formats/more_formats";
 import { PivotMeasureDisplayPanel } from "../components/side_panel/pivot/pivot_measure_display_panel/pivot_measure_display_panel";
 import { PivotSidePanel } from "../components/side_panel/pivot/pivot_side_panel/pivot_side_panel";
@@ -82,6 +83,11 @@ sidePanelRegistry.add("FindAndReplace", {
 sidePanelRegistry.add("GoalSeek", {
   title: _t("Goal Seek"),
   Body: GoalSeekSidePanel,
+});
+
+sidePanelRegistry.add("InsertSpecialCharacter", {
+  title: _t("Special Characters"),
+  Body: InsertSpecialCharacterPanel,
 });
 
 import { DataTableSidePanel } from "../components/side_panel/data_table/data_table_side_panel";

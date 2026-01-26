@@ -287,6 +287,37 @@ topbarMenuRegistry
     ...ACTION_INSERT.insertImage,
     sequence: 55,
   })
+  .addChild("insert_equation", ["insert"], {
+    name: _t("Insert equation"),
+    sequence: 56,
+    icon: "o-spreadsheet-Icon.EQUATION",
+    execute: async (env) => {
+      const sheetId = env.model.getters.getActiveSheetId();
+      const figureId = env.model.uuidGenerator.smallUuid();
+      const width = 200;
+      const height = 100;
+      await env.model.dispatch("CREATE_FIGURE", {
+        sheetId,
+        figureId,
+        tag: "latex",
+        col: 0,
+        row: 0,
+        offset: {
+          x: 100,
+          y: 100,
+        },
+        size: {
+          width,
+          height,
+        },
+      } as any);
+      await env.model.dispatch("UPDATE_LATEX_FIGURE", {
+        figureId,
+        latex: String.raw`\int_{-\infty}^\infty e^{-x^2} dx = \sqrt{\pi}`,
+      } as any);
+      env.model.dispatch("SELECT_FIGURE", { figureId });
+    },
+  })
   .addChild("insert_table", ["insert"], {
     ...ACTION_INSERT.insertTable,
     sequence: 57,
@@ -338,6 +369,12 @@ topbarMenuRegistry
     ...ACTION_INSERT.insertDropdown,
     separator: true,
     sequence: 90,
+  })
+  .addChild("insert_special_character", ["insert"], {
+    name: _t("Special character"),
+    execute: (env) => env.openSidePanel("InsertSpecialCharacter"),
+    sequence: 100,
+    icon: "o-spreadsheet-Icon.SPECIAL_CHARACTERS",
   })
 
   // ---------------------------------------------------------------------

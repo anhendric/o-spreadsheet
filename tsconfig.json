@@ -8,6 +8,10 @@
       "@odoo/o-spreadsheet-engine/*": ["./packages/o-spreadsheet-engine/src/*"]
     }
   },
-  "references": [{ "path": "./packages/o-spreadsheet-engine" }],
-  "include": ["src"]
+  "references": [
+    {
+      "path": "./packages/o-spreadsheet-engine"
+    }
+  ],
+  "include": ["src", "packages/o-spreadsheet-engine/src/plugins/core/latex_plugin.ts"]
 }

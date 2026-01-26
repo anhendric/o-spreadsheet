@@ -344,6 +344,8 @@ export const coreTypes = new Set<CoreCommandTypes>([
   "RENAME_PIVOT",
   "REMOVE_PIVOT",
   "DUPLICATE_PIVOT",
+
+  "UPDATE_LATEX_FIGURE",
 ]);
 
 export function isCoreCommand(cmd: Command): cmd is CoreCommand {
@@ -646,6 +648,12 @@ export interface PopOutChartFromCarouselCommand extends SheetDependentCommand {
   type: "POPOUT_CHART_FROM_CAROUSEL";
   carouselId: UID;
   chartId: UID;
+}
+
+export interface UpdateLatexFigureCommand {
+  type: "UPDATE_LATEX_FIGURE";
+  figureId: UID;
+  latex: string;
 }
 
 //------------------------------------------------------------------------------
@@ -1273,7 +1281,8 @@ export type CoreCommand =
   | InsertPivotCommand
   | RenamePivotCommand
   | RemovePivotCommand
-  | DuplicatePivotCommand;
+  | DuplicatePivotCommand
+  | UpdateLatexFigureCommand;
 
 export type LocalCommand =
   | RequestUndoCommand

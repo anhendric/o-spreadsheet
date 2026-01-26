@@ -1,0 +1,18 @@
+<templates>
+  <div t-name="o-spreadsheet-InsertSpecialCharacterPanel" class="o-special-character-panel h-100">
+    <t t-foreach="categories" t-as="category" t-key="category">
+      <Section title="category">
+        <div class="d-flex flex-wrap gap-2">
+          <t t-foreach="categories[category]" t-as="char" t-key="char">
+            <button
+              class="o-btn o-btn-action o-special-char-btn"
+              t-on-mousedown="onMousedown"
+              t-on-click="() => this.onCharacterClick(char)">
+              <t t-esc="char"/>
+            </button>
+          </t>
+        </div>
+      </Section>
+    </t>
+  </div>
+</templates>

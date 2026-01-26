@@ -6,9 +6,11 @@ import {
   getChartMenuActions,
   getImageMenuActions,
 } from "../actions/figure_menu_actions";
+import { getLatexMenuActions } from "../actions/latex_menu_actions";
 import { CarouselFigure } from "../components/figures/figure_carousel/figure_carousel";
 import { ChartFigure } from "../components/figures/figure_chart/figure_chart";
 import { ImageFigure } from "../components/figures/figure_image/figure_image";
+import { LatexFigure } from "../components/figures/figure_latex/figure_latex";
 import { UID } from "../types";
 
 //------------------------------------------------------------------------------
@@ -43,6 +45,12 @@ figureRegistry.add("image", {
   minFigSize: 20,
   borderWidth: 0,
   menuBuilder: getImageMenuActions,
+});
+figureRegistry.add("latex", {
+  Component: LatexFigure,
+  menuBuilder: getLatexMenuActions,
+  minFigSize: 100,
+  borderWidth: 0,
 });
 figureRegistry.add("carousel", {
   Component: CarouselFigure,
