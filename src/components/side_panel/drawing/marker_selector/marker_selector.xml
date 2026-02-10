@@ -1,0 +1,39 @@
+<templates>
+  <t t-name="o-spreadsheet-MarkerSelector">
+    <div
+      class="o-marker-selector d-flex align-items-center justify-content-between o-hoverable-button border rounded"
+      t-att-title="props.title"
+      t-ref="markerSelectorButton"
+      t-on-click.stop="toggleDropdown">
+      <MarkerPreview
+        marker="props.marker"
+        position="props.position"
+        width="60"
+        height="24"
+        class="'pointer-events-none'"
+      />
+      <t t-call="o-spreadsheet-Icon.CARET_DOWN"/>
+
+      <Popover t-props="popoverProps" t-if="state.isOpen">
+        <div class="o-border-style-dropdown bg-white p-1">
+          <t t-foreach="markerStyles" t-as="style" t-key="style.value">
+            <div
+              t-on-click.stop="() => this.onMarkerPicked(style.value)"
+              class="d-flex align-items-center p-1 o-hoverable-button rounded"
+              t-att-class="props.marker === style.value ? 'bg-light' : ''">
+              <MarkerPreview
+                marker="style.value"
+                position="props.position"
+                width="40"
+                height="20"
+                class="'me-2'"
+              />
+
+              <span class="small" t-esc="style.label"/>
+            </div>
+          </t>
+        </div>
+      </Popover>
+    </div>
+  </t>
+</templates>

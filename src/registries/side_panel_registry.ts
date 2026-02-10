@@ -91,6 +91,7 @@ sidePanelRegistry.add("InsertSpecialCharacter", {
 });
 
 import { DataTableSidePanel } from "../components/side_panel/data_table/data_table_side_panel";
+import { DrawingSidePanel } from "../components/side_panel/drawing/drawing_side_panel";
 import { SolverSidePanel } from "../components/side_panel/solver/solver_side_panel";
 
 sidePanelRegistry.add("Scenario", {
@@ -217,6 +218,22 @@ sidePanelRegistry.add("CarouselPanel", {
       return { isOpen: false };
     }
 
+    return { isOpen: true, props: { figureId } };
+  },
+});
+
+sidePanelRegistry.add("DrawingSidePanel", {
+  title: _t("Drawing"),
+  Body: DrawingSidePanel,
+  computeState: (getters: Getters, initialProps: { figureId: UID }) => {
+    const figureId = initialProps.figureId || getters.getSelectedFigureId();
+    if (!figureId) {
+      return { isOpen: false };
+    }
+    const drawing = getters.getDrawing(figureId);
+    if (!figureId || !drawing) {
+      return { isOpen: false };
+    }
     return { isOpen: true, props: { figureId } };
   },
 });

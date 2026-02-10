@@ -159,10 +159,24 @@ export class FigureComponent extends Component<Props, SpreadsheetChildEnv> {
     switch (keyDownShortcut) {
       case "Delete":
       case "Backspace":
-        this.env.model.dispatch("DELETE_FIGURE", {
-          sheetId: this.env.model.getters.getActiveSheetId(),
-          figureId: this.props.figureUI.id,
-        });
+        // Check if drawing and has selected element
+        const figureId = this.props.figureUI.id;
+        const drawing = this.env.model.getters.getDrawing(figureId);
+        if (drawing && drawing.selectedElementId) {
+          this.env.model.dispatch("REMOVE_DRAWING_ELEMENT", {
+            figureId,
+            elementId: drawing.selectedElementId,
+          });
+          this.env.model.dispatch("SELECT_DRAWING_ELEMENT", {
+            figureId,
+            elementId: null,
+          });
+        } else {
+          this.env.model.dispatch("DELETE_FIGURE", {
+            sheetId: this.env.model.getters.getActiveSheetId(),
+            figureId,
+          });
+        }
         ev.preventDefault();
         ev.stopPropagation();
         break;

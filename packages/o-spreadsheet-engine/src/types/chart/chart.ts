@@ -132,6 +132,7 @@ export interface ChartStyle {
   readonly color?: Color;
   readonly fontSize?: number;
   readonly fillColor?: Color;
+  readonly underline?: boolean;
 }
 
 export interface TitleDesign extends ChartStyle {

@@ -1,0 +1,363 @@
+<templates>
+  <div
+    t-name="o-spreadsheet-DrawingSidePanel"
+    class="o-drawing-side-panel h-100 d-flex flex-column">
+    <Section title="'Add Shapes'">
+      <div class="d-flex gap-2 flex-wrap">
+        <div
+          class="o-drawing-button"
+          title.translate="Add rectangle"
+          t-on-click="() => this.addShape('rect')">
+          <svg
+            fill="#000000"
+            width="16px"
+            height="16px"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M21,2H3A1,1,0,0,0,2,3V21a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V3A1,1,0,0,0,21,2ZM20,20H4V4H20Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="o-drawing-button"
+          title.translate="Add circle"
+          t-on-click="() => this.addShape('circle')">
+          <svg width="16px" height="16px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <g id="Complete">
+              <g id="Circle">
+                <circle
+                  id="Circle-2"
+                  data-name="Circle"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  fill="none"
+                  stroke="#000000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div
+          class="o-drawing-button"
+          title.translate="Add arrow"
+          t-on-click="() => this.addShape('arrow')">
+          <svg
+            width="16px"
+            height="16px"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4.5 0H0.5C0.223858 0 0 0.223858 0 0.5V4.5C0 4.70223 0.121821 4.88455 0.308658 4.96194C0.495495 5.03933 0.710554 4.99655 0.853553 4.85355L2.5 3.20711L14.1464 14.8536L14.8536 14.1464L3.20711 2.5L4.85355 0.853553C4.99655 0.710554 5.03933 0.495495 4.96194 0.308658C4.88455 0.121821 4.70223 0 4.5 0Z"
+              fill="#000000"
+            />
+          </svg>
+        </div>
+        <div
+          class="o-drawing-button"
+          title.translate="Add line"
+          t-on-click="() => this.addShape('line')">
+          <svg
+            width="16px"
+            height="16px"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1.5 0C0.671573 0 0 0.671573 0 1.5C0 2.32843 0.671573 3 1.5 3C1.73157 3 1.95089 2.94752 2.14671 2.85381L12.1462 12.8533C12.0525 13.0491 12 13.2684 12 13.5C12 14.3284 12.6716 15 13.5 15C14.3284 15 15 14.3284 15 13.5C15 12.6716 14.3284 12 13.5 12C13.2684 12 13.0491 12.0525 12.8533 12.1462L2.85381 2.14671C2.94752 1.95089 3 1.73157 3 1.5C3 0.671573 2.32843 0 1.5 0Z"
+              fill="#000000"
+            />
+          </svg>
+        </div>
+        <div
+          class="o-drawing-button"
+          title.translate="Add text"
+          t-on-click="() => this.addShape('text')">
+          <svg
+            fill="#000000"
+            width="16px"
+            height="16px"
+            viewBox="0 0 24 24"
+            id="text"
+            data-name="Line Color"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon line-color">
+            <path
+              id="primary"
+              d="M12,3V21m-2,0h4"
+              style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"
+            />
+            <path
+              id="primary-2"
+              data-name="primary"
+              d="M5,5V4A1,1,0,0,1,6,3H18a1,1,0,0,1,1,1V5"
+              style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"
+            />
+          </svg>
+        </div>
+        <div
+          class="o-drawing-button"
+          title.translate="Add svg"
+          t-on-click="() => this.addShape('svg')">
+          <svg
+            width="16px"
+            height="16px"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16 13L4 25.4322L16 37"
+              stroke="#000000"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M32 13L44 25.4322L32 37"
+              stroke="#000000"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M28 4L21 44" stroke="#000000" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </Section>
+
+    <Section title="'Drawing Background'">
+      <div class="o-section-items">
+        <RoundColorPicker
+          currentColor="drawing ? (drawing.backgroundColor || 'transparent') : 'transparent'"
+          onColorPicked="(color) => this.onChangeBackground(color)"
+        />
+      </div>
+    </Section>
+
+    <t t-if="selectedElement">
+      <Section
+        title="'Style'"
+        t-if="selectedElement.type !== 'text' and selectedElement.type !== 'svg'">
+        <div class="o-section-items d-flex">
+          <div
+            class="me-2"
+            t-if="selectedElement.type !== 'line' and selectedElement.type !== 'arrow'">
+            <ColorPickerWidget
+              currentColor="selectedElement.style.fillColor"
+              toggleColorPicker="() => this.toggleDropdownTool('fillColor')"
+              showColorPicker="state.activeTool === 'fillColor'"
+              onColorPicked.bind="onFillColorPicked"
+              title="'Fill Color'"
+              icon="'o-spreadsheet-Icon.FILL_COLOR'"
+              class="'o-hoverable-button o-menu-item-button'"
+            />
+          </div>
+          <div class="me-1">
+            <ColorPickerWidget
+              currentColor="selectedElement.style.strokeColor"
+              toggleColorPicker="() => this.toggleDropdownTool('strokeColor')"
+              showColorPicker="state.activeTool === 'strokeColor'"
+              onColorPicked.bind="onStrokeColorPicked"
+              title="'Border Color'"
+              icon="'o-spreadsheet-Icon.BORDER_COLOR'"
+              class="'o-hoverable-button o-menu-item-button me-2'"
+            />
+          </div>
+          <div
+            class="mt-1 o-border-style-tool d-flex align-items-center justify-content-center o-hoverable-button"
+            title="Line style"
+            t-ref="lineStyleButton"
+            style="width: 30px; height: 30px;"
+            t-on-click.stop="(ev) => this.toggleDropdownTool('borderTypeTool')">
+            <t t-call="o-spreadsheet-Icon.BORDER_TYPE"/>
+            <t t-call="o-spreadsheet-Icon.CARET_DOWN"/>
+            <Popover
+              t-props="lineStylePickerPopoverProps"
+              t-if="state.activeTool === 'borderTypeTool'">
+              <div class="o-border-style-dropdown bg-white">
+                <t t-foreach="borderStyles" t-as="borderStyle" t-key="borderStyle">
+                  <div
+                    t-att-title="borderStyle"
+                    t-on-click.stop="() => this.onBorderStylePicked(borderStyle)">
+                    <div class="d-flex o-dropdown-border-type">
+                      <div class="o-dropdown-border-check">
+                        <t
+                          t-if="(selectedElement.style.borderStyle || 'thin') === borderStyle"
+                          t-call="o-spreadsheet-Icon.CHECK"
+                        />
+                      </div>
+                      <div t-attf-class="o-style-preview o-style-{{borderStyle}}"/>
+                    </div>
+                  </div>
+                </t>
+              </div>
+            </Popover>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="'Text Content'" t-if="selectedElement.type === 'text'">
+        <div class="o-section-items">
+          <input
+            type="text"
+            class="form-control mb-2"
+            t-att-value="selectedElement.text || ''"
+            t-on-change="(ev) => this.onChangeAttr('text', ev.target.value)"
+          />
+          <TextStyler
+            style="textStyle"
+            updateStyle.bind="updateTextStyle"
+            hasHorizontalAlign="true"
+            hasBackgroundColor="true"
+            hasUnderline="true"
+          />
+        </div>
+      </Section>
+
+      <Section title="'SVG Content'" t-if="selectedElement.type === 'svg'">
+        <div class="o-section-items">
+          <textarea
+            class="form-control font-monospace mb-2"
+            rows="5"
+            style="font-size: 10px;"
+            t-att-value="selectedElement.svgContent || ''"
+            t-ref="svgTextarea"
+          />
+          <button class="btn btn-primary w-100" t-on-click="onSaveSvg">OK</button>
+        </div>
+      </Section>
+
+      <Section
+        title="'Markers'"
+        t-if="selectedElement.type === 'line' || selectedElement.type === 'arrow'">
+        <div class="o-section-items">
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="small text-muted mb-1">Start</label>
+              <MarkerSelector
+                marker="selectedElement.style.startArrow || ''"
+                onMarkerPicked="this.onChangeStyle.bind(this, 'startArrow')"
+                title="'Start Marker'"
+                position="'start'"
+              />
+            </div>
+            <div class="col-6">
+              <label class="small text-muted mb-1">End</label>
+              <MarkerSelector
+                marker="selectedElement.style.endArrow || ''"
+                onMarkerPicked="this.onChangeStyle.bind(this, 'endArrow')"
+                title="'End Marker'"
+                position="'end'"
+              />
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="'Arrangement'">
+        <div class="o-section-items">
+          <div class="d-flex gap-2 flex-wrap mb-3">
+            <div
+              class="o-drawing-button"
+              title="Bring to Front"
+              t-on-click="() => this.reorderSelected('front')">
+              <svg
+                width="16px"
+                height="16px"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                class="bi bi-front">
+                <path
+                  d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2H5z"
+                />
+              </svg>
+            </div>
+            <div
+              class="o-drawing-button"
+              title="Send to Back"
+              t-on-click="() => this.reorderSelected('back')">
+              <svg
+                width="16px"
+                height="16px"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                class="bi bi-front">
+                <path
+                  d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2z
+                            M1 1.5v8.5a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-8a1 1 0 0 0-1 1z"
+                />
+              </svg>
+            </div>
+            <div
+              class="o-drawing-button"
+              title="Bring Forward"
+              t-on-click="() => this.reorderSelected('forward')">
+              <svg
+                fill="currentColor"
+                height="16px"
+                width="16px"
+                version="1.1"
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512"
+                xml:space="preserve">
+                <path
+                  d="
+          M0,512h139.6V372.4H0V512z
+          M0,325.8h139.6V186.2H0V325.8z
+          M30,216.2h73v73H30V216.2z
+          M0,139.6h139.6V0H0V139.6z
+          M30,30h74v73H30z
+        
+          M360.7,81.5L442.2,0h-256v256l81.5-81.5C453.8,290.9,372.4,418.9,209.5,512
+            C372.4,512,605.1,325.8,360.7,81.5z"
+                />
+              </svg>
+            </div>
+            <div
+              class="o-drawing-button"
+              title="Send Backward"
+              t-on-click="() => this.reorderSelected('backward')">
+              <svg
+                fill="currentColor"
+                height="16px"
+                width="16px"
+                version="1.1"
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512"
+                xml:space="preserve">
+                <path
+                  d="
+          M0,512h139.6V372.4H0V512z
+          M0,325.8h139.6V186.2H0V325.8z
+          M30,216.2h73v73H30V216.2z
+          M0,139.6h139.6V0H0V139.6z
+          M30,30h74v73H30z
+        
+          M360.7,81.5L442.2,0h-256v256l81.5-81.5C453.8,290.9,372.4,418.9,209.5,512
+            C372.4,512,605.1,325.8,360.7,81.5z"
+                  transform="scale(1,-1) translate(0,-512)"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <button class="btn btn-danger w-100" t-on-click="removeSelected">Remove</button>
+        </div>
+      </Section>
+    </t>
+    <div t-else="" class="text-muted p-3">Select a shape in the drawing to edit it.</div>
+  </div>
+</templates>

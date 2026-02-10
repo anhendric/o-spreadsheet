@@ -16,6 +16,7 @@ interface Props {
   hasVerticalAlign?: boolean;
   hasHorizontalAlign?: boolean;
   hasBackgroundColor?: boolean;
+  hasUnderline?: boolean;
 }
 
 export interface TextStylerState {
@@ -32,6 +33,7 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
     hasVerticalAlign: { type: Boolean, optional: true },
     hasHorizontalAlign: { type: Boolean, optional: true },
     hasBackgroundColor: { type: Boolean, optional: true },
+    hasUnderline: { type: Boolean, optional: true },
     class: { type: String, optional: true },
   };
   openedEl: HTMLElement | null = null;
@@ -73,11 +75,6 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
     this.closeMenus();
   }
 
-  onFillColorChange(color: Color) {
-    this.props.updateStyle?.({ ...this.props.style, fillColor: color });
-    this.closeMenus();
-  }
-
   updateAlignment(align: Align) {
     this.props.updateStyle?.({ ...this.props.style, align });
     this.closeMenus();
@@ -94,6 +91,10 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
 
   toggleItalic() {
     this.props.updateStyle?.({ ...this.props.style, italic: !this.italic });
+  }
+
+  toggleUnderline() {
+    this.props.updateStyle?.({ ...this.props.style, underline: !this.underline });
   }
 
   closeMenus() {
@@ -117,6 +118,10 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
     return this.props.style.italic ?? this.props.defaultStyle?.italic;
   }
 
+  get underline() {
+    return this.props.style.underline ?? this.props.defaultStyle?.underline;
+  }
+
   get currentFontSize() {
     return this.props.style.fontSize ?? this.props.defaultStyle?.fontSize ?? DEFAULT_STYLE.fontSize;
   }
@@ -138,6 +143,15 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
       isActive: () => this.italic || false,
       isEnabledOnLockedSheet: true,
       icon: "o-spreadsheet-Icon.ITALIC",
+    };
+  }
+
+  get underlineButtonAction(): ActionSpec {
+    return {
+      name: _t("Underline"),
+      execute: () => this.toggleUnderline(),
+      isActive: () => this.underline || false,
+      icon: "o-spreadsheet-Icon.UNDERLINE",
     };
   }
 

@@ -376,6 +376,27 @@ topbarMenuRegistry
     sequence: 100,
     icon: "o-spreadsheet-Icon.SPECIAL_CHARACTERS",
   })
+  .addChild("insert_drawing", ["insert"], {
+    name: _t("Drawing"),
+    icon: "o-spreadsheet-Icon.DRAWING", // Use Equation icon for now or similar
+    sequence: 58,
+    execute: async (env) => {
+      const sheetId = env.model.getters.getActiveSheetId();
+      const figureId = env.model.uuidGenerator.uuidv4();
+      await env.model.dispatch("CREATE_FIGURE", {
+        sheetId,
+        figureId,
+        tag: "drawing",
+        col: 0,
+        row: 0,
+        offset: { x: 100, y: 100 },
+        size: { width: 400, height: 300 },
+      });
+      await env.model.dispatch("CREATE_DRAWING_FIGURE", { figureId });
+      env.model.dispatch("SELECT_FIGURE", { figureId });
+      env.openSidePanel("DrawingSidePanel", { figureId });
+    },
+  })
 
   // ---------------------------------------------------------------------
   // FORMAT MENU ITEMS

@@ -1,4 +1,10 @@
 import { CoreGetters, PluginGetters } from "../index";
+import { DrawingPlugin } from "../plugins/ui_feature/drawing";
+// ... (imports)
+
+// ...
+
+// ... (removed duplicate Getters)
 import { TableStylePlugin } from "../plugins/core/table_style";
 import { EvaluationPlugin } from "../plugins/ui_core_views/cell_evaluation";
 import { CellIconPlugin } from "../plugins/ui_core_views/cell_icon_plugin";
@@ -76,4 +82,5 @@ export type Getters = {
   PluginGetters<typeof DynamicTranslate> &
   PluginGetters<typeof FormulaTrackerPlugin> &
   PluginGetters<typeof CarouselUIPlugin> &
-  PluginGetters<typeof LockSheetPlugin>;
+  PluginGetters<typeof LockSheetPlugin> &
+  PluginGetters<typeof DrawingPlugin>;

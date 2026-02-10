@@ -6,3 +6,6 @@ import { DataCleanupPlugin } from "./ui_feature";
 featurePluginRegistry.add("data_cleanup", DataCleanupPlugin);
 featurePluginRegistry.add("scenario", ScenarioPlugin);
 featurePluginRegistry.add("solver", SolverPlugin);
+
+import { DrawingPlugin } from "@odoo/o-spreadsheet-engine/plugins";
+featurePluginRegistry.add("drawing", DrawingPlugin);

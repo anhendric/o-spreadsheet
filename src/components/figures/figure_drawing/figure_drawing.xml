@@ -1,0 +1,366 @@
+<templates>
+  <div
+    t-name="o-spreadsheet-DrawingFigure"
+    class="o-figure o-drawing-figure h-100 w-100"
+    t-on-contextmenu.prevent="props.openContextMenu"
+    t-on-dblclick="onDoubleClick"
+    t-on-pointermove="onPointerMove"
+    t-on-pointerup="onPointerUp"
+    t-att-style="figureStyle"
+    t-ref="root"
+    t-att-data-figure-id="props.figureUI.id">
+    <t t-foreach="drawingElements" t-as="element" t-key="element.id">
+      <!-- RECTANGLE & CIRCLE & GENERIC WRAPPER (for selection) -->
+      <!-- We wrap rect/circle in a div that handles interactions -->
+      <!-- RECTANGLE & CIRCLE -->
+      <div
+        t-if="element.type === 'rect' || element.type === 'circle'"
+        t-att-style="getPositionStyle(element) + getStyle(element) + (element.type === 'circle' ? 'border-radius: 50%;' : '')"
+        class="position-absolute cursor-move"
+        t-att-title="element.text || ''"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'element')">
+        <div
+          t-if="element.text"
+          class="d-flex align-items-center justify-content-center h-100 w-100"
+          style="pointer-events: none;">
+          <t t-esc="element.text"/>
+        </div>
+
+        <t t-call="o-spreadsheet-DrawingResizeHandles"/>
+      </div>
+
+      <!-- ARROW & LINE -->
+      <div
+        t-if="element.type === 'arrow' || element.type === 'line'"
+        class="position-absolute"
+        t-att-style="getPositionStyle(element) + 'z-index: 2; pointer-events: none;'">
+        <!-- SVG viewBox should be relative to the bounding box -->
+        <svg class="w-100 h-100" style="overflow: visible;">
+          <defs t-if="element.type === 'arrow' || element.type === 'line'">
+            <!-- Helper to generate marker ID -->
+            <t t-set="markerStartId" t-value="'marker-start-' + element.id"/>
+            <t t-set="markerEndId" t-value="'marker-end-' + element.id"/>
+
+            <!-- Marker Color -->
+            <t t-set="markerColor" t-value="element.style.strokeColor || 'black'"/>
+
+            <!-- End Markers -->
+            <marker
+              t-if="element.style.endArrow === 'arrow' || (!element.style.endArrow &amp;&amp; element.type === 'arrow')"
+              t-att-id="markerEndId"
+              markerWidth="10"
+              markerHeight="7"
+              refX="9"
+              refY="3.5"
+              orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'circle'"
+              t-att-id="markerEndId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <circle cx="4" cy="4" r="3" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'circle_empty'"
+              t-att-id="markerEndId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <circle cx="4" cy="4" r="3" fill="white" t-att-stroke="markerColor" stroke-width="1"/>
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'square'"
+              t-att-id="markerEndId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <rect x="1" y="1" width="6" height="6" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'square_empty'"
+              t-att-id="markerEndId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <rect
+                x="1"
+                y="1"
+                width="6"
+                height="6"
+                fill="white"
+                t-att-stroke="markerColor"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'diamond'"
+              t-att-id="markerEndId"
+              markerWidth="10"
+              markerHeight="10"
+              refX="5"
+              refY="5"
+              orient="auto">
+              <polygon points="0 5, 5 0, 10 5, 5 10" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.endArrow === 'diamond_empty'"
+              t-att-id="markerEndId"
+              markerWidth="10"
+              markerHeight="10"
+              refX="5"
+              refY="5"
+              orient="auto">
+              <polygon
+                points="0 5, 5 0, 10 5, 5 10"
+                fill="white"
+                t-att-stroke="markerColor"
+                stroke-width="1"
+              />
+            </marker>
+
+            <!-- Start Markers (same but with different ID suffix if we want distinction, but reusing types) -->
+            <!-- Actually we need separate IDs for start/end if we want to mix them. -->
+            <!-- We can create IDs based on type, e.g. marker-arrow-start-ID -->
+
+            <marker
+              t-if="element.style.startArrow === 'arrow'"
+              t-att-id="markerStartId"
+              markerWidth="10"
+              markerHeight="7"
+              refX="1"
+              refY="3.5"
+              orient="auto-start-reverse">
+              <polygon points="0 0, 10 3.5, 0 7" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'circle'"
+              t-att-id="markerStartId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <circle cx="4" cy="4" r="3" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'circle_empty'"
+              t-att-id="markerStartId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <circle cx="4" cy="4" r="3" fill="white" t-att-stroke="markerColor" stroke-width="1"/>
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'square'"
+              t-att-id="markerStartId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <rect x="1" y="1" width="6" height="6" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'square_empty'"
+              t-att-id="markerStartId"
+              markerWidth="8"
+              markerHeight="8"
+              refX="4"
+              refY="4"
+              orient="auto">
+              <rect
+                x="1"
+                y="1"
+                width="6"
+                height="6"
+                fill="white"
+                t-att-stroke="markerColor"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'diamond'"
+              t-att-id="markerStartId"
+              markerWidth="10"
+              markerHeight="10"
+              refX="5"
+              refY="5"
+              orient="auto">
+              <polygon points="0 5, 5 0, 10 5, 5 10" t-att-fill="markerColor"/>
+            </marker>
+            <marker
+              t-if="element.style.startArrow === 'diamond_empty'"
+              t-att-id="markerStartId"
+              markerWidth="10"
+              markerHeight="10"
+              refX="5"
+              refY="5"
+              orient="auto">
+              <polygon
+                points="0 5, 5 0, 10 5, 5 10"
+                fill="white"
+                t-att-stroke="markerColor"
+                stroke-width="1"
+              />
+            </marker>
+          </defs>
+
+          <t t-set="origin" t-value="getBounds(element)"/>
+          <t
+            t-set="p1"
+            t-value="{x: element.points[0].x - origin.left, y: element.points[0].y - origin.top}"
+          />
+          <t
+            t-set="p2"
+            t-value="{x: element.points[1].x - origin.left, y: element.points[1].y - origin.top}"
+          />
+
+          <!-- Hit area -->
+          <line
+            t-att-x1="p1.x"
+            t-att-y1="p1.y"
+            t-att-x2="p2.x"
+            t-att-y2="p2.y"
+            stroke="transparent"
+            stroke-width="15"
+            style="cursor: move; pointer-events: stroke;"
+            t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'element')"
+          />
+
+          <!-- Visible line -->
+          <t t-set="svgStyle" t-value="getSvgStyle(element)"/>
+          <line
+            t-att-x1="p1.x"
+            t-att-y1="p1.y"
+            t-att-x2="p2.x"
+            t-att-y2="p2.y"
+            t-att-stroke="element.style.strokeColor || 'black'"
+            t-att-stroke-width="svgStyle.strokeWidth"
+            t-att-stroke-dasharray="svgStyle.strokeDasharray"
+            t-att-marker-end="element.style.endArrow || (element.type === 'arrow' and !element.style.endArrow) ? 'url(#marker-end-' + element.id + ')' : ''"
+            t-att-marker-start="element.style.startArrow ? 'url(#marker-start-' + element.id + ')' : ''"
+            style="pointer-events: none;"
+          />
+
+          <!-- Selection Border (dashed box) -->
+          <!-- Use points handles instead of box handle for points element -->
+          <rect
+            t-if="isElementSelected(element.id) and !element.points"
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            fill="none"
+            stroke="#0099ff"
+            stroke-width="1"
+            stroke-dasharray="4"
+            style="pointer-events: none;"
+          />
+        </svg>
+
+        <t t-if="element.points">
+          <t t-call="o-spreadsheet-DrawingPointHandles"/>
+        </t>
+        <t t-else="">
+          <t t-call="o-spreadsheet-DrawingResizeHandles"/>
+        </t>
+      </div>
+      <!-- SVG RAW ELEMENT -->
+      <div
+        t-if="element.type === 'svg'"
+        class="position-absolute"
+        t-att-style="getPositionStyle(element) + 'z-index: 1;'"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'element')">
+        <div class="w-100 h-100" style="overflow: visible;" t-out="getSvgContent(element)"/>
+
+        <!-- Selection Border -->
+        <div
+          t-if="isElementSelected(element.id)"
+          class="position-absolute w-100 h-100 start-0 top-0"
+          style="border: 1px dashed #0099ff; pointer-events: none;"
+        />
+
+        <t t-call="o-spreadsheet-DrawingResizeHandles"/>
+      </div>
+
+      <!-- TEXT ELEMENT -->
+      <div
+        t-if="element.type === 'text'"
+        class="position-absolute"
+        t-att-style="getPositionStyle(element) + 'z-index: 3;'"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'element')">
+        <div t-att-style="getTextStyle(element)" t-esc="element.text || 'Text'"/>
+
+        <!-- Selection Border -->
+        <div
+          t-if="isElementSelected(element.id)"
+          class="position-absolute w-100 h-100 start-0 top-0"
+          style="border: 1px dashed #0099ff; pointer-events: none;"
+        />
+
+        <t t-call="o-spreadsheet-DrawingResizeHandles"/>
+      </div>
+      <!-- End loop -->
+    </t>
+
+    <!-- Background listener for deselection -->
+    <div class="position-absolute w-100 h-100" style="z-index: 0;" t-on-click="onClickBackground"/>
+
+    <div
+      t-if="!drawingElements.length"
+      class="d-flex justify-content-center align-items-center h-100 text-muted">
+      Double click to add shapes
+    </div>
+  </div>
+
+  <t t-name="o-spreadsheet-DrawingResizeHandles">
+    <t t-if="isElementSelected(element.id)">
+      <div
+        class="o-resize-handle position-absolute bg-primary"
+        style="width: 8px; height: 8px; top: -4px; left: -4px; cursor: nwse-resize; pointer-events: auto;"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'handle', 'tl')"
+      />
+      <div
+        class="o-resize-handle position-absolute bg-primary"
+        style="width: 8px; height: 8px; top: -4px; right: -4px; cursor: nesw-resize; pointer-events: auto;"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'handle', 'tr')"
+      />
+      <div
+        class="o-resize-handle position-absolute bg-primary"
+        style="width: 8px; height: 8px; bottom: -4px; left: -4px; cursor: nesw-resize; pointer-events: auto;"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'handle', 'bl')"
+      />
+      <div
+        class="o-resize-handle position-absolute bg-primary"
+        style="width: 8px; height: 8px; bottom: -4px; right: -4px; cursor: nwse-resize; pointer-events: auto;"
+        t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'handle', 'br')"
+      />
+    </t>
+  </t>
+
+  <t t-name="o-spreadsheet-DrawingPointHandles">
+    <t t-if="isElementSelected(element.id)">
+      <t t-set="origin" t-value="getBounds(element)"/>
+      <t t-foreach="element.points" t-as="point" t-key="point_index">
+        <div
+          class="o-resize-handle position-absolute bg-primary rounded-circle border border-white"
+          t-att-style="'width: 10px; height: 10px; margin-top: -5px; margin-left: -5px; cursor: grab; pointer-events: auto; top: ' + (point.y - origin.top) + 'px; left: ' + (point.x - origin.left) + 'px;'"
+          t-on-pointerdown="(ev) => this.onPointerDown(ev, element.id, 'point', point_index)"
+        />
+      </t>
+    </t>
+  </t>
+</templates>

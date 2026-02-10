@@ -1,6 +1,7 @@
 import { Registry } from "@odoo/o-spreadsheet-engine/registries/registry";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { Action } from "../actions/action";
+import { getDrawingMenuActions } from "../actions/drawing_menu_actions";
 import {
   getCarouselMenuActions,
   getChartMenuActions,
@@ -55,4 +56,14 @@ figureRegistry.add("latex", {
 figureRegistry.add("carousel", {
   Component: CarouselFigure,
   menuBuilder: getCarouselMenuActions,
+});
+
+import { DrawingFigure } from "../components/figures/figure_drawing/figure_drawing";
+
+figureRegistry.add("drawing", {
+  Component: DrawingFigure,
+  SidePanelComponent: "DrawingSidePanel",
+  menuBuilder: getDrawingMenuActions,
+  minFigSize: 100,
+  borderWidth: 1,
 });

@@ -1,0 +1,13 @@
+.o-spreadsheet {
+  .o-drawing-side-panel {
+    .o-drawing-button {
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 2px;
+
+      &:hover {
+        background: var(--os-button-hover-bg);
+      }
+    }
+  }
+}

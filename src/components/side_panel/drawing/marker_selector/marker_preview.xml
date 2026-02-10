@@ -1,0 +1,72 @@
+<templates>
+  <t t-name="o-spreadsheet-MarkerPreview">
+    <svg
+      t-att-width="width"
+      t-att-height="height"
+      t-att-viewBox="'0 0 ' + width + ' ' + height"
+      t-att-class="props.class"
+      style="overflow: visible;">
+      <line
+        t-att-x1="lineStart"
+        t-att-y1="lineY"
+        t-att-x2="lineEnd"
+        t-att-y2="lineY"
+        stroke="currentColor"
+        stroke-width="2"
+      />
+      <t t-if="props.marker === 'arrow'">
+        <polygon
+          t-att-points="getMarkerPoints(props.marker, cx, lineY, isStart)"
+          fill="currentColor"
+        />
+      </t>
+      <t t-elif="props.marker === 'circle'">
+        <circle t-att-cx="isStart ? cx+4 : cx-4" t-att-cy="lineY" r="3" fill="currentColor"/>
+      </t>
+      <t t-elif="props.marker === 'circle_empty'">
+        <circle
+          t-att-cx="isStart ? cx+4 : cx-4"
+          t-att-cy="lineY"
+          r="3"
+          fill="white"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+      </t>
+      <t t-elif="props.marker === 'square'">
+        <rect
+          t-att-x="isStart ? cx+1 : cx-7"
+          t-att-y="lineY-3"
+          width="6"
+          height="6"
+          fill="currentColor"
+        />
+      </t>
+      <t t-elif="props.marker === 'square_empty'">
+        <rect
+          t-att-x="isStart ? cx+1 : cx-7"
+          t-att-y="lineY-3"
+          width="6"
+          height="6"
+          fill="white"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+      </t>
+      <t t-elif="props.marker === 'diamond'">
+        <polygon
+          t-att-points="getMarkerPoints(props.marker, cx, lineY, isStart)"
+          fill="currentColor"
+        />
+      </t>
+      <t t-elif="props.marker === 'diamond_empty'">
+        <polygon
+          t-att-points="getMarkerPoints(props.marker, cx, lineY, isStart)"
+          fill="white"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+      </t>
+    </svg>
+  </t>
+</templates>

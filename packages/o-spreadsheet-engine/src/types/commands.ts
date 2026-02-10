@@ -20,6 +20,7 @@ import { ChartDefinition } from "./chart";
 
 import { ConditionalFormat } from "./conditional_formatting";
 
+import { DrawingData } from "../plugins/ui_feature/drawing";
 import { ClipboardPasteOptions, ParsedOsClipboardContentWithImageData } from "./clipboard";
 import { DataValidationRule } from "./data_validation";
 import { Carousel, CarouselItem, Figure, FigureSize } from "./figure";
@@ -346,6 +347,12 @@ export const coreTypes = new Set<CoreCommandTypes>([
   "DUPLICATE_PIVOT",
 
   "UPDATE_LATEX_FIGURE",
+  "CREATE_DRAWING_FIGURE",
+  "ADD_DRAWING_ELEMENT",
+  "UPDATE_DRAWING_ELEMENT",
+  "REMOVE_DRAWING_ELEMENT",
+  "REORDER_DRAWING_ELEMENT",
+  "SELECT_DRAWING_ELEMENT",
 ]);
 
 export function isCoreCommand(cmd: Command): cmd is CoreCommand {
@@ -825,6 +832,53 @@ export interface GroupHeadersCommand extends SheetDependentCommand {
   end: HeaderIndex;
 }
 
+// ------------------------------------------------
+// DRAWING
+// ------------------------------------------------
+
+export interface CreateDrawingFigureCommand {
+  type: "CREATE_DRAWING_FIGURE";
+  figureId: UID;
+}
+
+export interface AddDrawingElementCommand {
+  type: "ADD_DRAWING_ELEMENT";
+  figureId: UID;
+  element: any; // Using any to avoid circular deps or complex imports for now, or define minimal interface
+}
+
+export interface UpdateDrawingElementCommand {
+  type: "UPDATE_DRAWING_ELEMENT";
+  figureId: UID;
+  elementId: string;
+  updates: any;
+}
+
+export interface RemoveDrawingElementCommand {
+  type: "REMOVE_DRAWING_ELEMENT";
+  figureId: UID;
+  elementId: string;
+}
+
+export interface ReorderDrawingElementCommand {
+  type: "REORDER_DRAWING_ELEMENT";
+  figureId: UID;
+  elementId: string;
+  direction: "front" | "back" | "forward" | "backward";
+}
+
+export interface SelectDrawingElementCommand {
+  type: "SELECT_DRAWING_ELEMENT";
+  figureId: UID;
+  elementId: string | null;
+}
+
+export interface UpdateDrawingCommand {
+  type: "UPDATE_DRAWING";
+  figureId: UID;
+  updates: Partial<DrawingData>;
+}
+
 export interface UnGroupHeadersCommand extends SheetDependentCommand {
   type: "UNGROUP_HEADERS";
   dimension: Dimension;
@@ -1282,7 +1336,14 @@ export type CoreCommand =
   | RenamePivotCommand
   | RemovePivotCommand
   | DuplicatePivotCommand
-  | UpdateLatexFigureCommand;
+  | UpdateLatexFigureCommand
+  | CreateDrawingFigureCommand
+  | AddDrawingElementCommand
+  | UpdateDrawingElementCommand
+  | RemoveDrawingElementCommand
+  | ReorderDrawingElementCommand
+  | SelectDrawingElementCommand
+  | UpdateDrawingCommand;
 
 export type LocalCommand =
   | RequestUndoCommand
