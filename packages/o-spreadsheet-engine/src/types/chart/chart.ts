@@ -1,7 +1,6 @@
 import { Point } from "chart.js";
 import { XlsxHexColor } from "../xlsx";
 import { BarChartDefinition, BarChartRuntime } from "./bar_chart";
-import { CalendarChartDefinition } from "./calendar_chart";
 import { ComboChartDefinition, ComboChartRuntime } from "./combo_chart";
 import { LegendPosition } from "./common_chart";
 import { FunnelChartColors, FunnelChartDefinition, FunnelChartRuntime } from "./funnel_chart";
@@ -26,6 +25,8 @@ import { COLORSCHEMES } from "../../helpers/color";
 import { Format } from "../format";
 import { Locale } from "../locale";
 import { Range } from "../range";
+import { HeatmapChartDefinition } from "./heatmap_chart";
+import { MatrixChartDefinition } from "./matrix_chart";
 export const CHART_TYPES = [
   "line",
   "bar",
@@ -41,7 +42,8 @@ export const CHART_TYPES = [
   "funnel",
   "sunburst",
   "treemap",
-  "calendar",
+  "matrix",
+  "heatmap",
 ] as const;
 export type ChartType = (typeof CHART_TYPES)[number];
 
@@ -60,7 +62,8 @@ export type ChartDefinition =
   | FunnelChartDefinition
   | SunburstChartDefinition
   | TreeMapChartDefinition
-  | CalendarChartDefinition;
+  | MatrixChartDefinition
+  | HeatmapChartDefinition;
 
 export type ChartWithDataSetDefinition = Extract<
   ChartDefinition,

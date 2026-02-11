@@ -21,4 +21,5 @@ chartComponentRegistry.add("geo", ChartJsComponent);
 chartComponentRegistry.add("funnel", ChartJsComponent);
 chartComponentRegistry.add("sunburst", ChartJsComponent);
 chartComponentRegistry.add("treemap", ChartJsComponent);
-chartComponentRegistry.add("calendar", ChartJsComponent);
+chartComponentRegistry.add("matrix", ChartJsComponent);
+chartComponentRegistry.add("heatmap", ChartJsComponent);

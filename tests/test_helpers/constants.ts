@@ -76,13 +76,6 @@ export const TEST_CHART_DATA = {
       },
     },
   },
-  calendar: {
-    type: "calendar" as const,
-    dataSets: [{ dataRange: "B1" }],
-    labelRange: "A1",
-    title: { text: "hello" },
-    background: BACKGROUND_CHART_COLOR,
-  },
 };
 
 const PIVOT: PivotCoreDefinition = {

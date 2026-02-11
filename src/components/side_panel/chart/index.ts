@@ -3,8 +3,7 @@ import { Component } from "@odoo/owl";
 import { BarConfigPanel } from "./bar_chart/bar_chart_config_panel";
 import { BarChartDesignPanel } from "./bar_chart/bar_chart_design_panel";
 import { GenericChartConfigPanel } from "./building_blocks/generic_side_panel/config_panel";
-import { CalendarChartConfigPanel } from "./calendar_chart/calendar_chart_config_panel";
-import { CalendarChartDesignPanel } from "./calendar_chart/calendar_chart_design_panel";
+
 import { ChartWithAxisDesignPanel } from "./chart_with_axis/design_panel";
 import { ComboChartDesignPanel } from "./combo_chart/combo_chart_design_panel";
 import { FunnelChartConfigPanel } from "./funnel_chart_panel/funnel_chart_config_panel";
@@ -13,9 +12,13 @@ import { GaugeChartConfigPanel } from "./gauge_chart_panel/gauge_chart_config_pa
 import { GaugeChartDesignPanel } from "./gauge_chart_panel/gauge_chart_design_panel";
 import { GeoChartConfigPanel } from "./geo_chart_panel/geo_chart_config_panel";
 import { GeoChartDesignPanel } from "./geo_chart_panel/geo_chart_design_panel";
+import { HeatmapChartConfigPanel } from "./heatmap_chart_panel/heatmap_chart_config_panel";
+import { HeatmapChartDesignPanel } from "./heatmap_chart_panel/heatmap_chart_design_panel";
 import { HierarchicalChartConfigPanel } from "./hierarchical_chart/hierarchical_chart_config_panel";
 import { LineConfigPanel } from "./line_chart/line_chart_config_panel";
 import { LineChartDesignPanel } from "./line_chart/line_chart_design_panel";
+import { MatrixChartConfigPanel } from "./matrix_chart_panel/matrix_chart_config_panel";
+import { MatrixChartDesignPanel } from "./matrix_chart_panel/matrix_chart_design_panel";
 import { PieChartDesignPanel } from "./pie_chart/pie_chart_design_panel";
 import { RadarChartDesignPanel } from "./radar_chart/radar_chart_design_panel";
 import { ScatterConfigPanel } from "./scatter_chart/scatter_chart_config_panel";
@@ -99,7 +102,12 @@ chartSidePanelComponentRegistry
     configuration: HierarchicalChartConfigPanel,
     design: TreeMapChartDesignPanel,
   })
-  .add("calendar", {
-    configuration: CalendarChartConfigPanel,
-    design: CalendarChartDesignPanel,
+
+  .add("matrix", {
+    configuration: MatrixChartConfigPanel,
+    design: MatrixChartDesignPanel,
+  })
+  .add("heatmap", {
+    configuration: HeatmapChartConfigPanel,
+    design: HeatmapChartDesignPanel,
   });

@@ -375,7 +375,7 @@
       <path fill="var(--os-chart-preview-orange-fill)" d="M32,17 h13 v25 h-13"/>
     </svg>
   </t>
-  <t t-name="o-spreadsheet-ChartPreview.CALENDAR_CHART">
+  <t t-name="o-spreadsheet-ChartPreview.MATRIX_CHART">
     <svg class="o-chart-preview" viewBox="0 0 48 48">
       <path fill="var(--os-gray-600)" d="M3 3h42v42H3zh1v41h40V4H4"/>
       <path
@@ -392,6 +392,34 @@
       />
       <path fill="var(--os-white-bg)" d="M8 35h5v5H8"/>
       <path fill="var(--os-chart-preview-orange-dark)" d="M25 16h7v7h-7"/>
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-ChartPreview.HEAT_MAP">
+    <svg class="o-chart-preview" viewBox="0 0 1024 1024">
+      <g transform="scale(1.075,1.075)translate(-40,-40)">
+        <path
+          d="M96 96m32 0l768 0q32 0 32 32l0 768q0 32-32 32l-768 0q-32 0-32-32l0-768q0-32 32-32Z"
+          fill="var(--os-white-bg)"
+        />
+        <path
+          d="M928 448a160 160 0 0 0 0 320v128a32 32 0 0 1-32 32h-259.2a160.064 160.064 0 0 0-313.6 0H256.512a240 240 0 0 1 239.488-224c36.864 0 55.712 2.112 96.256 12.704s80.32-26.24 80.32-60.704c0.256-9.216-0.576-29.312-0.576-32 0-5.504 0.192-10.944 0.544-16.352 0.832-5.696 1.76-11.424 1.792-17.184A240.064 240.064 0 0 1 928 384.512V448z"
+          fill="var(--os-chart-preview-orange-fill)"
+        />
+        <path
+          d="M96 767.872V128a32 32 0 0 1 32-32h594.4A494.144 494.144 0 0 1 768 304C768 577.92 545.92 800 272 800c-61.984 0-121.28-11.36-176-32.128z"
+          fill="#D1E0F1"
+        />
+        <path
+          d="M96 646.976V128a32 32 0 0 1 32-32h455.872A367.04 367.04 0 0 1 704 368C704 571.232 539.232 736 336 736A366.56 366.56 0 0 1 96 646.976z"
+          fill="#81C3E3"
+        />
+        <path d="M96 560.128V303.872a272 272 0 1 1 0 256.224z" fill="#27A2DF"/>
+        <path
+          d="M352 448m-160 0a160 160 0 1 0 320 0 160 160 0 1 0-320 0Z"
+          fill="var(--os-chart-preview-blue-line)"
+        />
+        <path d="M96 96h832v832H96V128m20 0v780h792V116H116z" fill="var(--os-gray-600)"/>
+      </g>
     </svg>
   </t>
 </templates>

@@ -62,9 +62,6 @@ export const chartShowValuesPlugin: Plugin = {
       case "pyramid":
         drawHorizontalBarChartValues(chart, options, ctx);
         break;
-      case "calendar":
-        drawBarChartValues(chart, options, ctx);
-        break;
       case "funnel":
         drawHorizontalBarChartValues(chart, options, ctx);
         break;
@@ -136,57 +133,6 @@ function drawLineOrBarOrRadarChartValues(
       ctx.fillStyle = point.options.backgroundColor;
       ctx.strokeStyle = options.background(Number(value), dataset, i) || "#ffffff";
       const valueToDisplay = options.callback(Number(value), dataset, i);
-      drawTextWithBackground(valueToDisplay, xPosition, yPosition, ctx);
-    }
-  }
-}
-
-function drawBarChartValues(
-  chart: any,
-  options: ChartShowValuesPluginOptions,
-  ctx: CanvasRenderingContext2D
-) {
-  const yMax = chart.chartArea.bottom;
-  const yMin = chart.chartArea.top;
-
-  for (const dataset of chart._metasets) {
-    if (isTrendLineAxis(dataset.xAxisID) || dataset.hidden) {
-      continue;
-    }
-
-    const yAxisScale = chart.scales[dataset.yAxisID];
-    for (let i = 0; i < dataset._parsed.length; i++) {
-      const parsedValue = dataset._parsed[i];
-      const value = Number(chart.config.type === "radar" ? parsedValue.r : parsedValue.y);
-      if (isNaN(value)) {
-        continue;
-      }
-
-      const point = dataset.data[i];
-      const xPosition = point.x;
-
-      let yPosition = 0;
-      const yZeroLine = yAxisScale.getPixelForValue(0);
-      const distanceFromAxisOrigin = Math.abs(yZeroLine - point.y);
-      const textHeight = globalThis.Chart?.defaults.font.size ?? 12; // ChartJS default text height
-
-      if (distanceFromAxisOrigin < textHeight) {
-        yPosition = value < 0 ? yZeroLine + textHeight / 2 : yZeroLine - textHeight / 2;
-      } else {
-        yPosition = value < 0 ? point.y - point.height / 2 : point.y + point.height / 2;
-      }
-
-      yPosition = Math.min(yPosition, yMax);
-      yPosition = Math.max(yPosition, yMin);
-
-      ctx.strokeStyle = point.options.backgroundColor;
-      ctx.fillStyle = options.background(Number(value), dataset, i) || "#ffffff";
-      const valueToDisplay = options.callback(Number(value), dataset, i);
-      const measures = ctx.measureText(valueToDisplay);
-      const height = measures.actualBoundingBoxAscent + measures.actualBoundingBoxDescent;
-      if (height + 2 > Math.abs(point.height) - 2) {
-        continue; // Skip drawing the value if there is not enough space in the bar
-      }
       drawTextWithBackground(valueToDisplay, xPosition, yPosition, ctx);
     }
   }

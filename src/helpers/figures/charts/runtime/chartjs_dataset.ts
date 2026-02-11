@@ -43,12 +43,13 @@ import {
   TrendConfiguration,
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
-import { CalendarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/calendar_chart";
+
 import { ComboChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/combo_chart";
 import {
   GeoChartDefinition,
   GeoChartRuntimeGenerationArgs,
 } from "@odoo/o-spreadsheet-engine/types/chart/geo_chart";
+import { MatrixChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/matrix_chart";
 import { RadarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/radar_chart";
 import {
   TreeMapCategoryColorOptions,
@@ -105,51 +106,6 @@ export function getBarChartDatasets(
   dataSets.push(...trendDatasets);
 
   return dataSets;
-}
-
-export function getCalendarChartDatasetAndLabels(
-  definition: CalendarChartDefinition,
-  args: ChartRuntimeGenerationArgs
-): {
-  datasets: ChartDataset<"calendar">[];
-  labels: string[];
-} {
-  const { labels, dataSetsValues } = args;
-
-  const values = dataSetsValues
-    .map((ds) => ds.data)
-    .flat()
-    .filter(isDefined);
-
-  const maxValue = Math.max(...values);
-  const minValue = Math.min(...values);
-  const colorMap = getRuntimeColorScale(
-    definition.colorScale ?? DEFAULT_CHART_COLOR_SCALE,
-    minValue,
-    maxValue
-  );
-
-  const dataSets: ChartDataset<"calendar">[] = [];
-  for (const dataSetValues of dataSetsValues) {
-    dataSets.push({
-      label: dataSetValues.label,
-      data: dataSetValues.data.map((v) => 1),
-      backgroundColor: dataSetValues.data.map((v) =>
-        v !== undefined ? colorMap(v) : definition.missingValueColor || COLOR_TRANSPARENT
-      ),
-      borderColor: definition.background || BACKGROUND_CHART_COLOR,
-      borderSkipped: false,
-      borderWidth: 1,
-      barPercentage: 1,
-      categoryPercentage: 1,
-      values: dataSetValues.data,
-    });
-  }
-
-  return {
-    labels,
-    datasets: dataSets,
-  };
 }
 
 export function getWaterfallDatasetAndLabels(
@@ -664,6 +620,47 @@ export function getTreeMapChartDatasets(
   ];
 
   return dataSets;
+}
+
+export function getMatrixChartDataset(
+  definition: MatrixChartDefinition,
+  {
+    dataSetsValues,
+    verticalLabelValues,
+  }: { dataSetsValues: DatasetValues[]; verticalLabelValues?: DatasetValues }
+): ChartDataset<"bar">[] {
+  const allValues = dataSetsValues
+    .map((ds) => ds.data)
+    .flat()
+    .filter((v) => typeof v === "number" && !isNaN(v)) as number[];
+
+  const minValue = Math.min(...allValues);
+  const maxValue = Math.max(...allValues);
+
+  const colorMap = getRuntimeColorScale(
+    definition.colorScale ?? DEFAULT_CHART_COLOR_SCALE,
+    minValue,
+    maxValue
+  );
+
+  return dataSetsValues.map((dataset, index) => {
+    return {
+      label: verticalLabelValues?.data[index]
+        ? String(verticalLabelValues.data[index])
+        : dataset.label,
+      data: dataset.data.map((v) => (isFinite(Number(v)) ? 1 : 0)),
+      backgroundColor: dataset.data.map((v) =>
+        typeof v === "number" && !isNaN(v)
+          ? colorMap(v)
+          : definition.missingValueColor || "transparent"
+      ),
+      borderColor: definition.background || "transparent",
+      borderWidth: 1,
+      barPercentage: 1,
+      categoryPercentage: 1,
+      order: index,
+    };
+  });
 }
 
 function getTextStyle(design: TitleDesign | undefined, defaultDesign: TitleDesign) {

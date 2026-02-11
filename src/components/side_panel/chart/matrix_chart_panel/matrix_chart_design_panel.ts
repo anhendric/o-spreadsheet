@@ -1,6 +1,5 @@
 import { _t, ValueAndLabel } from "@odoo/o-spreadsheet-engine";
 import { LegendPosition } from "@odoo/o-spreadsheet-engine/types/chart";
-import { CalendarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/calendar_chart";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { Component } from "@odoo/owl";
 import { Color } from "../../../../types/index";
@@ -14,20 +13,15 @@ import {
 } from "../building_blocks/axis_design/axis_design_editor";
 import { ColorScalePicker } from "../building_blocks/color_scale/color_scale_picker";
 import { GeneralDesignEditor } from "../building_blocks/general_design/general_design_editor";
-import { ChartShowValues } from "../building_blocks/show_values/show_values";
-import { ChartSidePanelProps, ChartSidePanelPropsObject } from "../common";
+import { ChartSidePanelPropsObject } from "../common";
 
-export class CalendarChartDesignPanel extends Component<
-  ChartSidePanelProps<CalendarChartDefinition>,
-  SpreadsheetChildEnv
-> {
-  static template = "o-spreadsheet-CalendarChartDesignPanel";
+export class MatrixChartDesignPanel extends Component<any, SpreadsheetChildEnv> {
+  static template = "o-spreadsheet-MatrixChartDesignPanel";
   static components = {
     GeneralDesignEditor,
     SidePanelCollapsible,
     Section,
     AxisDesignEditor,
-    ChartShowValues,
     ColorScalePicker,
     RoundColorPicker,
     Select,

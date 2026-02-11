@@ -4,9 +4,11 @@
     padding-left: 35px;
     padding-top: 5px;
   }
+
   .o-type-selector-preview {
     left: 5px;
     top: 3px;
+
     .o-chart-preview {
       width: 24px;
       height: 24px;
@@ -18,15 +20,17 @@
       cursor: pointer;
       padding: 3px 6px;
       margin: 1px 2px;
+
       &.selected,
       &:hover {
         border: 1px solid var(--os-action-color);
         background: var(--os-badge-selected-color);
         padding: 2px 5px;
       }
+
       .o-chart-preview {
-        width: 48px;
-        height: 48px;
+        width: 32px;
+        height: 32px;
       }
     }
   }

@@ -39,7 +39,6 @@ import {
 } from "../../test_helpers/chart_helpers";
 import {
   copy,
-  createCalendarChart,
   createChart,
   createGaugeChart,
   createScorecardChart,
@@ -99,9 +98,6 @@ function createTestChart(
       break;
     case "basicChart":
       createChart(model, TEST_CHART_DATA.basicChart, newChartId, undefined, partialFigure);
-      break;
-    case "calendar":
-      createCalendarChart(model, TEST_CHART_DATA.calendar, newChartId, undefined, partialFigure);
       break;
     default:
       createChart(
@@ -1853,7 +1849,7 @@ describe("charts", () => {
     ]);
   });
 
-  test.each<ChartType>(["bar", "line", "waterfall", "radar", "calendar"])(
+  test.each<ChartType>(["bar", "line", "waterfall", "radar"])(
     "showValues checkbox updates the chart",
     async (type: ChartType) => {
       createTestChart(type);
@@ -2490,7 +2486,6 @@ test("ChartJS charts extensions are loaded when mounting a spreadsheet, are only
     "sunburstLabelsPlugin",
     "sunburstHoverPlugin",
     "chartColorScalePlugin",
-    "calendar", // Calendar controller
     "zoomWindowPlugin",
   ]);
 

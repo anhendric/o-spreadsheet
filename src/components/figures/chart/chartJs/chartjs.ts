@@ -10,7 +10,7 @@ import { deepCopy, deepEquals } from "../../../../helpers";
 import { Store, useStore } from "../../../../store_engine";
 import { UID } from "../../../../types";
 import { ChartAnimationStore } from "./chartjs_animation_store";
-import { getCalendarChartController } from "./chartjs_calendar_chart";
+
 import { chartColorScalePlugin } from "./chartjs_colorscale_plugin";
 import {
   funnelTooltipPositioner,
@@ -61,10 +61,7 @@ chartJsExtensionRegistry.add("chartColorScalePlugin", {
   register: (Chart) => Chart.register(chartColorScalePlugin),
   unregister: (Chart) => Chart.unregister(chartColorScalePlugin),
 });
-chartJsExtensionRegistry.add("calendarController", {
-  register: (Chart) => Chart.register(getCalendarChartController()),
-  unregister: (Chart) => Chart.unregister(getCalendarChartController()),
-});
+
 chartJsExtensionRegistry.add("zoomWindowPlugin", {
   register: (Chart) => Chart.register(zoomWindowPlugin),
   unregister: (Chart) => Chart.unregister(zoomWindowPlugin),

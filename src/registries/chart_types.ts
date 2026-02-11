@@ -13,7 +13,7 @@ import {
   SunburstChartDefinition,
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
-import { CalendarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/calendar_chart";
+
 import { ComboChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/combo_chart";
 import { GeoChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/geo_chart";
 import { RadarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/radar_chart";
@@ -32,13 +32,14 @@ import {
   ScorecardChart,
   WaterfallChart,
 } from "../helpers/figures/charts";
-import {
-  CalendarChart,
-  createCalendarChartRuntime,
-} from "../helpers/figures/charts/calendar_chart";
+
+import { HeatmapChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/heatmap_chart";
+import { MatrixChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/matrix_chart";
 import { ComboChart, createComboChartRuntime } from "../helpers/figures/charts/combo_chart";
 import { createFunnelChartRuntime, FunnelChart } from "../helpers/figures/charts/funnel_chart";
 import { createGeoChartRuntime, GeoChart } from "../helpers/figures/charts/geo_chart";
+import { createHeatmapChartRuntime, HeatmapChart } from "../helpers/figures/charts/heatmap_chart";
+import { createMatrixChartRuntime, MatrixChart } from "../helpers/figures/charts/matrix_chart";
 import { createPyramidChartRuntime, PyramidChart } from "../helpers/figures/charts/pyramid_chart";
 import { createRadarChartRuntime, RadarChart } from "../helpers/figures/charts/radar_chart";
 import { createScatterChartRuntime, ScatterChart } from "../helpers/figures/charts/scatter_chart";
@@ -195,18 +196,31 @@ chartRegistry.add("treemap", {
   getChartDefinitionFromContextCreation: TreeMapChart.getDefinitionFromContextCreation,
   sequence: 100,
 });
-chartRegistry.add("calendar", {
-  match: (type) => type === "calendar",
+
+chartRegistry.add("matrix" as any, {
+  match: (type) => (type as any) === "matrix",
   createChart: (definition, sheetId, getters) =>
-    new CalendarChart(definition as CalendarChartDefinition, sheetId, getters),
+    new MatrixChart(definition as unknown as MatrixChartDefinition, sheetId, getters),
   getChartRuntime: (chart, getters) => {
-    return createCalendarChartRuntime(chart as CalendarChart, getters);
+    return createMatrixChartRuntime(chart as MatrixChart, getters);
   },
-  validateChartDefinition: CalendarChart.validateChartDefinition,
-  transformDefinition: CalendarChart.transformDefinition,
-  getChartDefinitionFromContextCreation: CalendarChart.getDefinitionFromContextCreation,
-  sequence: 110,
-  dataSeriesLimit: 1,
+  validateChartDefinition: MatrixChart.validateChartDefinition,
+  transformDefinition: MatrixChart.transformDefinition,
+  getChartDefinitionFromContextCreation: MatrixChart.getDefinitionFromContextCreation,
+  sequence: 120,
+});
+
+chartRegistry.add("heatmap" as any, {
+  match: (type) => (type as any) === "heatmap",
+  createChart: (definition, sheetId, getters) =>
+    new HeatmapChart(definition as unknown as HeatmapChartDefinition, sheetId, getters),
+  getChartRuntime: (chart, getters) => {
+    return createHeatmapChartRuntime(chart as HeatmapChart, getters);
+  },
+  validateChartDefinition: HeatmapChart.validateChartDefinition,
+  transformDefinition: HeatmapChart.transformDefinition,
+  getChartDefinitionFromContextCreation: HeatmapChart.getDefinitionFromContextCreation,
+  sequence: 130,
 });
 
 chartSubtypeRegistry
@@ -398,10 +412,18 @@ chartSubtypeRegistry
     category: "hierarchical",
     preview: "o-spreadsheet-ChartPreview.TREE_MAP_CHART",
   })
-  .add("calendar", {
-    displayName: _t("Calendar"),
-    chartSubtype: "calendar",
-    chartType: "calendar",
+
+  .add("matrix", {
+    displayName: _t("Matrix"),
+    chartSubtype: "matrix",
+    chartType: "matrix" as any,
     category: "misc",
-    preview: "o-spreadsheet-ChartPreview.CALENDAR_CHART",
+    preview: "o-spreadsheet-ChartPreview.MATRIX_CHART",
+  })
+  .add("heatmap", {
+    displayName: _t("Heatmap"),
+    chartSubtype: "heatmap",
+    chartType: "heatmap" as any,
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.HEAT_MAP",
   });

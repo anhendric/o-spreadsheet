@@ -1,0 +1,30 @@
+<templates>
+  <t t-name="o-spreadsheet-HeatmapChartConfigPanel">
+    <div class="o-heatmap-chart-config-panel">
+      <ChartDataSeries
+        ranges="getDataSeriesRanges()"
+        onSelectionChanged.bind="onDataSeriesRangesChanged"
+        onSelectionConfirmed.bind="onDataSeriesConfirmed"
+        onSelectionReordered.bind="onDataSeriesReordered"
+        onSelectionRemoved.bind="onDataSeriesRemoved"
+        canChangeDatasetOrientation="false"
+      />
+      <ChartLabelRange
+        title="'Horizontal Labels'"
+        range="getHorizontalLabelsRange()"
+        onSelectionChanged.bind="onHorizontalLabelsRangeChanged"
+        onSelectionConfirmed.bind="onHorizontalLabelsRangeConfirmed"
+        isInvalid="false"
+      />
+      <ChartLabelRange
+        title="'Vertical Labels'"
+        range="getVerticalLabelsRange()"
+        onSelectionChanged.bind="onVerticalLabelsRangeChanged"
+        onSelectionConfirmed.bind="onVerticalLabelsRangeConfirmed"
+        isInvalid="false"
+      />
+
+      <ChartErrorSection t-if="errorMessages.length" messages="errorMessages"/>
+    </div>
+  </t>
+</templates>

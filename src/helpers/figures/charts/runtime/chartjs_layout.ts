@@ -9,6 +9,7 @@ import {
   ChartWithDataSetDefinition,
   GenericDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
+import { MatrixChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/matrix_chart";
 import { ChartOptions } from "chart.js";
 
 type ChartLayout = ChartOptions["layout"];
@@ -27,8 +28,8 @@ export function getChartLayout(
   };
 }
 
-export function getCalendarChartLayout(
-  definition: GenericDefinition<ChartWithDataSetDefinition>,
+export function getMatrixChartLayout(
+  definition: MatrixChartDefinition,
   args: ChartRuntimeGenerationArgs
 ): ChartLayout {
   const legendPosition = definition.legendPosition;

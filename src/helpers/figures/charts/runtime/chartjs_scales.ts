@@ -31,14 +31,15 @@ import {
   ScatterChartDefinition,
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
-import { CalendarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/calendar_chart";
+
 import {
   GeoChartDefinition,
   GeoChartProjection,
   GeoChartRuntimeGenerationArgs,
 } from "@odoo/o-spreadsheet-engine/types/chart/geo_chart";
+import { MatrixChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/matrix_chart";
 import { RadarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/radar_chart";
-import { ChartDataset, LinearScaleOptions, ScaleChartOptions, Tick } from "chart.js";
+import { LinearScaleOptions, ScaleChartOptions, Tick } from "chart.js";
 import { DeepPartial } from "chart.js/dist/types/utils";
 import { ChartColorScalePluginOptions } from "../../../../components/figures/chart/chartJs/chartjs_colorscale_plugin";
 import { Color, LocaleFormat } from "../../../../types";
@@ -85,81 +86,6 @@ export function getBarChartScales(
   }
 
   return scales;
-}
-
-export function getCalendarChartScales(
-  definition: GenericDefinition<BarChartDefinition>,
-  datasets: ChartDataset[]
-): DeepPartial<ScaleChartOptions<"calendar">["scales"]> {
-  const yLabels = datasets.map((dataset) => dataset.label || "");
-  const fontColor = chartFontColor(definition.background);
-  return {
-    y: {
-      title: getChartAxisTitleRuntime(definition.axesDesign?.y),
-      stacked: true,
-      min: 0,
-      max: yLabels.length,
-      ticks: {
-        // Here we have to use a step of 0.5 and skip every even label to have the labels centered
-        // with the bars
-        stepSize: 0.5,
-        color: fontColor,
-        callback: function (label, index, labels) {
-          if (index % 2 === 0) {
-            return undefined;
-          }
-          return yLabels[Math.floor((index - 1) / 2)];
-        },
-      },
-      grid: {
-        display: false,
-      },
-      border: { display: false },
-    },
-    x: {
-      title: getChartAxisTitleRuntime(definition.axesDesign?.x),
-      stacked: true,
-      grid: {
-        display: false,
-      },
-      position: "top",
-      ticks: {
-        color: fontColor,
-      },
-      border: { display: false },
-    },
-  };
-}
-
-export function getCalendarColorScale(
-  definition: CalendarChartDefinition,
-  args: ChartRuntimeGenerationArgs
-): ChartColorScalePluginOptions | undefined {
-  const { dataSetsValues } = args;
-  if (!dataSetsValues.length || definition.legendPosition === "none") {
-    return undefined;
-  }
-  const allValues = dataSetsValues.flatMap((ds) => ds.data).filter(isDefined);
-  const minValue = Math.min(...allValues);
-  const maxValue = Math.max(...allValues);
-  let colorScale: Color[] = [];
-  if (typeof definition.colorScale === "object") {
-    colorScale = [
-      definition.colorScale.minColor,
-      definition.colorScale.midColor,
-      definition.colorScale.maxColor,
-    ].filter(isDefined);
-  } else {
-    colorScale = [...COLORSCHEMES[definition.colorScale ?? "oranges"]];
-  }
-  return {
-    position: definition.legendPosition === "right" ? "right" : "left",
-    colorScale,
-    fontColor: chartFontColor(definition.background),
-    minValue,
-    maxValue,
-    locale: args.locale,
-  };
 }
 
 export function getLineChartScales(
@@ -506,6 +432,69 @@ function getLegendMargin(definition: GeoChartDefinition) {
     case "none":
       return { left: CHART_PADDING, right: CHART_PADDING, bottom: CHART_PADDING_BOTTOM };
   }
+}
+
+export function getMatrixChartScales(
+  definition: MatrixChartDefinition,
+  yLabels: string[]
+): DeepPartial<ScaleChartOptions<"bar">["scales"]> {
+  const fontColor = chartFontColor(definition.background);
+  const scales: DeepPartial<ScaleChartOptions<"bar">["scales"]> = {
+    x: {
+      stacked: true,
+      grid: { display: false },
+      title: getChartAxisTitleRuntime(definition.axesDesign?.x),
+    },
+    y: {
+      stacked: true,
+      grid: { display: false },
+      title: getChartAxisTitleRuntime(definition.axesDesign?.y),
+      min: 0,
+      max: yLabels.length,
+      ticks: {
+        stepSize: 0.5,
+        color: fontColor,
+        callback: function (label, index, labels) {
+          if (index % 2 === 0) {
+            return undefined;
+          }
+          return yLabels[Math.floor((index - 1) / 2)];
+        },
+      },
+    },
+  };
+  return scales;
+}
+
+export function getMatrixColorScale(
+  definition: MatrixChartDefinition,
+  args: ChartRuntimeGenerationArgs
+): ChartColorScalePluginOptions | undefined {
+  const { dataSetsValues } = args;
+  if (!dataSetsValues.length || definition.legendPosition === "none") {
+    return undefined;
+  }
+  const allValues = dataSetsValues.flatMap((ds) => ds.data).filter(isDefined);
+  const minValue = Math.min(...allValues);
+  const maxValue = Math.max(...allValues);
+  let colorScale: Color[] = [];
+  if (typeof definition.colorScale === "object") {
+    colorScale = [
+      definition.colorScale.minColor,
+      definition.colorScale.midColor,
+      definition.colorScale.maxColor,
+    ].filter(isDefined);
+  } else {
+    colorScale = [...COLORSCHEMES[definition.colorScale ?? "oranges"]];
+  }
+  return {
+    position: definition.legendPosition === "right" ? "right" : "left",
+    colorScale,
+    fontColor: chartFontColor(definition.background),
+    minValue,
+    maxValue,
+    locale: args.locale,
+  };
 }
 
 function legendPositionToGeoLegendPosition(position: LegendPosition) {
