@@ -1,5 +1,5 @@
 import { CoreGetters, PluginGetters } from "../index";
-import { DrawingPlugin } from "../plugins/ui_feature/drawing";
+import { DrawingPlugin } from "../plugins/core/drawing";
 // ... (imports)
 
 // ...

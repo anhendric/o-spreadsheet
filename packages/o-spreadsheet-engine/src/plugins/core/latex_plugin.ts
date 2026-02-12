@@ -50,4 +50,7 @@ export class LatexPlugin extends CorePlugin {
       this.latexContent = data.latexContent;
     }
   }
+  export(data: any) {
+    data.latexContent = this.latexContent;
+  }
 }

@@ -4,6 +4,7 @@ import { CellPlugin } from "../plugins/core/cell";
 import { ChartPlugin } from "../plugins/core/chart";
 import { ConditionalFormatPlugin } from "../plugins/core/conditional_format";
 import { DataValidationPlugin } from "../plugins/core/data_validation";
+import { DrawingPlugin } from "../plugins/core/drawing";
 import { FigurePlugin } from "../plugins/core/figures";
 import { HeaderGroupingPlugin } from "../plugins/core/header_grouping";
 import { HeaderSizePlugin } from "../plugins/core/header_size";
@@ -16,7 +17,6 @@ import { RangeAdapterPlugin } from "../plugins/core/range";
 import { SettingsPlugin } from "../plugins/core/settings";
 import { SheetPlugin } from "../plugins/core/sheet";
 import { TablePlugin } from "../plugins/core/tables";
-import { DrawingPlugin } from "../plugins/ui_feature/drawing";
 
 /**
  * Union of all getter names of a plugin.

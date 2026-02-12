@@ -1,4 +1,4 @@
-import { DrawingElement } from "@odoo/o-spreadsheet-engine/plugins/ui_feature/drawing";
+import { DrawingElement } from "@odoo/o-spreadsheet-engine/plugins/core/drawing";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { Component, useEffect, useRef, useState } from "@odoo/owl";
 import { BorderStyle, borderStyles, ChartStyle, Rect, UID } from "../../../types";

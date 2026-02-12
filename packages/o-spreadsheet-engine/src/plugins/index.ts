@@ -5,6 +5,7 @@ import { CellPlugin } from "./core/cell";
 import { ChartPlugin } from "./core/chart";
 import { ConditionalFormatPlugin } from "./core/conditional_format";
 import { DataValidationPlugin } from "./core/data_validation";
+import { DrawingPlugin } from "./core/drawing";
 import { FigurePlugin } from "./core/figures";
 import { HeaderGroupingPlugin } from "./core/header_grouping";
 import { HeaderSizePlugin } from "./core/header_size";
@@ -59,7 +60,7 @@ import { FilterEvaluationPlugin } from "./ui_stateful/filter_evaluation";
 import { HeaderPositionsUIPlugin } from "./ui_stateful/header_positions";
 import { GridSelectionPlugin } from "./ui_stateful/selection";
 import { SheetViewPlugin } from "./ui_stateful/sheetview";
-export { DrawingPlugin } from "./ui_feature/drawing";
+export { DrawingPlugin };
 
 export const corePluginRegistry = new Registry<CorePluginConstructor>()
   .add("settings", SettingsPlugin)
@@ -80,7 +81,8 @@ export const corePluginRegistry = new Registry<CorePluginConstructor>()
   .add("pivot_core", PivotCorePlugin)
   .add("spreadsheet_pivot_core", SpreadsheetPivotCorePlugin)
   .add("tableStyle", TableStylePlugin)
-  .add("latex", LatexPlugin);
+  .add("latex", LatexPlugin)
+  .add("drawing", DrawingPlugin);
 
 // Plugins which handle a specific feature, without handling any core commands
 export const featurePluginRegistry = new Registry<UIPluginConstructor>()

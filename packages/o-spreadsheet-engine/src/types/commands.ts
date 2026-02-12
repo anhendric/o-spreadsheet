@@ -20,7 +20,7 @@ import { ChartDefinition } from "./chart";
 
 import { ConditionalFormat } from "./conditional_formatting";
 
-import { DrawingData } from "../plugins/ui_feature/drawing";
+import { DrawingData } from "../plugins/core/drawing";
 import { ClipboardPasteOptions, ParsedOsClipboardContentWithImageData } from "./clipboard";
 import { DataValidationRule } from "./data_validation";
 import { Carousel, CarouselItem, Figure, FigureSize } from "./figure";

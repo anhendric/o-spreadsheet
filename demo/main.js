@@ -20,9 +20,15 @@ const { useStoreProvider } = o_spreadsheet.stores;
 
 const uuidGenerator = new o_spreadsheet.helpers.UuidGenerator();
 
-topbarMenuRegistry.addChild("xlsx", ["file"], {
-  name: "Download file",
+topbarMenuRegistry.addChild("download_as", ["file"], {
+  name: "Save as ...",
   sequence: 20,
+  icon: "o-spreadsheet-Icon.EXPORT_XLSX",
+});
+
+topbarMenuRegistry.addChild("download_as_xlsx", ["file", "download_as"], {
+  name: "Excel (*.xlsx)",
+  sequence: 10,
   execute: async (env) => {
     const doc = await env.model.exportXLSX();
     const zip = new JSZip();
@@ -38,7 +44,18 @@ topbarMenuRegistry.addChild("xlsx", ["file"], {
       saveAs(blob, doc.name);
     });
   },
-  icon: "o-spreadsheet-Icon.EXPORT_XLSX",
+  isEnabledOnLockedSheet: true,
+});
+
+topbarMenuRegistry.addChild("download_as_json", ["file", "download_as"], {
+  name: "JSON (*.json)",
+  sequence: 20,
+  execute: async (env) => {
+    const data = env.model.exportData();
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    saveAs(blob, "spreadsheet.json");
+  },
   isEnabledOnLockedSheet: true,
 });
 
@@ -77,42 +94,61 @@ class Demo extends Component {
       isEnabledOnLockedSheet: true,
     });
 
-    topbarMenuRegistry.addChild("xlsxImport", ["file"], {
-      name: "Open file",
+    topbarMenuRegistry.addChild("import", ["file"], {
+      name: "Open",
       sequence: 18.5,
       execute: async (env) => {
         const input = document.createElement("input");
         input.setAttribute("type", "file");
         input.setAttribute("style", "display: none");
+        input.setAttribute("accept", ".xlsx, .json");
         document.body.appendChild(input);
         input.addEventListener("change", async () => {
           if (input.files.length <= 0) {
             return false;
           }
-          const myjszip = new JSZip();
-          const zip = await myjszip.loadAsync(input.files[0]);
-          const files = Object.keys(zip.files);
-          const images = [];
-          const contents = await Promise.all(
-            files.map((file) => {
-              if (file.includes("media/image")) {
-                images.push(file);
-                return zip.files[file].async("blob");
+          const file = input.files[0];
+          const fileName = file.name.toLowerCase();
+
+          try {
+            if (fileName.endsWith(".json")) {
+              const content = await file.text();
+              const data = JSON.parse(content);
+              await this.initiateConnection(data);
+            } else {
+              const myjszip = new JSZip();
+              const zip = await myjszip.loadAsync(file);
+              const files = Object.keys(zip.files);
+              const images = [];
+              const contents = await Promise.all(
+                files.map((file) => {
+                  if (file.includes("media/image")) {
+                    images.push(file);
+                    return zip.files[file].async("blob");
+                  }
+                  return zip.files[file].async("text");
+                })
+              );
+              const inputFiles = {};
+              for (let i = 0; i < contents.length; i++) {
+                inputFiles[files[i]] = contents[i];
               }
-              return zip.files[file].async("text");
-            })
-          );
-          const inputFiles = {};
-          for (let i = 0; i < contents.length; i++) {
-            inputFiles[files[i]] = contents[i];
+              for (let i = 0; i < images.length; i++) {
+                const blob = inputFiles[images[i]];
+                const file = new File([blob], images[i].split("/").at(-1));
+                const imageSrc = await this.fileStore.upload(file);
+                inputFiles[images[i]] = { imageSrc };
+              }
+              await this.initiateConnection(inputFiles);
+            }
+          } catch (error) {
+            console.error(error);
+            this.notifyUser({
+              text: "An error occurred while opening the file.",
+              type: "warning",
+            });
           }
-          for (let i = 0; i < images.length; i++) {
-            const blob = inputFiles[images[i]];
-            const file = new File([blob], images[i].split("/").at(-1));
-            const imageSrc = await this.fileStore.upload(file);
-            inputFiles[images[i]] = { imageSrc };
-          }
-          await this.initiateConnection(inputFiles);
+
           stores.resetStores();
           this.state.key = this.state.key + 1;
           input.remove();

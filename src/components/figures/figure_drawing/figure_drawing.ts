@@ -1,4 +1,4 @@
-import { DrawingData, DrawingElement } from "@odoo/o-spreadsheet-engine/plugins/ui_feature/drawing";
+import { DrawingData, DrawingElement } from "@odoo/o-spreadsheet-engine/plugins/core/drawing";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { Component, markup, useRef, useState } from "@odoo/owl";
 import { CSSProperties, FigureUI, Rect } from "../../../types";
