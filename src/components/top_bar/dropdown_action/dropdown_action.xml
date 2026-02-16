@@ -14,7 +14,12 @@
       <div class="o-dropdown-content p-1 bg-white" t-if="isActive" t-on-click.stop="">
         <div class="o-dropdown-line">
           <t t-foreach="props.childActions" t-as="action" t-key="action_index">
-            <ActionButton action="action" class="props.childClass"/>
+            <ActionButton
+              action="action"
+              class="props.childClass"
+              showIdIfIconIsMissing="true"
+              onClick.bind="closeDropdowns"
+            />
           </t>
         </div>
       </div>

@@ -6,6 +6,11 @@
   }
 
   .o-dropdown-content {
+    background-color: var(--os-white-bg);
+    border: 1px solid var(--os-border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+
     .o-dropdown-line {
       display: flex;
 

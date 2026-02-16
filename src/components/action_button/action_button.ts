@@ -9,6 +9,7 @@ interface Props {
   selectedColor?: string;
   class?: string;
   onClick?: (ev: MouseEvent) => void;
+  showIdIfIconIsMissing?: boolean;
 }
 
 export class ActionButton extends Component<Props, SpreadsheetChildEnv> {
@@ -19,6 +20,7 @@ export class ActionButton extends Component<Props, SpreadsheetChildEnv> {
     selectedColor: { type: String, optional: true },
     class: { type: String, optional: true },
     onClick: { type: Function, optional: true },
+    showIdIfIconIsMissing: { type: Boolean, optional: true },
   };
 
   private actionButton = createAction(this.props.action);
@@ -49,6 +51,10 @@ export class ActionButton extends Component<Props, SpreadsheetChildEnv> {
     const name = this.actionButton.name(this.env);
     const description = this.actionButton.description(this.env) || this.actionButton.shortcut;
     return name + (description ? ` (${description})` : "");
+  }
+
+  get actionId() {
+    return this.actionButton.id;
   }
 
   get iconTitle() {

@@ -7,7 +7,15 @@
     padding: 0px 1px;
     border-radius: 2px;
     min-width: 22px;
+
+    .o-action-button-id {
+      font-size: 10px;
+      color: #666;
+      padding: 0 4px;
+      white-space: nowrap;
+    }
   }
+
   .o-disabled {
     opacity: 0.6;
     cursor: default;

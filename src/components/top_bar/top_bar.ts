@@ -4,9 +4,7 @@ import {
   Component,
   onWillStart,
   onWillUpdateProps,
-  useEffect,
   useExternalListener,
-  useRef,
   useState,
 } from "@odoo/owl";
 import { Action } from "../../actions/action";
@@ -22,14 +20,12 @@ import { TopBarComposer } from "../composer/top_bar_composer/top_bar_composer";
 import { getBoundingRectAsPOJO } from "../helpers/dom_helpers";
 import { useSpreadsheetRect } from "../helpers/position_hook";
 import { MenuPopover, MenuState } from "../menu_popover/menu_popover";
-import { Popover, PopoverProps } from "../popover";
+import { Popover } from "../popover";
 import { TopBarToolStore } from "./top_bar_tool_store";
 import { topBarToolBarRegistry } from "./top_bar_tools_registry";
 
 interface State {
   menuState: MenuState;
-  invisibleToolsCategories: string[];
-  toolsPopoverState: { isOpen: boolean };
 }
 
 interface Props {
@@ -41,6 +37,11 @@ interface Props {
 // TopBar
 // -----------------------------------------------------------------------------
 
+import "../../registries/ribbon_items";
+import { Ribbon } from "../ribbon/ribbon";
+
+// ...
+
 export class TopBar extends Component<Props, SpreadsheetChildEnv> {
   static template = "o-spreadsheet-TopBar";
   static props = {
@@ -51,14 +52,13 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
     MenuPopover,
     TopBarComposer,
     Popover,
+    Ribbon,
   };
 
   toolsCategories = topBarToolBarRegistry.getCategories();
 
   state: State = useState({
     menuState: { isOpen: false, anchorRect: null, menuItems: [] },
-    invisibleToolsCategories: [],
-    toolsPopoverState: { isOpen: false },
   });
 
   isSelectingMenu = false;
@@ -72,11 +72,11 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
   fingerprints!: Store<FormulaFingerprintStore>;
   topBarToolStore!: Store<TopBarToolStore>;
 
-  toolBarContainerRef = useRef("toolBarContainer");
-  toolbarRef = useRef("toolBar");
+  // toolBarContainerRef = useRef("toolBarContainer");
+  // toolbarRef = useRef("toolBar");
 
-  moreToolsContainerRef = useRef("moreToolsContainer");
-  moreToolsButtonRef = useRef("moreToolsButton");
+  // moreToolsContainerRef = useRef("moreToolsContainer");
+  // moreToolsButtonRef = useRef("moreToolsButton");
 
   spreadsheetRect = useSpreadsheetRect();
 
@@ -87,53 +87,9 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
     useExternalListener(window, "click", this.onExternalClick);
     onWillStart(() => this.updateCellState());
     onWillUpdateProps(() => this.updateCellState());
-
-    useEffect(
-      () => {
-        this.state.toolsPopoverState.isOpen = false;
-        this.setVisibilityToolsGroups();
-      },
-      () => [this.spreadsheetRect.width]
-    );
   }
 
-  setVisibilityToolsGroups() {
-    if (this.env.model.getters.isReadonly()) {
-      return;
-    }
-    const hiddenCategories: string[] = [];
-
-    const { x: toolsX } = this.toolbarRef.el!.getBoundingClientRect();
-    const { x } = this.toolBarContainerRef.el!.getBoundingClientRect();
-
-    // Compute the with of the button that will toggle the hidden tools
-    this.moreToolsContainerRef.el?.classList.remove("d-none");
-    const moreToolsWidth = this.moreToolsButtonRef.el?.getBoundingClientRect().width || 0;
-
-    // The actual width in which we can place our tools so that they are visible.
-    // Every tool container passed that width will be hidden.
-    // We remove 16px to the width to account for a scrollbar that might appear.
-    // Otherwise, we could end up in a loop of computation
-    const usableWidth = Math.round(this.spreadsheetRect.width) - moreToolsWidth - (toolsX - x) - 16;
-
-    const toolElements = document.querySelectorAll(".tool-container");
-
-    let currentWidth = 0;
-    for (let index = 0; index < toolElements.length; index++) {
-      const element = toolElements[index];
-      element.classList.remove("d-none");
-      const { width: toolWidth } = element.getBoundingClientRect();
-      currentWidth += toolWidth;
-      if (currentWidth > usableWidth) {
-        element.classList.add("d-none");
-        hiddenCategories.push(this.toolsCategories[index]);
-      }
-    }
-    this.state.invisibleToolsCategories = hiddenCategories;
-    if (!hiddenCategories.length) {
-      this.moreToolsContainerRef.el?.classList.add("d-none");
-    }
-  }
+  // setVisibilityToolsGroups removed for Ribbon
 
   get topbarComponents() {
     return topbarComponentRegistry
@@ -181,7 +137,7 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
     if (this.topBarToolStore.currentDropdown) {
       this.topBarToolStore.closeDropdowns();
     }
-    this.state.toolsPopoverState.isOpen = false;
+    // this.state.toolsPopoverState.isOpen = false;
     this.state.menuState.isOpen = true;
     this.state.menuState.anchorRect = getBoundingRectAsPOJO(ev.currentTarget as HTMLElement);
     this.state.menuState.menuItems = menu
@@ -197,7 +153,7 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
     if (this.topBarToolStore.currentDropdown) {
       this.topBarToolStore.closeDropdowns();
     }
-    this.state.toolsPopoverState.isOpen = false;
+    // this.state.toolsPopoverState.isOpen = false;
     this.state.menuState.isOpen = false;
     this.state.menuState.parentMenu = undefined;
     this.isSelectingMenu = false;
@@ -221,30 +177,10 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
     setStyle(this.env, { fontSize });
   }
 
-  toggleMoreTools() {
-    if (this.topBarToolStore.currentDropdown) {
-      this.topBarToolStore.closeDropdowns();
+  toggleFileMenu(ev: MouseEvent) {
+    const fileMenu = this.menus.find((m) => m.id === "file");
+    if (fileMenu) {
+      this.toggleContextMenu(fileMenu, ev);
     }
-    this.state.toolsPopoverState.isOpen = !this.state.toolsPopoverState.isOpen;
-  }
-
-  get toolsPopoverProps(): PopoverProps {
-    const rect = this.moreToolsButtonRef.el
-      ? getBoundingRectAsPOJO(this.moreToolsButtonRef.el)
-      : { x: 0, y: 0, width: 0, height: 0 };
-    return {
-      anchorRect: rect,
-      positioning: "bottom-left",
-      verticalOffset: 0,
-      class: "rounded",
-      maxWidth: 300,
-    };
-  }
-
-  showDivider(categoryIndex: number) {
-    return (
-      categoryIndex < this.toolsCategories.length - 1 ||
-      this.state.invisibleToolsCategories.length > 0
-    );
   }
 }

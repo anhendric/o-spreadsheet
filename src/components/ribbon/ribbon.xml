@@ -1,0 +1,39 @@
+<templates>
+  <t t-name="o-spreadsheet-Ribbon">
+    <div class="o-ribbon-container d-flex flex-column bg-white border-bottom">
+      <!-- Tabs -->
+      <div class="o-ribbon-tabs d-flex justify-content-between align-items-center">
+        <div class="d-flex">
+          <t t-slot="file-menu"/>
+          <t t-foreach="tabs" t-as="tab" t-key="tab.id">
+            <div
+              class="o-ribbon-tab px-3 py-1 cursor-pointer user-select-none"
+              t-att-class="{'active fw-bold border-bottom border-primary': state.activeTab === tab.id, 'text-muted': state.activeTab !== tab.id}"
+              t-on-click="() => this.selectTab(tab.id)">
+              <t t-esc="tab.name"/>
+            </div>
+          </t>
+        </div>
+        <div class="d-flex align-items-center px-2">
+          <t t-slot="top-right"/>
+        </div>
+      </div>
+
+      <!-- Toolbar / Groups -->
+      <div class="o-ribbon-toolbar d-flex p-2 bg-light border-top">
+        <t t-foreach="activeGroups" t-as="group" t-key="group.id">
+          <div class="o-ribbon-group d-flex flex-column px-2 border-end">
+            <div class="d-flex flex-wrap align-items-center justify-content-center">
+              <t t-foreach="group.items" t-as="item" t-key="item.id">
+                <t t-component="item.component" t-props="item.props"/>
+              </t>
+            </div>
+            <div class="o-ribbon-group-label text-center text-muted small mt-1">
+              <t t-esc="group.label"/>
+            </div>
+          </div>
+        </t>
+      </div>
+    </div>
+  </t>
+</templates>

@@ -31,10 +31,14 @@ export class DropdownAction extends Component<Props, SpreadsheetChildEnv> {
 
   toggleDropdown() {
     if (this.isActive) {
-      this.topBarToolStore.closeDropdowns();
+      this.closeDropdowns();
     } else {
       this.topBarToolStore.openDropdown();
     }
+  }
+
+  closeDropdowns() {
+    this.topBarToolStore.closeDropdowns();
   }
 
   get isActive() {

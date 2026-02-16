@@ -1,0 +1,71 @@
+.o-spreadsheet {
+  .o-ribbon-container {
+    font-size: 13px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .o-ribbon-tabs {
+    background-color: var(--os-background-gray-color);
+    border-bottom: 1px solid var(--os-border-color);
+  }
+
+  .o-ribbon-tab {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    color: var(--os-text-body);
+  }
+
+  .o-ribbon-tab:hover {
+    background-color: var(--os-button-hover-bg);
+  }
+
+  .o-ribbon-tab.active {
+    background-color: var(--os-white-bg);
+    border-bottom-color: #107c10 !important;
+    /* Excel Green */
+    color: #107c10;
+    font-weight: 600;
+  }
+
+  /* Specific styling for the File button in the slot */
+  .o-ribbon-file-button {
+    background-color: #107c10;
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .o-ribbon-file-button:hover {
+    background-color: #0e6d0e;
+  }
+
+  .o-ribbon-toolbar {
+    background-color: var(--os-white-bg);
+    overflow-x: auto;
+    border-bottom: 1px solid var(--os-border-color);
+  }
+
+  .o-ribbon-group {
+    padding: 4px;
+    border-right: 1px solid var(--os-separator-color);
+
+    .o-toolbar-button {
+      margin: 1px 3px !important;
+    }
+  }
+
+  .o-ribbon-group-label {
+    font-size: 10px;
+    color: #605e5c;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  /* Adjust button styles within ribbon if necessary */
+  .o-ribbon-group .o-toolbar-button {
+    margin: 1px;
+    border-radius: 2px;
+  }
+}

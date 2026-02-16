@@ -29,7 +29,6 @@
   }
 
   .o-spreadsheet-topbar {
-    line-height: 1.2;
     font-size: 14px;
     font-weight: 500;
 
@@ -83,6 +82,7 @@
     .o-topbar-toolbar {
       height: var(--os-mobile-topbar-toolbar-height);
     }
+
     .o-topbar-divider {
       border-width: 2px !important;
       border-radius: 4px;
@@ -91,6 +91,7 @@
     .o-toolbar-button {
       height: 35px;
       width: 31px;
+
       .o-toolbar-button.o-mobile-disabled * {
         color: var(--os-disabled-text-color);
         cursor: not-allowed;

@@ -10,6 +10,9 @@
       <span t-if="iconTitle" t-att-style="buttonStyle">
         <t t-call="{{iconTitle}}"/>
       </span>
+      <span t-else="" t-if="props.showIdIfIconIsMissing" class="o-action-button-id">
+        <t t-esc="actionId"/>
+      </span>
       <t t-if="props.hasTriangleDownIcon">
         <t t-call="o-spreadsheet-Icon.CARET_DOWN"/>
       </t>

@@ -41,9 +41,11 @@
   .o-spreadsheet-bottombar-wrapper {
     box-shadow: 0 0 3px 1px var(--os-gray-400);
   }
+
   .o-spreadsheet-bottombar-wrapper {
     overscroll-behavior: none;
   }
+
   position: relative;
   display: grid;
   font-size: 14px;
@@ -51,6 +53,7 @@
   .text-muted {
     color: var(--os-text-body-muted) !important;
   }
+
   .o-disabled {
     opacity: 0.4;
     cursor: default;
@@ -64,26 +67,33 @@
     /* rtl not supported ATM */
     direction: ltr;
   }
+
   .o-separator {
     margin-top: var(--os-menu-separator-padding);
     margin-bottom: var(--os-menu-separator-padding);
   }
+
   .o-hoverable-button {
     border-radius: 2px;
     cursor: pointer;
+
     .o-icon {
       color: var(--os-text-body);
     }
+
     &:not(.o-disabled):not(.active):hover {
       background-color: var(--os-button-hover-bg);
       color: var(--os-button-hover-text-color);
+
       .o-icon {
         color: var(--os-button-hover-text-color);
       }
     }
+
     &.active {
       background-color: var(--os-button-active-bg);
       color: var(--os-button-active-text-color);
+
       .o-icon {
         color: var(--os-button-active-text-color);
       }
@@ -126,6 +136,7 @@
     &::placeholder {
       color: var(--os-composer-placeholder-color);
     }
+
     &:focus {
       border-color: var(--os-action-color);
     }
@@ -162,6 +173,7 @@
     border-width: 0 0 1px 0;
     /* Remove number input arrows */
     appearance: textfield;
+
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -181,6 +193,7 @@
     position: relative;
     overflow: hidden;
     background-color: var(--os-background-gray-color);
+
     &:focus {
       outline: none;
     }
@@ -216,14 +229,17 @@
       background-color: var(--os-primary-button-bg);
       border-color: var(--os-primary-button-bg);
       color: var(--os-primary-button-text-color);
+
       &:hover:enabled {
         color: var(--os-primary-button-text-color);
         background-color: var(--os-primary-button-hover-bg);
       }
+
       &:active:enabled {
         background-color: var(--os-primary-button-active-bg);
         color: var(--os-primary-button-bg);
       }
+
       &.o-disabled,
       &:disabled {
         opacity: 0.5;
@@ -234,6 +250,7 @@
       color: var(--os-button-hover-text-color);
       background-color: var(--os-button-hover-bg);
     }
+
     &:active:enabled {
       color: var(--os-button-active-text-color);
       background-color: var(--os-button-active-bg);
@@ -255,6 +272,7 @@
     text-decoration: none;
     color: var(--os-action-color);
     font-weight: 500;
+
     &:hover,
     &:active {
       color: var(--os-action-color-hover);
@@ -265,6 +283,7 @@
     cursor: pointer;
     color: var(--os-text-body-muted);
     font-weight: 500;
+
     &:hover,
     &:active {
       color: var(--os-text-body);
