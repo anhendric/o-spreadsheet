@@ -1,4 +1,5 @@
 import { _t } from "@odoo/o-spreadsheet-engine/translation";
+import * as ACTION_CHART from "../actions/chart_actions";
 import * as ACTION_DATA from "../actions/data_actions";
 import * as ACTION_EDIT from "../actions/edit_actions";
 import * as ACTION_FORMAT from "../actions/format_actions";
@@ -8,6 +9,7 @@ import { ActionButton } from "../components/action_button/action_button";
 import { BorderEditorWidget } from "../components/border_editor/border_editor_widget";
 import { PaintFormatButton } from "../components/paint_format_button/paint_format_button";
 import { TableDropdownButton } from "../components/tables/table_dropdown_button/table_dropdown_button";
+import { ChartBackgroundColorEditor } from "../components/top_bar/color_editor/chart_background_color_editor";
 import { TopBarColorEditor } from "../components/top_bar/color_editor/color_editor";
 import { DropdownAction } from "../components/top_bar/dropdown_action/dropdown_action";
 import { TopBarFontSizeEditor } from "../components/top_bar/font_size_editor/font_size_editor";
@@ -19,7 +21,8 @@ ribbonRegistry
   .addTab("home", _t("Home"), 10)
   .addTab("insert", _t("Insert"), 20)
   .addTab("data", _t("Data"), 30)
-  .addTab("view", _t("View"), 40);
+  .addTab("view", _t("View"), 40)
+  .addTab("chart", _t("Chart"), 50, (env) => !!ACTION_CHART.getSelectedChartId(env));
 
 // --- HOME TAB ---
 
@@ -309,10 +312,17 @@ ribbonRegistry.addItem("home", "editing", {
 ribbonRegistry.addGroup("insert", "figures", _t("Figures"), 10);
 ribbonRegistry.addItem("insert", "figures", {
   id: "insert_chart",
-  component: ActionButton,
+  component: DropdownAction,
   props: {
-    action: ACTION_INSERT.insertChart,
+    parentAction: ACTION_INSERT.insertChart,
+    childActions: [
+      ACTION_INSERT.insertColumnChart,
+      ACTION_INSERT.insertLineChart,
+      ACTION_INSERT.insertPieChart,
+      ACTION_INSERT.insertScorecardChart,
+    ],
     class: "o-hoverable-button o-toolbar-button",
+    childClass: "o-hoverable-button o-menu-item-button o-chart-item-button",
   },
   sequence: 10,
 });
@@ -712,4 +722,85 @@ ribbonRegistry.addItem("view", "outline", {
     childClass: "o-hoverable-button",
   },
   sequence: 20,
+});
+
+// --- CHART TAB ---
+
+ribbonRegistry.addGroup("chart", "chart_type", _t("Type"), 10);
+ribbonRegistry.addItem("chart", "chart_type", {
+  id: "chart_type",
+  component: DropdownAction,
+  props: {
+    parentAction: ACTION_CHART.chartTypeMenu,
+    childActions: [
+      ACTION_CHART.setChartColumn,
+      ACTION_CHART.setChartLine,
+      ACTION_CHART.setChartPie,
+      ACTION_CHART.setChartDoughnut,
+      ACTION_CHART.setChartScorecard,
+    ],
+    class: "o-hoverable-button o-toolbar-button",
+    childClass: "o-hoverable-button o-menu-item-button o-chart-item-button",
+  },
+  sequence: 10,
+});
+
+ribbonRegistry.addGroup("chart", "chart_legend", _t("Legend"), 20);
+ribbonRegistry.addItem("chart", "chart_legend", {
+  id: "legend_position",
+  component: DropdownAction,
+  props: {
+    parentAction: ACTION_CHART.legendPositionMenu,
+    childActions: [
+      ACTION_CHART.setLegendTop,
+      ACTION_CHART.setLegendBottom,
+      ACTION_CHART.setLegendLeft,
+      ACTION_CHART.setLegendRight,
+      ACTION_CHART.setLegendNone,
+    ],
+    class: "o-hoverable-button o-toolbar-button",
+    childClass: "o-hoverable-button",
+  },
+  sequence: 10,
+});
+
+ribbonRegistry.addGroup("chart", "chart_format", _t("Format"), 30);
+ribbonRegistry.addItem("chart", "chart_format", {
+  id: "chart_background_color",
+  component: ChartBackgroundColorEditor,
+  props: {
+    class: "o-hoverable-button o-menu-item-button o-toolbar-button",
+    icon: "o-spreadsheet-Icon.FILL_COLOR",
+    title: _t("Background Color"),
+  },
+  sequence: 10,
+});
+ribbonRegistry.addItem("chart", "chart_format", {
+  id: "show_values",
+  component: ActionButton,
+  props: {
+    action: ACTION_CHART.toggleShowValues,
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 20,
+});
+ribbonRegistry.addItem("chart", "chart_format", {
+  id: "humanize_numbers",
+  component: ActionButton,
+  props: {
+    action: ACTION_CHART.toggleHumanize,
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 30,
+});
+
+ribbonRegistry.addGroup("chart", "chart_data", _t("Data"), 40);
+ribbonRegistry.addItem("chart", "chart_data", {
+  id: "view_range",
+  component: ActionButton,
+  props: {
+    action: ACTION_CHART.toggleViewRange,
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 10,
 });

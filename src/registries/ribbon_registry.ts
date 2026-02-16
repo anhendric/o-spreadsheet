@@ -22,16 +22,22 @@ export interface RibbonTab {
   name: string;
   sequence: number;
   groups: RibbonGroup[];
+  isVisible?: (env: SpreadsheetChildEnv) => boolean;
 }
 
 export class RibbonRegistry {
   private tabs: Map<string, RibbonTab> = new Map();
 
-  addTab(id: string, name: string, sequence: number): this {
+  addTab(
+    id: string,
+    name: string,
+    sequence: number,
+    isVisible?: (env: SpreadsheetChildEnv) => boolean
+  ): this {
     if (this.tabs.has(id)) {
       throw new Error(`Tab ${id} already exists`);
     }
-    this.tabs.set(id, { id, name, sequence, groups: [] });
+    this.tabs.set(id, { id, name, sequence, groups: [], isVisible });
     return this;
   }
 

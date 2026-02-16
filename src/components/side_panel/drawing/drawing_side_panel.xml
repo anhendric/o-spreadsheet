@@ -6,7 +6,7 @@
       <div class="d-flex gap-2 flex-wrap">
         <div
           class="o-drawing-button"
-          title.translate="Add rectangle"
+          title="Add rectangle"
           t-on-click="() => this.addShape('rect')">
           <svg
             fill="#000000"
@@ -19,10 +19,7 @@
             />
           </svg>
         </div>
-        <div
-          class="o-drawing-button"
-          title.translate="Add circle"
-          t-on-click="() => this.addShape('circle')">
+        <div class="o-drawing-button" title="Add circle" t-on-click="() => this.addShape('circle')">
           <svg width="16px" height="16px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <g id="Complete">
               <g id="Circle">
@@ -42,10 +39,7 @@
             </g>
           </svg>
         </div>
-        <div
-          class="o-drawing-button"
-          title.translate="Add arrow"
-          t-on-click="() => this.addShape('arrow')">
+        <div class="o-drawing-button" title="Add arrow" t-on-click="() => this.addShape('arrow')">
           <svg
             width="16px"
             height="16px"
@@ -58,10 +52,7 @@
             />
           </svg>
         </div>
-        <div
-          class="o-drawing-button"
-          title.translate="Add line"
-          t-on-click="() => this.addShape('line')">
+        <div class="o-drawing-button" title="Add line" t-on-click="() => this.addShape('line')">
           <svg
             width="16px"
             height="16px"
@@ -74,10 +65,7 @@
             />
           </svg>
         </div>
-        <div
-          class="o-drawing-button"
-          title.translate="Add text"
-          t-on-click="() => this.addShape('text')">
+        <div class="o-drawing-button" title="Add text" t-on-click="() => this.addShape('text')">
           <svg
             fill="#000000"
             width="16px"
@@ -100,10 +88,7 @@
             />
           </svg>
         </div>
-        <div
-          class="o-drawing-button"
-          title.translate="Add svg"
-          t-on-click="() => this.addShape('svg')">
+        <div class="o-drawing-button" title="Add svg" t-on-click="() => this.addShape('svg')">
           <svg
             width="16px"
             height="16px"
@@ -306,10 +291,7 @@
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 512 512"
-                enable-background="new 0 0 512 512"
-                xml:space="preserve">
+                viewBox="0 0 512 512">
                 <path
                   d="
           M0,512h139.6V372.4H0V512z
@@ -334,10 +316,7 @@
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 512 512"
-                enable-background="new 0 0 512 512"
-                xml:space="preserve">
+                viewBox="0 0 512 512">
                 <path
                   d="
           M0,512h139.6V372.4H0V512z

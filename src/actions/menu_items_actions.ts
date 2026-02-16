@@ -430,6 +430,44 @@ export const CREATE_CHART = (env: SpreadsheetChildEnv) => {
   }
 };
 
+export const CREATE_CHART_TYPE =
+  (type: string, isDoughnut = false) =>
+  (env: SpreadsheetChildEnv) => {
+    const getters = env.model.getters;
+    const figureId = env.model.uuidGenerator.smallUuid();
+    const sheetId = getters.getActiveSheetId();
+    let zones = getters.getSelectedZones();
+
+    if (zones.length === 1 && getZoneArea(zones[0]) === 1) {
+      env.model.selection.selectTableAroundSelection();
+      zones = getters.getSelectedZones();
+    }
+
+    const size = { width: DEFAULT_FIGURE_WIDTH, height: DEFAULT_FIGURE_HEIGHT };
+    const { col, row, offset } = centerFigurePosition(getters, size);
+
+    const definition = getSmartChartDefinition(zones, env.model.getters) as any;
+    definition.type = type;
+    if (isDoughnut) {
+      definition.isDoughnut = true;
+    }
+
+    const result = env.model.dispatch("CREATE_CHART", {
+      sheetId,
+      figureId,
+      chartId: env.model.uuidGenerator.smallUuid(),
+      col,
+      row,
+      offset,
+      size,
+      definition,
+    });
+    if (result.isSuccessful) {
+      env.model.dispatch("SELECT_FIGURE", { figureId });
+      env.openSidePanel("ChartPanel");
+    }
+  };
+
 export const CREATE_CAROUSEL = (env: SpreadsheetChildEnv) => {
   const getters = env.model.getters;
   const figureId = env.model.uuidGenerator.smallUuid();

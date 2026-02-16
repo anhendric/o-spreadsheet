@@ -216,6 +216,7 @@ import { topbarComponentRegistry } from "./registries/topbar_component_registry"
 import { useLocalStore, useStore, useStoreProvider } from "./store_engine";
 import { DependencyContainer } from "./store_engine/dependency_container";
 import { SpreadsheetStore } from "./stores";
+import { ChartHighlightStore } from "./stores/chart_highlight_store";
 import { ClientFocusStore } from "./stores/client_focus_store";
 import { GridRenderer } from "./stores/grid_renderer_store";
 import { HighlightStore } from "./stores/highlight_store";
@@ -509,6 +510,7 @@ export const stores = {
   ComposerFocusStore,
   CellComposerStore,
   FindAndReplaceStore,
+  ChartHighlightStore,
   HighlightStore,
   DelayedHoveredCellStore,
   HoveredTableStore,

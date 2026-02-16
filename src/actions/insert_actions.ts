@@ -180,7 +180,7 @@ export const insertCellShiftRight: ActionSpec = {
 
 export const insertChart: ActionSpec = {
   name: _t("Chart"),
-  execute: ACTIONS.CREATE_CHART,
+  //execute: ACTIONS.CREATE_CHART,
   isEnabled: (env) => !env.isSmall,
   icon: "o-spreadsheet-Icon.INSERT_CHART",
 };
@@ -390,3 +390,27 @@ function getColumnsNumber(env): number {
     return zone.right - zone.left + 1;
   }
 }
+
+export const insertColumnChart: ActionSpec = {
+  name: _t("Column chart"),
+  execute: ACTIONS.CREATE_CHART_TYPE("bar"),
+  icon: "o-spreadsheet-Icon.CHART_COLUMN",
+};
+
+export const insertLineChart: ActionSpec = {
+  name: _t("Line chart"),
+  execute: ACTIONS.CREATE_CHART_TYPE("line"),
+  icon: "o-spreadsheet-Icon.CHART_LINE",
+};
+
+export const insertPieChart: ActionSpec = {
+  name: _t("Pie chart"),
+  execute: ACTIONS.CREATE_CHART_TYPE("pie"),
+  icon: "o-spreadsheet-Icon.CHART_PIE",
+};
+
+export const insertScorecardChart: ActionSpec = {
+  name: _t("Scorecard"),
+  execute: ACTIONS.CREATE_CHART_TYPE("scorecard"),
+  icon: "o-spreadsheet-Icon.CHART_SCORECARD",
+};
