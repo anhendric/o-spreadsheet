@@ -1,0 +1,152 @@
+<templates>
+  <t t-name="o-spreadsheet-AnovaSidePanel">
+    <div class="o-anova-side-panel h-100 d-flex flex-column">
+      <div class="p-3">
+        <div class="o-section-title mb-2">ANOVA Type</div>
+        <div class="d-flex flex-column mb-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="anovaType"
+              id="anovaSingleFactor"
+              value="SingleFactor"
+              t-model="state.type"
+            />
+            <label class="form-check-label" for="anovaSingleFactor">Single Factor</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="anovaType"
+              id="anovaTwoFactorRep"
+              value="TwoFactorRep"
+              t-model="state.type"
+            />
+            <label class="form-check-label" for="anovaTwoFactorRep">
+              Two-Factor with Replication
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="anovaType"
+              id="anovaTwoFactorNoRep"
+              value="TwoFactorNoRep"
+              t-model="state.type"
+            />
+            <label class="form-check-label" for="anovaTwoFactorNoRep">
+              Two-Factor without Replication
+            </label>
+          </div>
+        </div>
+
+        <div class="o-section-title mb-2">Input Range</div>
+        <div class="mb-3">
+          <SelectionInput
+            ranges="[state.inputRange]"
+            onSelectionChanged="(ranges) => this.onInputRangeChanged(ranges)"
+            required="true"
+            hasSingleRange="true"
+          />
+        </div>
+
+        <t t-if="state.type === 'SingleFactor'">
+          <div class="o-section-title mb-2">Grouped By</div>
+          <div class="d-flex mb-3">
+            <div class="form-check me-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="groupedBy"
+                id="groupedByColumns"
+                value="columns"
+                t-model="state.groupedBy"
+              />
+              <label class="form-check-label" for="groupedByColumns">Columns</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="groupedBy"
+                id="groupedByRows"
+                value="rows"
+                t-model="state.groupedBy"
+              />
+              <label class="form-check-label" for="groupedByRows">Rows</label>
+            </div>
+          </div>
+        </t>
+
+        <t t-if="state.type === 'TwoFactorRep'">
+          <div class="o-section-title mb-2">Rows per sample</div>
+          <input type="number" class="o-input mb-3" t-model="state.rowsPerSample"/>
+        </t>
+
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="labelsInFirstRow"
+            t-model="state.labelsInFirstRow"
+          />
+          <label class="form-check-label" for="labelsInFirstRow">Labels in First Row/Column</label>
+        </div>
+
+        <div class="o-section-title mb-2">Alpha</div>
+        <input type="number" class="o-input mb-3" t-model="state.alpha" step="0.01"/>
+
+        <div class="o-section-title mb-2">Output Range</div>
+        <div class="d-flex flex-column mb-3">
+          <div class="form-check mb-2">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="outputOption"
+              id="outputNewSheet"
+              value="true"
+              t-model="state.newSheet"
+            />
+            <label class="form-check-label" for="outputNewSheet">New Sheet</label>
+          </div>
+          <div class="form-check mb-2">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="outputOption"
+              id="outputRange"
+              value="false"
+              t-model="state.newSheet"
+            />
+            <label class="form-check-label" for="outputRange">Output Range</label>
+          </div>
+          <t t-if="state.newSheet === 'false'">
+            <SelectionInput
+              ranges="[state.outputRange]"
+              onSelectionChanged="(ranges) => this.onOutputRangeChanged(ranges)"
+              required="true"
+              hasSingleRange="true"
+            />
+          </t>
+        </div>
+      </div>
+
+      <div class="p-3 mt-auto border-top">
+        <div t-if="state.error" class="text-danger mb-2 small">
+          <t t-esc="state.error"/>
+        </div>
+        <div class="d-flex">
+          <button class="o-button o-button-primary flex-grow-1 me-2" t-on-click="compute">
+            OK
+          </button>
+          <button class="o-button o-button-secondary" t-on-click="props.onCloseSidePanel">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

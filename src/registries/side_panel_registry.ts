@@ -90,6 +90,7 @@ sidePanelRegistry.add("InsertSpecialCharacter", {
   Body: InsertSpecialCharacterPanel,
 });
 
+import { AnovaSidePanel } from "../components/side_panel/anova/anova_side_panel";
 import { DataTableSidePanel } from "../components/side_panel/data_table/data_table_side_panel";
 import { DrawingSidePanel } from "../components/side_panel/drawing/drawing_side_panel";
 import { SolverSidePanel } from "../components/side_panel/solver/solver_side_panel";
@@ -107,6 +108,11 @@ sidePanelRegistry.add("DataTable", {
 sidePanelRegistry.add("Solver", {
   title: _t("Solver"),
   Body: SolverSidePanel,
+});
+
+sidePanelRegistry.add("Anova", {
+  title: _t("ANOVA"),
+  Body: AnovaSidePanel,
 });
 
 sidePanelRegistry.add("SplitToColumns", {

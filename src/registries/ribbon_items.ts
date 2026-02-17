@@ -634,6 +634,20 @@ ribbonRegistry.addItem("data", "analysis", {
   sequence: 20,
 });
 
+ribbonRegistry.addItem("data", "analysis", {
+  id: "anova",
+  component: ActionButton,
+  props: {
+    action: {
+      name: _t("ANOVA"),
+      execute: (env: any) => env.openSidePanel("Anova"),
+      icon: "o-spreadsheet-Icon.STATS_BOX_PLOT",
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 30,
+});
+
 // --- VIEW TAB ---
 
 // Show
