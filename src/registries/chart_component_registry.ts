@@ -23,3 +23,4 @@ chartComponentRegistry.add("sunburst", ChartJsComponent);
 chartComponentRegistry.add("treemap", ChartJsComponent);
 chartComponentRegistry.add("matrix", ChartJsComponent);
 chartComponentRegistry.add("heatmap", ChartJsComponent);
+chartComponentRegistry.add("boxplot", ChartJsComponent);

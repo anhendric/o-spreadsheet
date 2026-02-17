@@ -1,6 +1,8 @@
 import { Point } from "chart.js";
 import { XlsxHexColor } from "../xlsx";
 import { BarChartDefinition, BarChartRuntime } from "./bar_chart";
+import { BoxPlotChartDefinition, BoxPlotChartRuntime } from "./box_plot_chart";
+
 import { ComboChartDefinition, ComboChartRuntime } from "./combo_chart";
 import { LegendPosition } from "./common_chart";
 import { FunnelChartColors, FunnelChartDefinition, FunnelChartRuntime } from "./funnel_chart";
@@ -44,6 +46,7 @@ export const CHART_TYPES = [
   "treemap",
   "matrix",
   "heatmap",
+  "boxplot",
 ] as const;
 export type ChartType = (typeof CHART_TYPES)[number];
 
@@ -63,7 +66,8 @@ export type ChartDefinition =
   | SunburstChartDefinition
   | TreeMapChartDefinition
   | MatrixChartDefinition
-  | HeatmapChartDefinition;
+  | HeatmapChartDefinition
+  | BoxPlotChartDefinition;
 
 export type ChartWithDataSetDefinition = Extract<
   ChartDefinition,
@@ -96,7 +100,8 @@ export type ChartJSRuntime =
   | GeoChartRuntime
   | FunnelChartRuntime
   | SunburstChartRuntime
-  | TreeMapChartRuntime;
+  | TreeMapChartRuntime
+  | BoxPlotChartRuntime;
 
 export type ChartRuntime = ChartJSRuntime | ScorecardChartRuntime | GaugeChartRuntime;
 

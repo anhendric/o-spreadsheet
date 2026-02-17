@@ -3,6 +3,7 @@ import { chartSubtypeRegistry } from "@odoo/o-spreadsheet-engine/registries/char
 import { _t } from "@odoo/o-spreadsheet-engine/translation";
 import {
   BarChartDefinition,
+  BoxPlotChartDefinition,
   FunnelChartDefinition,
   GaugeChartDefinition,
   LineChartDefinition,
@@ -20,7 +21,9 @@ import { RadarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/rad
 import { TreeMapChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/tree_map_chart";
 import {
   BarChart,
+  BoxPlotChart,
   createBarChartRuntime,
+  createBoxPlotChartRuntime,
   createGaugeChartRuntime,
   createLineChartRuntime,
   createPieChartRuntime,
@@ -221,6 +224,19 @@ chartRegistry.add("heatmap" as any, {
   transformDefinition: HeatmapChart.transformDefinition,
   getChartDefinitionFromContextCreation: HeatmapChart.getDefinitionFromContextCreation,
   sequence: 130,
+});
+
+chartRegistry.add("boxplot" as any, {
+  match: (type) => (type as any) === "boxplot",
+  createChart: (definition, sheetId, getters) =>
+    new BoxPlotChart(definition as unknown as BoxPlotChartDefinition, sheetId, getters),
+  getChartRuntime: (chart, getters) => {
+    return createBoxPlotChartRuntime(chart as BoxPlotChart, getters);
+  },
+  validateChartDefinition: BoxPlotChart.validateChartDefinition,
+  transformDefinition: BoxPlotChart.transformDefinition,
+  getChartDefinitionFromContextCreation: BoxPlotChart.getDefinitionFromContextCreation,
+  sequence: 140,
 });
 
 chartSubtypeRegistry
@@ -426,4 +442,11 @@ chartSubtypeRegistry
     chartType: "heatmap" as any,
     category: "misc",
     preview: "o-spreadsheet-ChartPreview.HEAT_MAP",
+  })
+  .add("boxplot", {
+    displayName: _t("Box Plot"),
+    chartSubtype: "boxplot",
+    chartType: "boxplot" as any,
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.BOX_PLOT",
   });

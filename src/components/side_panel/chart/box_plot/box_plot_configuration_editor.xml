@@ -1,0 +1,15 @@
+<templates>
+  <t t-name="o-spreadsheet-BoxPlotConfigurationEditor">
+    <SidePanelCollapsible isInitiallyCollapsed="true" title.translate="Style">
+      <t t-set-slot="content">
+        <Section class="'pt-0'">
+          <Checkbox
+            label.translate="Box outlines"
+            value="isOutlined"
+            onChange.bind="onToggleOutlined"
+          />
+        </Section>
+      </t>
+    </SidePanelCollapsible>
+  </t>
+</templates>

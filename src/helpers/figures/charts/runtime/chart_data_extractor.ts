@@ -818,7 +818,7 @@ export function getChartLabelFormat(
   return formats.find((format) => format !== undefined);
 }
 
-function getChartLabelValues(
+export function getChartLabelValues(
   getters: Getters,
   dataSets: DataSet[],
   labelRange?: Range

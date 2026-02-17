@@ -422,4 +422,21 @@
       </g>
     </svg>
   </t>
+
+  <t t-name="o-spreadsheet-ChartPreview.BOX_PLOT">
+    <svg viewBox="0 0 48 48" class="o-chart-preview" xmlns="http://www.w3.org/2000/svg">
+      <path
+        stroke="var(--os-chart-preview-blue-line)"
+        style="fill:none"
+        d="M24,8 V16 M24,28 V38 M20,8 H28 M20,38 H28 M18,16 H30 V28 H18 Z M18,24 H30"
+        transform="translate(-10,0)"
+      />
+      <path
+        stroke="var(--os-chart-preview-orange-line)"
+        style="fill:none"
+        d="M24,9 V20 M24,32 V40 M20,9 H28 M20,40 H28 M18,20 H30 V32 H18 Z M18,26 H30"
+        transform="translate(10,0)"
+      />
+    </svg>
+  </t>
 </templates>

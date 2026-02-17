@@ -2,6 +2,8 @@ import { Registry } from "@odoo/o-spreadsheet-engine/registries/registry";
 import { Component } from "@odoo/owl";
 import { BarConfigPanel } from "./bar_chart/bar_chart_config_panel";
 import { BarChartDesignPanel } from "./bar_chart/bar_chart_design_panel";
+import { BoxPlotConfigPanel } from "./box_plot/box_plot_config_panel";
+import { BoxPlotDesignPanel } from "./box_plot/box_plot_design_panel";
 import { GenericChartConfigPanel } from "./building_blocks/generic_side_panel/config_panel";
 
 import { ChartWithAxisDesignPanel } from "./chart_with_axis/design_panel";
@@ -30,6 +32,7 @@ import { WaterfallChartDesignPanel } from "./waterfall_chart/waterfall_chart_des
 import { GenericZoomableChartDesignPanel } from "./zoomable_chart/design_panel";
 
 export { BarConfigPanel } from "./bar_chart/bar_chart_config_panel";
+export { BoxPlotConfigPanel } from "./box_plot/box_plot_config_panel";
 export { GenericChartConfigPanel } from "./building_blocks/generic_side_panel/config_panel";
 export { ChartWithAxisDesignPanel } from "./chart_with_axis/design_panel";
 export { GaugeChartConfigPanel } from "./gauge_chart_panel/gauge_chart_config_panel";
@@ -110,4 +113,8 @@ chartSidePanelComponentRegistry
   .add("heatmap", {
     configuration: HeatmapChartConfigPanel,
     design: HeatmapChartDesignPanel,
+  })
+  .add("boxplot", {
+    configuration: BoxPlotConfigPanel,
+    design: BoxPlotDesignPanel,
   });

@@ -11,6 +11,7 @@ import { Store, useStore } from "../../../../store_engine";
 import { UID } from "../../../../types";
 import { ChartAnimationStore } from "./chartjs_animation_store";
 
+import { getBoxPlotChartController, getBoxPlotChartElement } from "./box_plot";
 import { chartColorScalePlugin } from "./chartjs_colorscale_plugin";
 import {
   funnelTooltipPositioner,
@@ -60,6 +61,15 @@ chartJsExtensionRegistry.add("sunburstHoverPlugin", {
 chartJsExtensionRegistry.add("chartColorScalePlugin", {
   register: (Chart) => Chart.register(chartColorScalePlugin),
   unregister: (Chart) => Chart.unregister(chartColorScalePlugin),
+});
+
+chartJsExtensionRegistry.add("boxPlotController", {
+  register: (Chart) => Chart.register(getBoxPlotChartController()),
+  unregister: (Chart) => Chart.unregister(getBoxPlotChartController()),
+});
+chartJsExtensionRegistry.add("boxPlotElement", {
+  register: (Chart) => Chart.register(getBoxPlotChartElement()),
+  unregister: (Chart) => Chart.unregister(getBoxPlotChartElement()),
 });
 
 chartJsExtensionRegistry.add("zoomWindowPlugin", {
