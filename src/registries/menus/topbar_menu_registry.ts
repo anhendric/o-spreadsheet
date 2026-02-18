@@ -604,7 +604,14 @@ topbarMenuRegistry
     });
   })
   .addChild("reinsert_dynamic_pivot", ["data"], ACTION_DATA.reinsertDynamicPivotMenu)
-  .addChild("reinsert_static_pivot", ["data"], ACTION_DATA.reinsertStaticPivotMenu);
+  .addChild("reinsert_static_pivot", ["data"], ACTION_DATA.reinsertStaticPivotMenu)
+  .addChild("console", ["data"], {
+    name: _t("Console"),
+    execute: (env) => env.openSidePanel("Console"),
+    sequence: 100,
+    icon: "o-spreadsheet-Icon.TERMINAL", // Assuming this icon exists or similar
+    separator: true,
+  });
 
 // Zoom
 ZOOM_VALUES.forEach((zoom) => {

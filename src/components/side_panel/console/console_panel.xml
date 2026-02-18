@@ -1,0 +1,25 @@
+<templates>
+  <div t-name="o-spreadsheet-ConsolePanel" class="o-console-panel">
+    <div class="o-console-history" t-ref="history">
+      <div t-foreach="state.history" t-as="entry" t-key="entry_index" class="o-console-entry">
+        <div class="o-console-input">
+          <span class="o-console-prompt">&gt;</span>
+          <span t-esc="entry.code"/>
+        </div>
+        <div class="o-console-output" t-if="entry.result !== undefined" t-esc="entry.result"/>
+        <div class="o-console-error" t-if="entry.error" t-esc="entry.error"/>
+      </div>
+    </div>
+    <div class="o-console-input-area">
+      <span class="o-console-prompt">&gt;</span>
+      <input
+        type="text"
+        class="o-console-input-field"
+        t-model="state.currentInput"
+        t-on-keydown="onKeyDown"
+        t-ref="input"
+        placeholder="Type JS code (e.g. 1+1, A1, SUM(1,2))..."
+      />
+    </div>
+  </div>
+</templates>

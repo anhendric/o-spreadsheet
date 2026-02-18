@@ -1,0 +1,65 @@
+.o-spreadsheet {
+  .o-console-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family: monospace;
+    font-size: 13px;
+  }
+
+  .o-console-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .o-console-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .o-console-input {
+    display: flex;
+    gap: 5px;
+    color: #d4d4d4;
+    white-space: pre-wrap;
+  }
+
+  .o-console-prompt {
+    color: #569cd6;
+    font-weight: bold;
+    user-select: none;
+  }
+
+  .o-console-output {
+    margin-left: 15px;
+    white-space: pre-wrap;
+  }
+
+  .o-console-error {
+    margin-left: 15px;
+    color: #f48771;
+    white-space: pre-wrap;
+  }
+
+  .o-console-input-area {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    border-top: 1px solid #333;
+  }
+
+  .o-console-input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-family: monospace;
+    font-size: 13px;
+    outline: none;
+  }
+}

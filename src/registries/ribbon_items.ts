@@ -648,6 +648,20 @@ ribbonRegistry.addItem("data", "analysis", {
   sequence: 30,
 });
 
+ribbonRegistry.addItem("data", "analysis", {
+  id: "console",
+  component: ActionButton,
+  props: {
+    action: {
+      name: _t("Console"),
+      execute: (env: any) => env.openSidePanel("Console"),
+      icon: "o-spreadsheet-Icon.TERMINAL",
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 40,
+});
+
 // --- VIEW TAB ---
 
 // Show

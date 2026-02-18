@@ -243,3 +243,10 @@ sidePanelRegistry.add("DrawingSidePanel", {
     return { isOpen: true, props: { figureId } };
   },
 });
+
+import { ConsolePanel } from "../components/side_panel/console/console_panel";
+
+sidePanelRegistry.add("Console", {
+  title: _t("Console"),
+  Body: ConsolePanel,
+});
