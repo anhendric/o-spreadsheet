@@ -44,6 +44,8 @@ import {
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
 
+import { HistogramChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/histogram_chart";
+
 import { ComboChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/combo_chart";
 import {
   GeoChartDefinition,
@@ -797,4 +799,30 @@ function getTreeMapElementColor(
   const value = Number(ctx.raw.v) || 0;
   const factor = ((value - max) / (min - max)) * 0.5;
   return lightenColor(baseColor, factor);
+}
+
+export function getHistogramChartDatasets(
+  definition: GenericDefinition<HistogramChartDefinition>,
+  args: ChartRuntimeGenerationArgs
+): ChartDataset<"bar">[] {
+  const { dataSetsValues } = args;
+  const datasets: ChartDataset<"bar">[] = [];
+  const colors = getChartColorsGenerator(definition, dataSetsValues.length);
+
+  for (let i = 0; i < dataSetsValues.length; i++) {
+    const { label, data } = dataSetsValues[i];
+    const backgroundColor = colors.next();
+
+    datasets.push({
+      label,
+      data,
+      backgroundColor,
+      borderColor: definition.background || BACKGROUND_CHART_COLOR,
+      borderWidth: 0,
+      barPercentage: 0.9,
+      categoryPercentage: dataSetsValues.length > 1 ? 0.8 : 1,
+      borderRadius: 2,
+    });
+  }
+  return datasets;
 }

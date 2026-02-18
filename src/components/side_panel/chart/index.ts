@@ -17,6 +17,8 @@ import { GeoChartDesignPanel } from "./geo_chart_panel/geo_chart_design_panel";
 import { HeatmapChartConfigPanel } from "./heatmap_chart_panel/heatmap_chart_config_panel";
 import { HeatmapChartDesignPanel } from "./heatmap_chart_panel/heatmap_chart_design_panel";
 import { HierarchicalChartConfigPanel } from "./hierarchical_chart/hierarchical_chart_config_panel";
+import { HistogramChartConfigPanel } from "./histogram_chart_panel/histogram_chart_config_panel";
+import { HistogramChartDesignPanel } from "./histogram_chart_panel/histogram_chart_design_panel";
 import { LineConfigPanel } from "./line_chart/line_chart_config_panel";
 import { LineChartDesignPanel } from "./line_chart/line_chart_design_panel";
 import { MatrixChartConfigPanel } from "./matrix_chart_panel/matrix_chart_config_panel";
@@ -117,4 +119,8 @@ chartSidePanelComponentRegistry
   .add("boxplot", {
     configuration: BoxPlotConfigPanel,
     design: BoxPlotDesignPanel,
+  })
+  .add("histogram", {
+    configuration: HistogramChartConfigPanel,
+    design: HistogramChartDesignPanel,
   });

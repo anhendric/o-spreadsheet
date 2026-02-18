@@ -21,7 +21,9 @@ import {
   SunburstChartJSDataset,
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
+
 import { ComboChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/combo_chart";
+import { HistogramChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/histogram_chart";
 import { RadarChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/radar_chart";
 import { Chart, Color, LegendItem, LegendOptions } from "chart.js";
 import { DeepPartial } from "chart.js/dist/types/utils";
@@ -317,5 +319,19 @@ function getCustomLegendLabels(
           : true;
       },
     },
+  };
+}
+
+export function getHistogramChartLegend(
+  definition: GenericDefinition<HistogramChartDefinition>,
+  args: ChartRuntimeGenerationArgs
+): ChartLegend {
+  return {
+    ...INTERACTIVE_LEGEND_CONFIG,
+    ...getLegendDisplayOptions(definition, args),
+    ...getCustomLegendLabels(chartFontColor(definition.background), {
+      pointStyle: "rect",
+      lineWidth: 3,
+    }),
   };
 }

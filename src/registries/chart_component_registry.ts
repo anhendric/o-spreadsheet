@@ -24,3 +24,4 @@ chartComponentRegistry.add("treemap", ChartJsComponent);
 chartComponentRegistry.add("matrix", ChartJsComponent);
 chartComponentRegistry.add("heatmap", ChartJsComponent);
 chartComponentRegistry.add("boxplot", ChartJsComponent);
+chartComponentRegistry.add("histogram", ChartJsComponent);

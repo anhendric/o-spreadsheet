@@ -28,6 +28,7 @@ import { Format } from "../format";
 import { Locale } from "../locale";
 import { Range } from "../range";
 import { HeatmapChartDefinition } from "./heatmap_chart";
+import { HistogramChartDefinition, HistogramChartRuntime } from "./histogram_chart";
 import { MatrixChartDefinition } from "./matrix_chart";
 export const CHART_TYPES = [
   "line",
@@ -47,6 +48,7 @@ export const CHART_TYPES = [
   "matrix",
   "heatmap",
   "boxplot",
+  "histogram",
 ] as const;
 export type ChartType = (typeof CHART_TYPES)[number];
 
@@ -67,7 +69,8 @@ export type ChartDefinition =
   | TreeMapChartDefinition
   | MatrixChartDefinition
   | HeatmapChartDefinition
-  | BoxPlotChartDefinition;
+  | BoxPlotChartDefinition
+  | HistogramChartDefinition;
 
 export type ChartWithDataSetDefinition = Extract<
   ChartDefinition,
@@ -101,7 +104,8 @@ export type ChartJSRuntime =
   | FunnelChartRuntime
   | SunburstChartRuntime
   | TreeMapChartRuntime
-  | BoxPlotChartRuntime;
+  | BoxPlotChartRuntime
+  | HistogramChartRuntime;
 
 export type ChartRuntime = ChartJSRuntime | ScorecardChartRuntime | GaugeChartRuntime;
 

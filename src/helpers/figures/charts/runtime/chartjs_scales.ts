@@ -32,6 +32,8 @@ import {
   WaterfallChartDefinition,
 } from "@odoo/o-spreadsheet-engine/types/chart";
 
+import { HistogramChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/histogram_chart";
+
 import {
   GeoChartDefinition,
   GeoChartProjection,
@@ -510,4 +512,20 @@ function legendPositionToGeoLegendPosition(position: LegendPosition) {
     case "none":
       return "bottom-left";
   }
+}
+
+export function getHistogramChartScales(
+  definition: GenericDefinition<HistogramChartDefinition>,
+  args: ChartRuntimeGenerationArgs
+): DeepPartial<ScaleChartOptions<"bar">["scales"]> {
+  const { locale, axisFormats } = args;
+  return {
+    x: {
+      ...getChartAxis(definition, "bottom", "labels", { locale }),
+      grid: {
+        offset: false,
+      },
+    },
+    y: getChartAxis(definition, "left", "values", { locale, format: axisFormats?.y }),
+  };
 }

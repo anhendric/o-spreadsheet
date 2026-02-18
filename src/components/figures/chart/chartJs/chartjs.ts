@@ -92,7 +92,7 @@ export class ChartJsComponent extends Component<Props, SpreadsheetChildEnv> {
   private currentDevicePixelRatio = window.devicePixelRatio;
 
   get background(): string {
-    return this.chartRuntime.background;
+    return this.chartRuntime.background || "#ffffff";
   }
 
   get canvasStyle() {

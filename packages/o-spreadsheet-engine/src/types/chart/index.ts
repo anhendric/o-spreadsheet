@@ -6,6 +6,7 @@ export * from "./chartjs_tree_map_type";
 export * from "./common_chart";
 export * from "./funnel_chart";
 export * from "./gauge_chart";
+export * from "./histogram_chart";
 export * from "./line_chart";
 export * from "./pie_chart";
 export * from "./pyramid_chart";

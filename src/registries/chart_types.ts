@@ -6,6 +6,7 @@ import {
   BoxPlotChartDefinition,
   FunnelChartDefinition,
   GaugeChartDefinition,
+  HistogramChartDefinition,
   LineChartDefinition,
   PieChartDefinition,
   PyramidChartDefinition,
@@ -42,6 +43,10 @@ import { ComboChart, createComboChartRuntime } from "../helpers/figures/charts/c
 import { createFunnelChartRuntime, FunnelChart } from "../helpers/figures/charts/funnel_chart";
 import { createGeoChartRuntime, GeoChart } from "../helpers/figures/charts/geo_chart";
 import { createHeatmapChartRuntime, HeatmapChart } from "../helpers/figures/charts/heatmap_chart";
+import {
+  createHistogramChartRuntime,
+  HistogramChart,
+} from "../helpers/figures/charts/histogram_chart";
 import { createMatrixChartRuntime, MatrixChart } from "../helpers/figures/charts/matrix_chart";
 import { createPyramidChartRuntime, PyramidChart } from "../helpers/figures/charts/pyramid_chart";
 import { createRadarChartRuntime, RadarChart } from "../helpers/figures/charts/radar_chart";
@@ -237,6 +242,19 @@ chartRegistry.add("boxplot" as any, {
   transformDefinition: BoxPlotChart.transformDefinition,
   getChartDefinitionFromContextCreation: BoxPlotChart.getDefinitionFromContextCreation,
   sequence: 140,
+});
+
+chartRegistry.add("histogram" as any, {
+  match: (type) => (type as any) === "histogram",
+  createChart: (definition, sheetId, getters) =>
+    new HistogramChart(definition as unknown as HistogramChartDefinition, sheetId, getters),
+  getChartRuntime: (chart, getters) => {
+    return createHistogramChartRuntime(chart as HistogramChart, getters);
+  },
+  validateChartDefinition: HistogramChart.validateChartDefinition,
+  transformDefinition: HistogramChart.transformDefinition,
+  getChartDefinitionFromContextCreation: HistogramChart.getDefinitionFromContextCreation,
+  sequence: 150,
 });
 
 chartSubtypeRegistry
@@ -449,4 +467,11 @@ chartSubtypeRegistry
     chartType: "boxplot" as any,
     category: "misc",
     preview: "o-spreadsheet-ChartPreview.BOX_PLOT",
+  })
+  .add("histogram", {
+    displayName: _t("Histogram"),
+    chartSubtype: "histogram",
+    chartType: "histogram" as any,
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.HISTOGRAM",
   });

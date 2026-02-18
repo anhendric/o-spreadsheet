@@ -6,6 +6,7 @@ export * from "@odoo/o-spreadsheet-engine/helpers/figures/charts/scorecard_chart
 export * from "./bar_chart";
 export * from "./box_plot_chart";
 export * from "./gauge_chart";
+export * from "./histogram_chart";
 
 export * from "./line_chart";
 export * from "./pie_chart";

@@ -28,6 +28,8 @@ import {
   TrendConfiguration,
 } from "@odoo/o-spreadsheet-engine/types/chart";
 
+import { HistogramChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/histogram_chart";
+
 import {
   GeoChartDefinition,
   GeoChartRuntimeGenerationArgs,
@@ -303,6 +305,93 @@ export function getFunnelChartData(
     axisFormats: { x: format },
     labels,
     locale: getters.getLocale(),
+  };
+}
+
+export function getHistogramChartData(
+  definition: GenericDefinition<HistogramChartDefinition>,
+  dataSets: DataSet[],
+  getters: Getters
+): ChartRuntimeGenerationArgs {
+  const dataSetsValues = dataSets.map((ds, index) => {
+    const data = getData(getters, ds);
+    const label =
+      definition.dataSets?.[index]?.label ||
+      (ds.labelCell?.zone
+        ? String(
+            getters.getRangeValues(
+              getters.getRangeFromZone(ds.labelCell.sheetId, ds.labelCell.zone)
+            )[0] ?? `Series ${index + 1}`
+          )
+        : `Series ${index + 1}`);
+    return {
+      label,
+      data: data.filter((d): d is number => typeof d === "number"),
+      backgroundColor: definition.dataSets?.[index]?.backgroundColor,
+    };
+  });
+
+  const allValues = dataSetsValues.flatMap((ds) => ds.data);
+
+  if (allValues.length === 0) {
+    return {
+      dataSetsValues: [],
+      labels: [],
+      locale: getters.getLocale(),
+      topPadding: 0,
+      axisFormats: { x: undefined, y: undefined },
+    };
+  }
+
+  const min = Math.min(...allValues);
+  const max = Math.max(...allValues);
+
+  let bucketSize = definition.bucketSize;
+  if (!bucketSize || bucketSize <= 0) {
+    const k = Math.ceil(Math.sqrt(allValues.length));
+    bucketSize = (max - min) / k;
+    if (bucketSize === 0) {
+      bucketSize = 1;
+    }
+  }
+
+  const buckets: { min: number; max: number; label: string }[] = [];
+  let current = min;
+  while (current < max || (current === max && buckets.length === 0)) {
+    const next = current + bucketSize;
+    buckets.push({
+      min: current,
+      max: next,
+      label: `${parseFloat(current.toFixed(2))} - ${parseFloat(next.toFixed(2))}`,
+    });
+    current = next;
+  }
+
+  const datasets = dataSetsValues.map((ds, i) => {
+    const counts = new Array(buckets.length).fill(0);
+    for (const val of ds.data) {
+      let bucketIndex = Math.floor((val - min) / bucketSize!);
+      if (bucketIndex < 0) {
+        bucketIndex = 0;
+      }
+      if (bucketIndex >= buckets.length) {
+        bucketIndex = buckets.length - 1;
+      }
+      counts[bucketIndex]++;
+    }
+    return {
+      label: ds.label,
+      data: counts,
+      backgroundColor: ds.backgroundColor,
+    };
+  });
+
+  return {
+    dataSetsValues: datasets, // These are now counts
+    labels: buckets.map((b) => b.label),
+    locale: getters.getLocale(),
+    topPadding: getTopPaddingForDashboard(definition, getters),
+    axisFormats: { x: undefined, y: undefined },
   };
 }
 

@@ -1,0 +1,47 @@
+<templates>
+  <t t-name="o-spreadsheet-HistogramChartConfigPanel">
+    <div>
+      <ChartDataSeries
+        ranges="this.getDataSeriesRanges()"
+        onSelectionChanged.bind="onDataSeriesRangesChanged"
+        onSelectionConfirmed.bind="onDataSeriesConfirmed"
+        onSelectionReordered.bind="onDataSeriesReordered"
+        onSelectionRemoved.bind="onDataSeriesRemoved"
+        maxNumberOfUsedRanges="maxNumberOfUsedRanges"
+        datasetOrientation="datasetOrientation"
+        canChangeDatasetOrientation="canChangeDatasetOrientation"
+        onFlipAxis.bind="setDatasetOrientation"
+      />
+
+      <Section title.translate="Histogram">
+        <div class="o-section-subtitle">Bucket Size</div>
+        <input
+          type="number"
+          t-on-change="onUpdateBucketSize"
+          t-att-value="bucketSize"
+          class="o-input"
+          placeholder="Auto"
+        />
+
+        <div class="o-section-subtitle">Outlier Percentage</div>
+        <input
+          type="number"
+          t-on-change="onUpdateOutlierPercentage"
+          t-att-value="outlierPercentage"
+          class="o-input"
+          placeholder="0"
+        />
+      </Section>
+
+      <ChartLabelRange
+        range="this.getLabelRange()"
+        isInvalid="isLabelInvalid"
+        onSelectionChanged.bind="onLabelRangeChanged"
+        onSelectionConfirmed.bind="onLabelRangeConfirmed"
+        options="this.getLabelRangeOptions()"
+      />
+
+      <ChartErrorSection t-if="errorMessages.length" messages="errorMessages"/>
+    </div>
+  </t>
+</templates>

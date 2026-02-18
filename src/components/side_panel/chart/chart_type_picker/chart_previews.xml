@@ -439,4 +439,24 @@
       />
     </svg>
   </t>
+  <t t-name="o-spreadsheet-ChartPreview.HISTOGRAM">
+    <svg viewBox="0 0 48 48" class="o-chart-preview" xmlns="http://www.w3.org/2000/svg">
+      <path fill="var(--os-chart-preview-blue-line)" d="M5,45 v-18 h8 v18"/>
+      <path fill="var(--os-chart-preview-blue-fill)" d="M6,45 v-17 h6 v17"/>
+
+      <path fill="var(--os-chart-preview-blue-line)" d="M13,45 v-30 h8 v30"/>
+      <path fill="var(--os-chart-preview-blue-fill)" d="M14,45 v-29 h6 v29"/>
+
+      <path fill="var(--os-chart-preview-blue-line)" d="M21,45 v-24 h8 v24"/>
+      <path fill="var(--os-chart-preview-blue-fill)" d="M22,45 v-23 h6 v23"/>
+
+      <path fill="var(--os-chart-preview-blue-line)" d="M29,45 v-14 h8 v14"/>
+      <path fill="var(--os-chart-preview-blue-fill)" d="M30,45 v-13 h6 v13"/>
+
+      <path fill="var(--os-chart-preview-blue-line)" d="M37,45 v-8 h8 v8"/>
+      <path fill="var(--os-chart-preview-blue-fill)" d="M38,45 v-7 h6 v7"/>
+
+      <path fill="var(--os-gray-600)" d="M2,2 v44 h1 v-44 M3,45 h42 v1 h-42"/>
+    </svg>
+  </t>
 </templates>
