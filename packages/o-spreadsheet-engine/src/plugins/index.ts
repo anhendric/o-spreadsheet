@@ -4,6 +4,7 @@ import { CarouselPlugin } from "./core/carousel";
 import { CellPlugin } from "./core/cell";
 import { ChartPlugin } from "./core/chart";
 import { ConditionalFormatPlugin } from "./core/conditional_format";
+import { CustomFunctionPlugin } from "./core/custom_function";
 import { DataValidationPlugin } from "./core/data_validation";
 import { DrawingPlugin } from "./core/drawing";
 import { FigurePlugin } from "./core/figures";
@@ -82,7 +83,8 @@ export const corePluginRegistry = new Registry<CorePluginConstructor>()
   .add("spreadsheet_pivot_core", SpreadsheetPivotCorePlugin)
   .add("tableStyle", TableStylePlugin)
   .add("latex", LatexPlugin)
-  .add("drawing", DrawingPlugin);
+  .add("drawing", DrawingPlugin)
+  .add("custom_function", CustomFunctionPlugin);
 
 // Plugins which handle a specific feature, without handling any core commands
 export const featurePluginRegistry = new Registry<UIPluginConstructor>()

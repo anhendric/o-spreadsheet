@@ -662,6 +662,20 @@ ribbonRegistry.addItem("data", "analysis", {
   sequence: 40,
 });
 
+ribbonRegistry.addItem("data", "analysis", {
+  id: "custom_functions",
+  component: ActionButton,
+  props: {
+    action: {
+      name: _t("Custom Functions"),
+      execute: (env: any) => env.openSidePanel("CustomFunctions"),
+      icon: "o-spreadsheet-Icon.CODE",
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 50,
+});
+
 // --- VIEW TAB ---
 
 // Show

@@ -6,6 +6,7 @@ import { CarouselPanel } from "../components/side_panel/carousel_panel/carousel_
 import { ChartPanel } from "../components/side_panel/chart/main_chart_panel/main_chart_panel";
 import { ConditionalFormattingEditor } from "../components/side_panel/conditional_formatting/cf_editor/cf_editor";
 import { ConditionalFormatPreviewList } from "../components/side_panel/conditional_formatting/cf_preview_list/cf_preview_list";
+import { CustomFunctionPanel } from "../components/side_panel/custom_functions/custom_function_panel";
 import { DataValidationPanel } from "../components/side_panel/data_validation/data_validation_panel";
 import { DataValidationEditor } from "../components/side_panel/data_validation/dv_editor/dv_editor";
 import { FindAndReplacePanel } from "../components/side_panel/find_and_replace/find_and_replace";
@@ -249,4 +250,9 @@ import { ConsolePanel } from "../components/side_panel/console/console_panel";
 sidePanelRegistry.add("Console", {
   title: _t("Console"),
   Body: ConsolePanel,
+});
+
+sidePanelRegistry.add("CustomFunctions", {
+  title: _t("Custom Functions"),
+  Body: CustomFunctionPanel,
 });

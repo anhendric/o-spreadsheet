@@ -1,0 +1,82 @@
+<templates>
+  <div t-name="o-spreadsheet-CustomFunctionPanel" class="o-custom-function-panel">
+    <Section t-if="state.mode === 'list'" class="'o-cf-list'">
+      <div class="o-cf-actions">
+        <button class="o-button primary" t-on-click="addFunction">Add Function</button>
+      </div>
+      <div t-if="customFunctionList.length === 0" class="text-muted italic mt-3 text-center">
+        No custom functions defined.
+      </div>
+      <div
+        t-foreach="customFunctionList"
+        t-as="func"
+        t-key="func.name"
+        class="o-cf-item"
+        t-on-click="() => this.editFunction(func)">
+        <div class="o-cf-item-info">
+          <div class="fw-bold">
+            <t t-esc="func.name"/>
+          </div>
+          <div class="text-muted small">
+            <t t-esc="func.description"/>
+          </div>
+        </div>
+        <div class="o-cf-item-actions">
+          <button
+            class="o-button link text-danger"
+            t-on-click.stop="() => this.deleteFunction(func.name)">
+            <i class="fa fa-trash"/>
+          </button>
+        </div>
+      </div>
+    </Section>
+
+    <div t-if="state.mode === 'edit'" class="o-cf-editor h-100 d-flex flex-column">
+      <Section title.translate="Definition">
+        <label class="o-input-label">Name</label>
+        <TextInput
+          value="state.tempName"
+          onChange="(v) => state.tempName = v"
+          placeholder="'FUNCTION_NAME'"
+          alwaysShowBorder="true"
+        />
+
+        <label class="o-input-label mt-2">Description</label>
+        <TextInput
+          value="state.tempDescription"
+          onChange="(v) => state.tempDescription = v"
+          placeholder="'Description'"
+          alwaysShowBorder="true"
+        />
+      </Section>
+
+      <Section title.translate="Script" class="'flex-grow-1 d-flex flex-column'">
+        <div class="text-muted small mb-1">
+          Arguments are available in the
+          <code>args</code>
+          array.
+        </div>
+        <textarea
+          class="o-input flex-grow-1 font-monospace"
+          t-model="state.tempBody"
+          placeholder="return args[0] * 2;"
+        />
+        <div class="o-cf-option mt-2">
+          <Checkbox
+            label="'Accept ranges (no vectorization)'"
+            value="state.acceptMatrix"
+            onChange="(v) => state.acceptMatrix = v"
+          />
+        </div>
+      </Section>
+
+      <Section>
+        <ValidationMessages t-if="state.error" messages="[state.error]" msgType="'error'"/>
+        <div class="o-sidePanelButtons">
+          <button t-on-click="cancelEdit" class="o-button">Cancel</button>
+          <button t-on-click="saveFunction" class="o-button primary">Save</button>
+        </div>
+      </Section>
+    </div>
+  </div>
+</templates>

@@ -3,6 +3,7 @@ import { CarouselPlugin } from "../plugins/core/carousel";
 import { CellPlugin } from "../plugins/core/cell";
 import { ChartPlugin } from "../plugins/core/chart";
 import { ConditionalFormatPlugin } from "../plugins/core/conditional_format";
+import { CustomFunctionPlugin } from "../plugins/core/custom_function";
 import { DataValidationPlugin } from "../plugins/core/data_validation";
 import { DrawingPlugin } from "../plugins/core/drawing";
 import { FigurePlugin } from "../plugins/core/figures";
@@ -87,4 +88,5 @@ export type CoreGetters = PluginGetters<typeof SheetPlugin> &
   PluginGetters<typeof DataValidationPlugin> &
   PluginGetters<typeof PivotCorePlugin> &
   PluginGetters<typeof LatexPlugin> &
+  PluginGetters<typeof CustomFunctionPlugin> &
   PluginGetters<typeof DrawingPlugin>;

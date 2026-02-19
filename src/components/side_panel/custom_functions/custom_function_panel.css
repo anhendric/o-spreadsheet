@@ -1,0 +1,32 @@
+.o-spreadsheet {
+  .o-custom-function-panel {
+    height: 100%;
+
+    .o-cf-list {
+      .o-cf-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+
+      .o-cf-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+
+        .o-cf-item-info {
+          flex: 1;
+        }
+      }
+    }
+  }
+}

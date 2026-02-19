@@ -20,6 +20,7 @@ import { ChartDefinition } from "./chart";
 
 import { ConditionalFormat } from "./conditional_formatting";
 
+import { CustomFunctionDefinition } from "../plugins/core/custom_function";
 import { DrawingData } from "../plugins/core/drawing";
 import { ClipboardPasteOptions, ParsedOsClipboardContentWithImageData } from "./clipboard";
 import { DataValidationRule } from "./data_validation";
@@ -142,6 +143,9 @@ export const invalidateEvaluationCommands = new Set<CommandTypes>([
   "RENAME_PIVOT",
   "REMOVE_PIVOT",
   "DUPLICATE_PIVOT",
+  "ADD_CUSTOM_FUNCTION",
+  "REMOVE_CUSTOM_FUNCTION",
+  "RENAME_CUSTOM_FUNCTION",
 ]);
 
 export const invalidateChartEvaluationCommands = new Set<CommandTypes>([
@@ -245,6 +249,10 @@ export const lockedSheetAllowedCommands = new Set<Command["type"]>([
   "UPDATE_CAROUSEL_ACTIVE_ITEM",
   "DUPLICATE_PIVOT_IN_NEW_SHEET",
   "UPDATE_FILTER",
+  /** CUSTOM FUNCTIONS */
+  "ADD_CUSTOM_FUNCTION",
+  "REMOVE_CUSTOM_FUNCTION",
+  "RENAME_CUSTOM_FUNCTION",
 ]);
 
 export const coreTypes = new Set<CoreCommandTypes>([
@@ -353,6 +361,11 @@ export const coreTypes = new Set<CoreCommandTypes>([
   "REMOVE_DRAWING_ELEMENT",
   "REORDER_DRAWING_ELEMENT",
   "SELECT_DRAWING_ELEMENT",
+
+  /** CUSTOM FUNCTIONS */
+  "ADD_CUSTOM_FUNCTION",
+  "REMOVE_CUSTOM_FUNCTION",
+  "RENAME_CUSTOM_FUNCTION",
 ]);
 
 export function isCoreCommand(cmd: Command): cmd is CoreCommand {
@@ -1343,7 +1356,10 @@ export type CoreCommand =
   | RemoveDrawingElementCommand
   | ReorderDrawingElementCommand
   | SelectDrawingElementCommand
-  | UpdateDrawingCommand;
+  | UpdateDrawingCommand
+  | AddCustomFunctionCommand
+  | RemoveCustomFunctionCommand
+  | RenameCustomFunctionCommand;
 
 export type LocalCommand =
   | RequestUndoCommand
@@ -1593,6 +1609,26 @@ export interface CommandHandler<T> {
   beforeHandle(command: T): void;
   handle(command: T): void;
   finalize(): void;
+}
+
+//------------------------------------------------------------------------------
+// Custom Functions
+//------------------------------------------------------------------------------
+
+export interface AddCustomFunctionCommand {
+  type: "ADD_CUSTOM_FUNCTION";
+  functionDefinition: CustomFunctionDefinition;
+}
+
+export interface RemoveCustomFunctionCommand {
+  type: "REMOVE_CUSTOM_FUNCTION";
+  functionName: string;
+}
+
+export interface RenameCustomFunctionCommand {
+  type: "RENAME_CUSTOM_FUNCTION";
+  oldName: string;
+  newName: string;
 }
 
 export interface CommandDispatcher {
