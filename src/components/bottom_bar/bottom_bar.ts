@@ -3,10 +3,12 @@ import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadshee
 import { Component, onWillUpdateProps, useRef, useState } from "@odoo/owl";
 import { deepEquals } from "../../helpers";
 import { MenuItemRegistry } from "../../registries/menu_items_registry";
+import { Store, useStore } from "../../store_engine";
 import { MenuMouseEvent, Pixel, Rect, UID } from "../../types";
 import { Ripple } from "../animation/ripple";
 import { useDragAndDropListItems } from "../helpers/drag_and_drop_dom_items_hook";
 import { MenuPopover, MenuState } from "../menu_popover/menu_popover";
+import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
 import { BottomBarSheet } from "./bottom_bar_sheet/bottom_bar_sheet";
 import { BottomBarStatistic } from "./bottom_bar_statistic/bottom_bar_statistic";
 
@@ -55,8 +57,10 @@ export class BottomBar extends Component<Props, SpreadsheetChildEnv> {
   });
 
   sheetList = this.getVisibleSheets();
+  customFunctionTabStore!: Store<CustomFunctionTabStore>;
 
   setup() {
+    this.customFunctionTabStore = useStore(CustomFunctionTabStore);
     onWillUpdateProps(() => {
       this.updateScrollState();
       const visibleSheets = this.getVisibleSheets();

@@ -69,7 +69,9 @@ export class GoalSeekSidePanel extends Component<Props, SpreadsheetChildEnv> {
       this.state.byChangingCell
     );
 
-    if (!setCellRange || !byChangingCellRange) return;
+    if (!setCellRange || !byChangingCellRange) {
+      return;
+    }
 
     // Parse bounds, handling empty string or undefined as undefined
     const minVal =

@@ -45,17 +45,29 @@ export class GoalSeekStore extends SpreadsheetStore {
     let x0 = typeof startValue === "number" ? startValue : parseFloat(String(startValue)) || 0;
 
     // Clamp initial
-    if (minValue !== undefined) x0 = Math.max(x0, minValue);
-    if (maxValue !== undefined) x0 = Math.min(x0, maxValue);
+    if (minValue !== undefined) {
+      x0 = Math.max(x0, minValue);
+    }
+    if (maxValue !== undefined) {
+      x0 = Math.min(x0, maxValue);
+    }
 
     let x1 = x0 + (x0 === 0 ? 0.1 : x0 * 0.001);
     // Clamp x1 if needed
-    if (minValue !== undefined) x1 = Math.max(x1, minValue);
-    if (maxValue !== undefined) x1 = Math.min(x1, maxValue);
+    if (minValue !== undefined) {
+      x1 = Math.max(x1, minValue);
+    }
+    if (maxValue !== undefined) {
+      x1 = Math.min(x1, maxValue);
+    }
     if (Math.abs(x1 - x0) < 1e-9) {
       x1 = x0 + 0.1; // Try forcing a step if clamped to same
-      if (maxValue !== undefined && x1 > maxValue) x1 = x0 - 0.1;
-      if (minValue !== undefined && x1 < minValue) x1 = x0; // Can't move
+      if (maxValue !== undefined && x1 > maxValue) {
+        x1 = x0 - 0.1;
+      }
+      if (minValue !== undefined && x1 < minValue) {
+        x1 = x0;
+      } // Can't move
     }
 
     let y0 = this.evaluateAt(setCell, byChangingCell, x0);
@@ -83,8 +95,12 @@ export class GoalSeekStore extends SpreadsheetStore {
       let x2 = x1 - ((y1 - toValue) * (x1 - x0)) / (y1 - y0);
 
       // Clamp x2
-      if (minValue !== undefined) x2 = Math.max(x2, minValue);
-      if (maxValue !== undefined) x2 = Math.min(x2, maxValue);
+      if (minValue !== undefined) {
+        x2 = Math.max(x2, minValue);
+      }
+      if (maxValue !== undefined) {
+        x2 = Math.min(x2, maxValue);
+      }
 
       x0 = x1;
       y0 = y1;
@@ -130,23 +146,34 @@ export class GoalSeekStore extends SpreadsheetStore {
     let center = typeof startValue === "number" ? startValue : parseFloat(String(startValue)) || 0;
 
     // Clamp center
-    if (minValue !== undefined) center = Math.max(center, minValue);
-    if (maxValue !== undefined) center = Math.min(center, maxValue);
+    if (minValue !== undefined) {
+      center = Math.max(center, minValue);
+    }
+    if (maxValue !== undefined) {
+      center = Math.min(center, maxValue);
+    }
 
     const yCenter = this.evaluateAt(setCell, byChangingCell, center);
-    if (Math.abs(yCenter - toValue) < epsilon) return;
+    if (Math.abs(yCenter - toValue) < epsilon) {
+      return;
+    }
 
     // Check direction
     // If center is at bounds, we can only check one side.
     let checkStep = 1;
-    if (center >= (maxValue ?? Infinity)) checkStep = -1;
-    else if (center <= (minValue ?? -Infinity)) checkStep = 1;
+    if (center >= (maxValue ?? Infinity)) {
+      checkStep = -1;
+    } else if (center <= (minValue ?? -Infinity)) {
+      checkStep = 1;
+    }
 
     const yPlus = this.evaluateAt(setCell, byChangingCell, center + checkStep);
 
     // Determine effective direction
     let increasing = yPlus > yCenter;
-    if (checkStep < 0) increasing = !increasing; // If we stepped back, logic flips
+    if (checkStep < 0) {
+      increasing = !increasing;
+    } // If we stepped back, logic flips
 
     // If bounded, check if the root is out of bounds
     if (maxValue !== undefined) {
@@ -201,7 +228,9 @@ export class GoalSeekStore extends SpreadsheetStore {
           foundBracket = true;
           break;
         }
-        if (maxValue !== undefined && high >= maxValue) break; // Limit reached
+        if (maxValue !== undefined && high >= maxValue) {
+          break;
+        } // Limit reached
         step *= 2;
         iter++;
       }
@@ -218,7 +247,9 @@ export class GoalSeekStore extends SpreadsheetStore {
           foundBracket = true;
           break;
         }
-        if (minValue !== undefined && low <= minValue) break; // Limit reached
+        if (minValue !== undefined && low <= minValue) {
+          break;
+        } // Limit reached
         step *= 2;
         iter++;
       }
@@ -245,11 +276,17 @@ export class GoalSeekStore extends SpreadsheetStore {
       }
 
       if (increasing) {
-        if (yMid < toValue) low = mid;
-        else high = mid;
+        if (yMid < toValue) {
+          low = mid;
+        } else {
+          high = mid;
+        }
       } else {
-        if (yMid > toValue) low = mid;
-        else high = mid;
+        if (yMid > toValue) {
+          low = mid;
+        } else {
+          high = mid;
+        }
       }
     }
     this.updateCell(byChangingCell, (low + high) / 2);
@@ -266,8 +303,12 @@ export class GoalSeekStore extends SpreadsheetStore {
     const startValue = this.getters.getEvaluatedCell(byChangingCell).value;
     let x = typeof startValue === "number" ? startValue : parseFloat(String(startValue)) || 0;
 
-    if (minValue !== undefined) x = Math.max(x, minValue);
-    if (maxValue !== undefined) x = Math.min(x, maxValue);
+    if (minValue !== undefined) {
+      x = Math.max(x, minValue);
+    }
+    if (maxValue !== undefined) {
+      x = Math.min(x, maxValue);
+    }
 
     for (let i = 0; i < MAX_ITERATIONS; i++) {
       const y = this.evaluateAt(setCell, byChangingCell, x);
@@ -278,7 +319,9 @@ export class GoalSeekStore extends SpreadsheetStore {
       // Estimate derivative
       let h = 1e-4; // small step
       // Adjust h if at bounds to stay inside or at least computable
-      if (maxValue !== undefined && x + h > maxValue) h = -h;
+      if (maxValue !== undefined && x + h > maxValue) {
+        h = -h;
+      }
 
       const yPlus = this.evaluateAt(setCell, byChangingCell, x + h);
       const derivative = (yPlus - y) / h;
@@ -290,8 +333,12 @@ export class GoalSeekStore extends SpreadsheetStore {
       let xNext = x - (y - toValue) / derivative;
 
       // Clamp
-      if (minValue !== undefined) xNext = Math.max(xNext, minValue);
-      if (maxValue !== undefined) xNext = Math.min(xNext, maxValue);
+      if (minValue !== undefined) {
+        xNext = Math.max(xNext, minValue);
+      }
+      if (maxValue !== undefined) {
+        xNext = Math.min(xNext, maxValue);
+      }
 
       x = xNext;
     }
@@ -311,8 +358,12 @@ export class GoalSeekStore extends SpreadsheetStore {
 
     const startValue = this.getters.getEvaluatedCell(byChangingCell).value;
     let center = typeof startValue === "number" ? startValue : parseFloat(String(startValue)) || 0;
-    if (minValue !== undefined) center = Math.max(center, minValue);
-    if (maxValue !== undefined) center = Math.min(center, maxValue);
+    if (minValue !== undefined) {
+      center = Math.max(center, minValue);
+    }
+    if (maxValue !== undefined) {
+      center = Math.min(center, maxValue);
+    }
 
     // Initial bracket points
     let a: number, b: number;
@@ -327,17 +378,24 @@ export class GoalSeekStore extends SpreadsheetStore {
 
     // Check center first
     const yCenter = this.evaluateAt(setCell, byChangingCell, center);
-    if (Math.abs(yCenter - toValue) < epsilon) return;
+    if (Math.abs(yCenter - toValue) < epsilon) {
+      return;
+    }
 
     // Check direction
     // If center is at bounds, we can only check one side.
     let checkStep = 1;
-    if (center >= (maxValue ?? Infinity)) checkStep = -1;
-    else if (center <= (minValue ?? -Infinity)) checkStep = 1;
+    if (center >= (maxValue ?? Infinity)) {
+      checkStep = -1;
+    } else if (center <= (minValue ?? -Infinity)) {
+      checkStep = 1;
+    }
 
     const yPlus = this.evaluateAt(setCell, byChangingCell, center + checkStep);
     let increasing = yPlus > yCenter;
-    if (checkStep < 0) increasing = !increasing;
+    if (checkStep < 0) {
+      increasing = !increasing;
+    }
 
     const goRight = (increasing && yCenter < toValue) || (!increasing && yCenter > toValue);
 
@@ -358,7 +416,9 @@ export class GoalSeekStore extends SpreadsheetStore {
           foundBracket = true;
           break;
         }
-        if (maxValue !== undefined && high >= maxValue) break;
+        if (maxValue !== undefined && high >= maxValue) {
+          break;
+        }
         step *= 2;
         iter++;
       }
@@ -375,7 +435,9 @@ export class GoalSeekStore extends SpreadsheetStore {
           foundBracket = true;
           break;
         }
-        if (minValue !== undefined && low <= minValue) break;
+        if (minValue !== undefined && low <= minValue) {
+          break;
+        }
         step *= 2;
         iter++;
       }
@@ -436,8 +498,12 @@ export class GoalSeekStore extends SpreadsheetStore {
 
       // Check bounds for s? Brent is bracketing, so s should naturally be effectively bounded if [a,b] is within bounds.
       // But let's be safe.
-      if (minValue !== undefined) s = Math.max(s, minValue);
-      if (maxValue !== undefined) s = Math.min(s, maxValue);
+      if (minValue !== undefined) {
+        s = Math.max(s, minValue);
+      }
+      if (maxValue !== undefined) {
+        s = Math.min(s, maxValue);
+      }
 
       // Conditions to force bisection
       const condition1 = (s < (3 * a + b) / 4 && s < b) || (s > (3 * a + b) / 4 && s > b);

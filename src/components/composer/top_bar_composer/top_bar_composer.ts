@@ -13,7 +13,7 @@ const COMPOSER_MAX_HEIGHT = 300;
 
 export class TopBarComposer extends Component<any, SpreadsheetChildEnv> {
   static template = "o-spreadsheet-TopBarComposer";
-  static props = {};
+  static props = { isDisabled: { type: Boolean, optional: true } };
   static components = { Composer };
 
   private composerFocusStore!: Store<ComposerFocusStore>;
@@ -55,7 +55,7 @@ export class TopBarComposer extends Component<any, SpreadsheetChildEnv> {
       "max-height": `${COMPOSER_MAX_HEIGHT}px`,
       "line-height": "24px",
     };
-    if (this.env.model.getters.isCurrentSheetLocked()) {
+    if (this.env.model.getters.isCurrentSheetLocked() || this.props.isDisabled) {
       style["pointer-events"] = "none";
     }
     style.height = this.focus === "inactive" ? `${DESKTOP_TOPBAR_TOOLBAR_HEIGHT}px` : "fit-content";

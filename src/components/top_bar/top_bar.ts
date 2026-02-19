@@ -21,6 +21,7 @@ import { getBoundingRectAsPOJO } from "../helpers/dom_helpers";
 import { useSpreadsheetRect } from "../helpers/position_hook";
 import { MenuPopover, MenuState } from "../menu_popover/menu_popover";
 import { Popover } from "../popover";
+import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
 import { TopBarToolStore } from "./top_bar_tool_store";
 import { topBarToolBarRegistry } from "./top_bar_tools_registry";
 
@@ -79,8 +80,10 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
   // moreToolsButtonRef = useRef("moreToolsButton");
 
   spreadsheetRect = useSpreadsheetRect();
+  customFunctionTabStore!: Store<CustomFunctionTabStore>;
 
   setup() {
+    this.customFunctionTabStore = useStore(CustomFunctionTabStore);
     this.composerFocusStore = useStore(ComposerFocusStore);
     this.fingerprints = useStore(FormulaFingerprintStore);
     this.topBarToolStore = useStore(TopBarToolStore);

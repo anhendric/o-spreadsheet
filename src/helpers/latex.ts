@@ -1,7 +1,9 @@
 let katexLoaded = false;
 
 async function loadKatex() {
-  if (katexLoaded) return;
+  if (katexLoaded) {
+    return;
+  }
   if ((window as any).katex) {
     katexLoaded = true;
     return;
@@ -29,7 +31,9 @@ async function loadKatex() {
       }, 50);
       setTimeout(() => {
         clearInterval(check);
-        if (!(window as any).katex) console.warn("Katex not found");
+        if (!(window as any).katex) {
+          console.warn("Katex not found");
+        }
         resolve();
       }, 2000);
     }
@@ -65,7 +69,9 @@ export function getCachedLatexImage(
 ): HTMLImageElement | undefined {
   const key = `${latex}-${fontSizePx}-${color}`;
   const item = cache.get(key);
-  if (item instanceof HTMLImageElement) return item;
+  if (item instanceof HTMLImageElement) {
+    return item;
+  }
   return undefined;
 }
 
@@ -76,7 +82,9 @@ async function loadAndRenderLatex(
 ): Promise<HTMLImageElement | null> {
   await loadKatex();
   const katex = (window as any).katex;
-  if (!katex) return null;
+  if (!katex) {
+    return null;
+  }
 
   let html = "";
   try {

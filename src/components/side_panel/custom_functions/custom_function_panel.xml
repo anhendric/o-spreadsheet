@@ -1,0 +1,99 @@
+<templates>
+  <div t-name="o-spreadsheet-CustomFunctionPanel" class="o-custom-function-panel">
+    <Section t-if="state.mode === 'list'" class="'o-cf-list'">
+      <div class="o-cf-actions">
+        <button class="o-button primary" t-on-click="addFunction">Add Function</button>
+      </div>
+      <div t-if="customFunctionList.length === 0" class="text-muted italic mt-3 text-center">
+        No custom functions defined.
+      </div>
+      <div
+        t-foreach="customFunctionList"
+        t-as="func"
+        t-key="func.name"
+        class="o-cf-item"
+        t-on-click="() => this.editFunction(func)">
+        <div class="o-cf-item-info">
+          <div class="fw-bold">
+            <t t-esc="func.name"/>
+          </div>
+          <div class="text-muted small">
+            <t t-esc="func.description"/>
+          </div>
+        </div>
+        <div class="o-cf-item-actions">
+          <button
+            class="o-button link text-danger"
+            t-on-click.stop="() => this.deleteFunction(func.name)">
+            <i class="fa fa-trash"/>
+          </button>
+        </div>
+      </div>
+    </Section>
+
+    <div t-if="state.mode === 'edit'" class="o-cf-editor h-100 d-flex flex-column">
+      <Section title.translate="Definition">
+        <label class="o-input-label">Name</label>
+        <TextInput
+          value="state.tempName"
+          onChange="(v) => state.tempName = v"
+          placeholder="'FUNCTION_NAME'"
+          alwaysShowBorder="true"
+        />
+
+        <label class="o-input-label mt-2">Description</label>
+        <TextInput
+          value="state.tempDescription"
+          onChange="(v) => state.tempDescription = v"
+          placeholder="'Description'"
+          alwaysShowBorder="true"
+        />
+      </Section>
+
+      <Section title.translate="Script" class="'flex-grow-1 d-flex flex-column'">
+        <div class="text-muted small mb-1">
+          Arguments are available in the
+          <code>args</code>
+          array.
+        </div>
+        <CodeEditor
+          class="'flex-grow-1'"
+          value="state.tempBody"
+          onChange="(v) => state.tempBody = v"
+          placeholder="'return args[0] * 2;'"
+        />
+        <div class="o-cf-option mt-2">
+          <Checkbox
+            label="'Accept ranges (no vectorization)'"
+            value="state.acceptMatrix"
+            onChange="(v) => state.acceptMatrix = v"
+          />
+        </div>
+      </Section>
+
+      <Section>
+        <ValidationMessages t-if="state.error" messages="[state.error]" msgType="'error'"/>
+        <div class="o-sidePanelButtons d-flex w-100 gap-2">
+          <button t-on-click="cancelEdit" class="o-button flex-grow-1 box-border">Cancel</button>
+          <button t-on-click="saveFunction" class="o-button primary flex-grow-1 box-border">
+            Save
+          </button>
+        </div>
+
+        <t t-portal="'.o-sidePanelHeaderActions'">
+          <div
+            t-on-click="popOutFunction"
+            class="o-sidePanelAction rounded"
+            title="Open in full screen"
+            style="line-height: 1;">
+            <svg fill="currentColor" width="14px" height="14px" viewBox="0 0 32 32">
+              <path
+                d="M15.694 13.541l2.666 2.665 5.016-5.017 2.59 2.59 0.004-7.734-7.785-0.046 2.526 2.525-5.017 5.017zM25.926 16.945l-1.92-1.947 0.035 9.007-16.015 0.009 0.016-15.973 8.958-0.040-2-2h-7c-1.104 0-2 0.896-2 2v16c0 1.104 0.896 2 2 2h16c1.104 0 2-0.896 2-2l-0.074-7.056z"
+              />
+            </svg>
+          </div>
+        </t>
+      </Section>
+    </div>
+  </div>
+</templates>

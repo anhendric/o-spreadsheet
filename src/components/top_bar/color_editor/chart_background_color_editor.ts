@@ -27,7 +27,9 @@ export class ChartBackgroundColorEditor extends Component<Props, SpreadsheetChil
 
   get currentColor(): string {
     const chartId = getSelectedChartId(this.env);
-    if (!chartId) return "#ffffff";
+    if (!chartId) {
+      return "#ffffff";
+    }
     return this.env.model.getters.getChartDefinition(chartId).background || "#ffffff";
   }
 

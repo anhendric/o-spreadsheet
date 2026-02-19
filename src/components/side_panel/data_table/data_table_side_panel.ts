@@ -112,7 +112,9 @@ export class DataTableSidePanel extends Component<Props, SpreadsheetChildEnv> {
     // Helper to set cell
     const setCell = (xc: string, val: string) => {
       const range = this.env.model.getters.getRangeFromSheetXC(sheetId, xc);
-      if (!range) return;
+      if (!range) {
+        return;
+      }
       this.env.model.dispatch("UPDATE_CELL", {
         sheetId,
         col: range.zone.left,
@@ -200,8 +202,12 @@ export class DataTableSidePanel extends Component<Props, SpreadsheetChildEnv> {
     }
 
     // Restore Originals
-    if (rowInput && originalRowVal !== undefined) setCell(rowInput, originalRowVal);
-    if (colInput && originalColVal !== undefined) setCell(colInput, originalColVal);
+    if (rowInput && originalRowVal !== undefined) {
+      setCell(rowInput, originalRowVal);
+    }
+    if (colInput && originalColVal !== undefined) {
+      setCell(colInput, originalColVal);
+    }
 
     // Commit Results
     for (const res of results) {

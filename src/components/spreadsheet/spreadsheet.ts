@@ -38,6 +38,8 @@ import { HeaderGroupContainer } from "../header_group/header_group_container";
 import { isMobileOS, zoomCorrectedElementRect } from "../helpers/dom_helpers";
 import { useSpreadsheetRect } from "../helpers/position_hook";
 import { useScreenWidth } from "../helpers/screen_width_hook";
+import { CustomFunctionFullEditor } from "../side_panel/custom_functions/custom_function_full_editor";
+import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
 import { DEFAULT_SIDE_PANEL_SIZE, SidePanelStore } from "../side_panel/side_panel/side_panel_store";
 import { SidePanels } from "../side_panel/side_panels/side_panels";
 import { SmallBottomBar } from "../small_bottom_bar/small_bottom_bar";
@@ -78,6 +80,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
     SpreadsheetDashboard,
     HeaderGroupContainer,
     FullScreenFigure,
+    CustomFunctionFullEditor,
   };
 
   sidePanel!: Store<SidePanelStore>;
@@ -89,6 +92,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
   private isViewportTooSmall: boolean = false;
   private notificationStore!: Store<NotificationStore>;
   private composerFocusStore!: Store<ComposerFocusStore>;
+  customFunctionTabStore!: Store<CustomFunctionTabStore>;
 
   get model(): Model {
     return this.props.model;
@@ -133,6 +137,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
     this.notificationStore = useStore(NotificationStore);
     this.composerFocusStore = useStore(ComposerFocusStore);
     this.sidePanel = useStore(SidePanelStore);
+    this.customFunctionTabStore = useStore(CustomFunctionTabStore);
     const fileStore = this.model.config.external.fileStore;
 
     useSubEnv({

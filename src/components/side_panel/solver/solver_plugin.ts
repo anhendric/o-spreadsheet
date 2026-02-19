@@ -61,7 +61,9 @@ export class SolverPlugin extends UIPlugin {
       const sheetId = this.getters.getActiveSheetId();
 
       const setup = setupSolverProblem(config, this.getters, sheetId);
-      if (!setup) return;
+      if (!setup) {
+        return;
+      }
       const { paramCells, x0 } = setup;
 
       const evaluate = createEvaluateFunction(

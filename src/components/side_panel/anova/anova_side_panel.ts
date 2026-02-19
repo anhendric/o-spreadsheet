@@ -77,7 +77,9 @@ export class AnovaSidePanel extends Component<Props, SpreadsheetChildEnv> {
   async computeOneWay() {
     const sheetId = this.env.model.getters.getActiveSheetId();
     const range = this.env.model.getters.getRangeFromSheetXC(sheetId, this.state.inputRange);
-    if (!range) throw new Error(_t("Invalid input range"));
+    if (!range) {
+      throw new Error(_t("Invalid input range"));
+    }
 
     const zone = range.zone;
     const data: number[][] = [];
@@ -155,7 +157,9 @@ export class AnovaSidePanel extends Component<Props, SpreadsheetChildEnv> {
         this.env.model.getters.getActiveSheetId(),
         this.state.outputRange
       );
-      if (!range) throw new Error(_t("Invalid output range"));
+      if (!range) {
+        throw new Error(_t("Invalid output range"));
+      }
       targetSheetId = range.sheetId;
       targetCol = range.zone.left;
       targetRow = range.zone.top;
@@ -224,10 +228,18 @@ export class AnovaSidePanel extends Component<Props, SpreadsheetChildEnv> {
       setCell(c, r, result.anova.source[i]);
       setCell(c + 1, r, result.anova.ss[i]);
       setCell(c + 2, r, result.anova.df[i]);
-      if (!isNaN(result.anova.ms[i])) setCell(c + 3, r, result.anova.ms[i]);
-      if (!isNaN(result.anova.f[i])) setCell(c + 4, r, result.anova.f[i]);
-      if (!isNaN(result.anova.pValue[i])) setCell(c + 5, r, result.anova.pValue[i]);
-      if (!isNaN(result.anova.fCrit[i])) setCell(c + 6, r, result.anova.fCrit[i]);
+      if (!isNaN(result.anova.ms[i])) {
+        setCell(c + 3, r, result.anova.ms[i]);
+      }
+      if (!isNaN(result.anova.f[i])) {
+        setCell(c + 4, r, result.anova.f[i]);
+      }
+      if (!isNaN(result.anova.pValue[i])) {
+        setCell(c + 5, r, result.anova.pValue[i]);
+      }
+      if (!isNaN(result.anova.fCrit[i])) {
+        setCell(c + 6, r, result.anova.fCrit[i]);
+      }
       r++;
     }
 

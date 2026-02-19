@@ -87,7 +87,9 @@ async function solveNelderMead(
 
     while (iter < phaseMaxIter) {
       // Yield every 100 iterations
-      if (iter % 100 === 0) await new Promise((r) => setTimeout(r, 0));
+      if (iter % 100 === 0) {
+        await new Promise((r) => setTimeout(r, 0));
+      }
 
       // 1. Order
       simplex.sort((a, b) => a.cost - b.cost);
@@ -113,7 +115,9 @@ async function solveNelderMead(
           centroid[j] += simplex[i].p[j];
         }
       }
-      for (let j = 0; j < n; j++) centroid[j] /= n;
+      for (let j = 0; j < n; j++) {
+        centroid[j] /= n;
+      }
 
       // 4. Reflection
       let xr = centroid.map((val, j) => val + ALPHA * (val - simplex[n].p[j]));
@@ -127,8 +131,11 @@ async function solveNelderMead(
         let xe = centroid.map((val, j) => val + GAMMA * (val - simplex[n].p[j]));
         xe = clamp(xe, options.lowerBound, options.upperBound);
         const costE = (await evaluate(xe)) as number;
-        if (costE < costR) simplex[n] = { p: xe, cost: costE };
-        else simplex[n] = { p: xr, cost: costR };
+        if (costE < costR) {
+          simplex[n] = { p: xe, cost: costE };
+        } else {
+          simplex[n] = { p: xr, cost: costR };
+        }
       } else {
         // 6. Contraction
         let xc = centroid.map((val, j) => val + RHO * (val - simplex[n].p[j]));
@@ -212,11 +219,15 @@ async function solveBFGS(
   let grad = await getGradient(x, fk);
 
   while (iter < options.maxIter) {
-    if (iter % 100 === 0) await new Promise((r) => setTimeout(r, 0));
+    if (iter % 100 === 0) {
+      await new Promise((r) => setTimeout(r, 0));
+    }
 
     // Validation for convergence (Gradient Norm)
     const gradNorm = Math.sqrt(grad.reduce((sum, v) => sum + v * v, 0));
-    if (gradNorm < options.tol) break;
+    if (gradNorm < options.tol) {
+      break;
+    }
 
     // Search Direction: p = -H * grad
     const p = new Array(n).fill(0);
@@ -239,7 +250,9 @@ async function solveBFGS(
       xNew = clamp(potentialX, options.lowerBound, options.upperBound);
       fNew = (await evaluate(xNew)) as number;
       // Armijo condition check (simplified)
-      if (fNew <= fk + c1 * alpha * dot(grad, p)) break;
+      if (fNew <= fk + c1 * alpha * dot(grad, p)) {
+        break;
+      }
       alpha *= 0.5;
       lsIter++;
     }
@@ -317,26 +330,36 @@ async function solveGenetic(
   }
 
   // Eval initial
-  for (const indiv of population) indiv.cost = (await evaluate(indiv.p)) as number;
+  for (const indiv of population) {
+    indiv.cost = (await evaluate(indiv.p)) as number;
+  }
 
   let iter = 0;
   let overallBest = population[0];
 
   while (iter < options.maxIter) {
-    if (iter % 20 === 0) await new Promise((r) => setTimeout(r, 0)); // GA is slower per iter
+    if (iter % 20 === 0) {
+      await new Promise((r) => setTimeout(r, 0));
+    } // GA is slower per iter
 
     // Sort
     population.sort((a, b) => a.cost - b.cost);
-    if (population[0].cost < overallBest.cost) overallBest = { ...population[0] };
+    if (population[0].cost < overallBest.cost) {
+      overallBest = { ...population[0] };
+    }
 
     // Convergence check? (std dev of costs)
-    if (overallBest.cost < options.tol) break; // Absolute check
+    if (overallBest.cost < options.tol) {
+      break;
+    } // Absolute check
 
     // Next Gen
     const newPop: { p: number[]; cost: number }[] = [];
 
     // Elitism
-    for (let i = 0; i < eliteSize; i++) newPop.push(population[i]);
+    for (let i = 0; i < eliteSize; i++) {
+      newPop.push(population[i]);
+    }
 
     // Reproduction
     while (newPop.length < popSize) {
@@ -417,11 +440,15 @@ async function solveGradientDescent(
   };
 
   while (iter < options.maxIter) {
-    if (iter % 100 === 0) await new Promise((r) => setTimeout(r, 0));
+    if (iter % 100 === 0) {
+      await new Promise((r) => setTimeout(r, 0));
+    }
 
     const grad = await getGradient(x);
     const gradNorm = Math.sqrt(dot(grad, grad));
-    if (gradNorm < options.tol) break;
+    if (gradNorm < options.tol) {
+      break;
+    }
 
     // Direction: Descent (Negative Gradient)
     const p = grad.map((g) => -g);
@@ -439,7 +466,9 @@ async function solveGradientDescent(
       fNew = (await evaluate(xNew)) as number;
 
       // Armijo condition
-      if (fNew <= fk + c1 * alpha * dot(grad, p)) break;
+      if (fNew <= fk + c1 * alpha * dot(grad, p)) {
+        break;
+      }
 
       alpha *= 0.5;
       lsIter++;
@@ -509,7 +538,9 @@ async function solvePSO(
 
   let iter = 0;
   while (iter < options.maxIter) {
-    if (iter % 50 === 0) await new Promise((r) => setTimeout(r, 0));
+    if (iter % 50 === 0) {
+      await new Promise((r) => setTimeout(r, 0));
+    }
 
     for (let i = 0; i < swarnSize; i++) {
       const particle = particles[i];
@@ -548,7 +579,9 @@ async function solvePSO(
       }
     }
 
-    if (globalBestCost < options.tol) break;
+    if (globalBestCost < options.tol) {
+      break;
+    }
     iter++;
 
     if (options.onIteration) {
@@ -587,7 +620,9 @@ async function solveNSGAII(
 
   let iter = 0;
   while (iter < maxIter) {
-    if (iter % 10 === 0) await new Promise((r) => setTimeout(r, 0));
+    if (iter % 10 === 0) {
+      await new Promise((r) => setTimeout(r, 0));
+    }
 
     // Create Offspring
     const offspring: typeof population = [];
@@ -639,8 +674,12 @@ async function solveNSGAII(
     if (options.onIteration) {
       // Find best (Rank 0, min sum cost for now or simply first of rank 0)
       const best = population.reduce((prev, curr) => {
-        if (curr.rank < prev.rank) return curr;
-        if (curr.rank > prev.rank) return prev;
+        if (curr.rank < prev.rank) {
+          return curr;
+        }
+        if (curr.rank > prev.rank) {
+          return prev;
+        }
         const sumCurr = curr.costs.reduce((a, b) => a + b, 0);
         const sumPrev = prev.costs.reduce((a, b) => a + b, 0);
         return sumCurr < sumPrev ? curr : prev;
@@ -657,8 +696,12 @@ async function solveNSGAII(
   // Select "best" solution for single return (e.g. knee point or simple weight sum)
   // For now, return the one with min sum of costs from Rank 0
   const best = population.reduce((prev, curr) => {
-    if (curr.rank < prev.rank) return curr;
-    if (curr.rank > prev.rank) return prev;
+    if (curr.rank < prev.rank) {
+      return curr;
+    }
+    if (curr.rank > prev.rank) {
+      return prev;
+    }
     const sumCurr = curr.costs.reduce((a, b) => a + b, 0);
     const sumPrev = prev.costs.reduce((a, b) => a + b, 0);
     return sumCurr < sumPrev ? curr : prev;
@@ -691,7 +734,9 @@ function dot(a: number[], b: number[]) {
 
 function createMatrix(n: number) {
   const m: number[][] = [];
-  for (let i = 0; i < n; i++) m[i] = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) {
+    m[i] = new Array(n).fill(0);
+  }
   return m;
 }
 
@@ -701,7 +746,9 @@ function matMul(A: number[][], B: number[][]) {
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
       let sum = 0;
-      for (let k = 0; k < n; k++) sum += A[i][k] * B[k][j];
+      for (let k = 0; k < n; k++) {
+        sum += A[i][k] * B[k][j];
+      }
       C[i][j] = sum;
     }
   }
@@ -713,17 +760,25 @@ function tournament(pop: { p: number[]; cost: number }[]) {
   let best = pop[Math.floor(Math.random() * pop.length)];
   for (let i = 1; i < k; i++) {
     const other = pop[Math.floor(Math.random() * pop.length)];
-    if (other.cost < best.cost) best = other;
+    if (other.cost < best.cost) {
+      best = other;
+    }
   }
   return best;
 }
 
 function clamp(p: number[], lower?: number[], upper?: number[]): number[] {
-  if (!lower && !upper) return p;
+  if (!lower && !upper) {
+    return p;
+  }
   return p.map((val, i) => {
     let v = val;
-    if (lower && lower[i] !== undefined && v < lower[i]) v = lower[i];
-    if (upper && upper[i] !== undefined && v > upper[i]) v = upper[i];
+    if (lower && lower[i] !== undefined && v < lower[i]) {
+      v = lower[i];
+    }
+    if (upper && upper[i] !== undefined && v > upper[i]) {
+      v = upper[i];
+    }
     return v;
   });
 }
@@ -737,16 +792,24 @@ function tournamentNSGA2<T extends { rank: number; distance: number }>(pop: T[])
   const ind2 = pop[j];
 
   // Rank check (lower is better)
-  if (ind1.rank < ind2.rank) return pop[i];
-  if (ind2.rank < ind1.rank) return pop[j];
+  if (ind1.rank < ind2.rank) {
+    return pop[i];
+  }
+  if (ind2.rank < ind1.rank) {
+    return pop[j];
+  }
 
   // Crowding distance check (higher is better)
-  if (ind1.distance > ind2.distance) return pop[i];
+  if (ind1.distance > ind2.distance) {
+    return pop[i];
+  }
   return pop[j];
 }
 
 function crossover(p1: number[], p2: number[], rate: number) {
-  if (Math.random() > rate) return [...p1];
+  if (Math.random() > rate) {
+    return [...p1];
+  }
   return p1.map((val, i) => (Math.random() < 0.5 ? val : p2[i]));
 }
 
@@ -800,7 +863,9 @@ function fastNonDominatedSort<
       }
     }
     i++;
-    if (nextFront.length > 0) fronts.push(nextFront);
+    if (nextFront.length > 0) {
+      fronts.push(nextFront);
+    }
   }
   return fronts;
 }
@@ -808,17 +873,25 @@ function fastNonDominatedSort<
 function dominates(p: { costs: number[] }, q: { costs: number[] }) {
   let betterInAny = false;
   for (let i = 0; i < p.costs.length; i++) {
-    if (p.costs[i] > q.costs[i]) return false; // Worse in this obj (min problem)
-    if (p.costs[i] < q.costs[i]) betterInAny = true;
+    if (p.costs[i] > q.costs[i]) {
+      return false;
+    } // Worse in this obj (min problem)
+    if (p.costs[i] < q.costs[i]) {
+      betterInAny = true;
+    }
   }
   return betterInAny;
 }
 
 function calculateCrowdingDistance<T extends { costs: number[]; distance: number }>(front: T[]) {
   const n = front.length;
-  if (n === 0) return;
+  if (n === 0) {
+    return;
+  }
 
-  for (const p of front) p.distance = 0;
+  for (const p of front) {
+    p.distance = 0;
+  }
 
   const numObj = front[0].costs.length;
 
@@ -830,7 +903,9 @@ function calculateCrowdingDistance<T extends { costs: number[]; distance: number
     front[n - 1].distance = Infinity;
 
     const spread = front[n - 1].costs[m] - front[0].costs[m];
-    if (spread === 0) continue;
+    if (spread === 0) {
+      continue;
+    }
 
     for (let i = 1; i < n - 1; i++) {
       front[i].distance += (front[i + 1].costs[m] - front[i - 1].costs[m]) / spread;

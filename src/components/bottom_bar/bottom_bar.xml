@@ -40,6 +40,25 @@
               onMouseDown="(ev) => this.onSheetMouseDown(sheet.id, ev)"
             />
           </t>
+          <t t-foreach="customFunctionTabStore.openedTabs" t-as="funcName" t-key="funcName">
+            <Ripple>
+              <div
+                class="o-sheet d-flex align-items-center user-select-none text-nowrap border-start border-end px-2"
+                t-att-class="{active: customFunctionTabStore.activeTab === funcName}"
+                t-on-click="() => customFunctionTabStore.activateTab(funcName)">
+                <span class="o-icon me-1">
+                  <t t-call="o-spreadsheet-Icon.FORMULA"/>
+                </span>
+                <span class="o-sheet-name" t-esc="funcName"/>
+                <span
+                  class="o-sheet-icon ms-2 rounded opacity-50 hover-opacity-100"
+                  tabindex="-1"
+                  t-on-click.stop="() => customFunctionTabStore.closeTab(funcName)">
+                  <t t-call="o-spreadsheet-Icon.CLEAR"/>
+                </span>
+              </div>
+            </Ripple>
+          </t>
         </div>
         <div
           class="o-bottom-bar-fade-out position-absolute h-100 w-100 pe-none"

@@ -105,8 +105,11 @@ export class SolverSidePanel extends Component<Props, SpreadsheetChildEnv> {
     // If 1 range, keep string (backward compat), if >1 or specifically multi-obj, store array?
     // Actually SelectionInput returns string[], but traditionally we grabbed [0].
     // Now if ranges.length > 1, we store string[].
-    if (ranges.length === 1) this.state.objectiveCell = ranges[0];
-    else this.state.objectiveCell = ranges;
+    if (ranges.length === 1) {
+      this.state.objectiveCell = ranges[0];
+    } else {
+      this.state.objectiveCell = ranges;
+    }
   }
 
   onChangingCellsChanged(ranges: string[]) {
@@ -162,7 +165,9 @@ export class SolverSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   async solve() {
-    if (!this.state.objectiveCell || this.state.changingCells.length === 0) return;
+    if (!this.state.objectiveCell || this.state.changingCells.length === 0) {
+      return;
+    }
 
     const config: GenericSolverConfig = {
       objectiveCell: this.state.objectiveCell,

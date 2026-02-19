@@ -20,6 +20,7 @@ import { Command, CommandResult, DispatchResult, isSheetDependent, Rect } from "
 import { Ripple } from "../../animation/ripple";
 import { ColorPicker } from "../../color_picker/color_picker";
 import { getBoundingRectAsPOJO } from "../../helpers/dom_helpers";
+import { CustomFunctionTabStore } from "../../side_panel/custom_functions/custom_function_tab_store";
 
 interface Props {
   sheetId: string;
@@ -70,7 +71,10 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
   private editionState: "initializing" | "editing" = "initializing";
 
   private DOMFocusableElementStore!: Store<DOMFocusableElementStore>;
+  customFunctionTabStore!: Store<CustomFunctionTabStore>;
+
   setup() {
+    this.customFunctionTabStore = useStore(CustomFunctionTabStore);
     onPatched(() => {
       if (this.sheetNameRef.el && this.state.isEditing && this.editionState === "initializing") {
         this.editionState = "editing";
@@ -166,6 +170,7 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
   }
 
   private activateSheet() {
+    this.customFunctionTabStore.activateTab(null);
     this.env.model.dispatch("ACTIVATE_SHEET", {
       sheetIdFrom: this.env.model.getters.getActiveSheetId(),
       sheetIdTo: this.props.sheetId,
@@ -274,7 +279,10 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
   }
 
   get isSheetActive() {
-    return this.env.model.getters.getActiveSheetId() === this.props.sheetId;
+    return (
+      this.env.model.getters.getActiveSheetId() === this.props.sheetId &&
+      this.customFunctionTabStore.activeTab === null
+    );
   }
 
   get sheetName() {

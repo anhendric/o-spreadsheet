@@ -53,6 +53,12 @@ export class FunctionRegistry extends Registry<FunctionDescription> {
     super.replace(name, descr);
     return this;
   }
+
+  remove(name: string) {
+    name = name.toUpperCase();
+    delete this.mapping[name];
+    super.remove(name);
+  }
 }
 
 export const functionRegistry = new FunctionRegistry();

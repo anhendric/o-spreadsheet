@@ -13,22 +13,35 @@
         <div class="o-spreadsheet-topbar-wrapper o-two-columns">
           <TopBar onClick="() => this.focusGrid()" dropdownMaxHeight="gridHeight"/>
         </div>
-        <div
-          class="o-grid-container"
-          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}"
-          t-att-style="gridContainerStyle"
-          t-on-click="this.focusGrid">
-          <div class="o-top-left"/>
-          <div class="o-column-groups o-zoomable">
-            <HeaderGroupContainer layers="colLayers" dimension="'COL'"/>
+
+        <t t-if="customFunctionTabStore.activeTab">
+          <div
+            class="o-cf-full-editor-container"
+            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
+            <CustomFunctionFullEditor functionName="customFunctionTabStore.activeTab"/>
           </div>
-          <div class="o-row-groups o-zoomable">
-            <HeaderGroupContainer layers="rowLayers" dimension="'ROW'"/>
+        </t>
+        <t t-else="">
+          <div
+            class="o-grid-container"
+            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}"
+            t-att-style="gridContainerStyle"
+            t-on-click="this.focusGrid">
+            <div class="o-top-left"/>
+            <div class="o-column-groups o-zoomable">
+              <HeaderGroupContainer layers="colLayers" dimension="'COL'"/>
+            </div>
+            <div class="o-row-groups o-zoomable">
+              <HeaderGroupContainer layers="rowLayers" dimension="'ROW'"/>
+            </div>
+            <div class="o-group-grid overflow-hidden">
+              <Grid
+                exposeFocus="(focus) => this._focusGrid = focus"
+                getGridSize.bind="getGridSize"
+              />
+            </div>
           </div>
-          <div class="o-group-grid overflow-hidden">
-            <Grid exposeFocus="(focus) => this._focusGrid = focus" getGridSize.bind="getGridSize"/>
-          </div>
-        </div>
+        </t>
         <SidePanels/>
         <div class="o-spreadsheet-bottombar-wrapper o-two-columns overflow-hidden">
           <SmallBottomBar t-if="env.isSmall" onClick="() => this.focusGrid()"/>

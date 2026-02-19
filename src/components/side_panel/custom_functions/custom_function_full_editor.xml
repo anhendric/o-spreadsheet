@@ -1,0 +1,17 @@
+<templates>
+  <t t-name="o-spreadsheet-CustomFunctionFullEditor">
+    <div class="h-100 w-100 d-flex flex-column bg-view border-top">
+      <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
+        <h4 class="m-0 text-truncate">
+          <t t-esc="props.functionName"/>
+        </h4>
+        <div>
+          <button class="o-button o-primary me-2" t-on-click="save">Save</button>
+        </div>
+      </div>
+      <div class="flex-grow-1 position-relative m-2">
+        <CodeEditor value="state.body" onChange.bind="onCodeChange"/>
+      </div>
+    </div>
+  </t>
+</templates>

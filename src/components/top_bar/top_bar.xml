@@ -29,8 +29,8 @@
         popoverPositioning="'bottom-left'"
       />
 
-      <div class="w-100 border-top">
-        <TopBarComposer t-if="!env.isSmall"/>
+      <div class="w-100">
+        <TopBarComposer t-if="!env.isSmall" isDisabled="!!customFunctionTabStore.activeTab"/>
       </div>
 
       <div

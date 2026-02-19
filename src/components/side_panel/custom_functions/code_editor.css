@@ -1,0 +1,138 @@
+.o-spreadsheet {
+  .o-code-editor {
+    display: flex;
+    position: relative;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+    font-family: inherit;
+    max-height: 350px;
+  }
+
+  .o-ce-lines {
+    padding: 8px 4px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    text-align: right;
+    user-select: none;
+    border-right: 1px solid #ced4da;
+    overflow-y: hidden;
+    min-width: 30px;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .o-ce-line-num {
+    height: 1.5em;
+    /* Match line-height */
+  }
+
+  .o-ce-content {
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    background-color: #fff;
+  }
+
+  .o-ce-textarea,
+  .o-ce-highlight {
+    margin: 0;
+    padding: 8px;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    tab-size: 2;
+  }
+
+  .o-ce-textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: transparent;
+    background: transparent;
+    caret-color: #000;
+    resize: none;
+    outline: none;
+  }
+
+  .o-ce-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #333;
+    pointer-events: none;
+  }
+
+  /* Syntax Highlighting */
+  .o-ce-keyword {
+    color: #0000ff;
+    font-weight: bold;
+  }
+
+  .o-ce-string {
+    color: #a31515;
+  }
+
+  .o-ce-number {
+    color: #098658;
+  }
+
+  .o-ce-comment {
+    color: #008000;
+    font-style: italic;
+  }
+}
+
+/* Dark mode support */
+.o-spreadsheet.o-dark-mode {
+  .o-code-editor {
+    background-color: #1e1e1e;
+    border-color: #333;
+  }
+
+  .o-ce-lines {
+    background-color: #252526;
+    color: #858585;
+    border-color: #333;
+  }
+
+  .o-ce-content {
+    background-color: #1e1e1e;
+  }
+
+  .o-ce-highlight {
+    color: #d4d4d4;
+  }
+
+  .o-ce-textarea {
+    caret-color: #d4d4d4;
+  }
+
+  .o-ce-keyword {
+    color: #569cd6;
+  }
+
+  .o-ce-string {
+    color: #ce9178;
+  }
+
+  .o-ce-number {
+    color: #b5cea8;
+  }
+
+  .o-ce-comment {
+    color: #6a9955;
+  }
+}

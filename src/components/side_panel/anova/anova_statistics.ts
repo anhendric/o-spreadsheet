@@ -14,7 +14,9 @@ function logGamma(z: number): number {
   let tmp = x + 5.5;
   tmp -= (x + 0.5) * Math.log(tmp);
   let ser = 1.000000000190015;
-  for (let j = 0; j < 6; j++) ser += c[j] / ++y;
+  for (let j = 0; j < 6; j++) {
+    ser += c[j] / ++y;
+  }
   return -tmp + Math.log((2.5066282746310005 * ser) / x);
 }
 
@@ -23,8 +25,12 @@ function logGamma(z: number): number {
  * Computed using continued fraction representation.
  */
 function incompleteBeta(x: number, a: number, b: number): number {
-  if (x === 0) return 0;
-  if (x === 1) return 1;
+  if (x === 0) {
+    return 0;
+  }
+  if (x === 1) {
+    return 1;
+  }
 
   const bt =
     x === 0 || x === 1
@@ -54,7 +60,9 @@ function betacf(x: number, a: number, b: number): number {
   const qam = a - 1;
   let c = 1;
   let d = 1 - (qab * x) / qap;
-  if (Math.abs(d) < FPMIN) d = FPMIN;
+  if (Math.abs(d) < FPMIN) {
+    d = FPMIN;
+  }
   d = 1 / d;
   let h = d;
 
@@ -62,20 +70,30 @@ function betacf(x: number, a: number, b: number): number {
     const m2 = 2 * m;
     let aa = (m * (b - m) * x) / ((qam + m2) * (a + m2));
     d = 1 + aa * d;
-    if (Math.abs(d) < FPMIN) d = FPMIN;
+    if (Math.abs(d) < FPMIN) {
+      d = FPMIN;
+    }
     c = 1 + aa / c;
-    if (Math.abs(c) < FPMIN) c = FPMIN;
+    if (Math.abs(c) < FPMIN) {
+      c = FPMIN;
+    }
     d = 1 / d;
     h *= d * c;
     aa = (-(a + m) * (qab + m) * x) / ((a + m2) * (qap + m2));
     d = 1 + aa * d;
-    if (Math.abs(d) < FPMIN) d = FPMIN;
+    if (Math.abs(d) < FPMIN) {
+      d = FPMIN;
+    }
     c = 1 + aa / c;
-    if (Math.abs(c) < FPMIN) c = FPMIN;
+    if (Math.abs(c) < FPMIN) {
+      c = FPMIN;
+    }
     d = 1 / d;
     const del = d * c;
     h *= del;
-    if (Math.abs(del - 1.0) < EPS) break;
+    if (Math.abs(del - 1.0) < EPS) {
+      break;
+    }
   }
   return h;
 }
@@ -86,7 +104,9 @@ function betacf(x: number, a: number, b: number): number {
  * Relation to Beta: I_{d1*x / (d1*x + d2)} (d1/2, d2/2)
  */
 export function fDistributionCDF(x: number, d1: number, d2: number): number {
-  if (x < 0) return 0;
+  if (x < 0) {
+    return 0;
+  }
   const val = (d1 * x) / (d1 * x + d2);
   return incompleteBeta(val, d1 / 2, d2 / 2);
 }
@@ -96,16 +116,24 @@ export function fDistributionCDF(x: number, d1: number, d2: number): number {
  * Finds x such that P(X <= x) = p
  */
 export function fDistributionInverse(p: number, d1: number, d2: number): number {
-  if (p < 0 || p > 1) return NaN;
-  if (p === 0) return 0;
-  if (p === 1) return Infinity;
+  if (p < 0 || p > 1) {
+    return NaN;
+  }
+  if (p === 0) {
+    return 0;
+  }
+  if (p === 1) {
+    return Infinity;
+  }
 
   let min = 0;
   let max = 10; // Initial guess
 
   // Expand search range if needed
   while (fDistributionCDF(max, d1, d2) < p) {
-    if (max > 1e10) break; // Avoid infinite loop
+    if (max > 1e10) {
+      break;
+    } // Avoid infinite loop
     min = max;
     max *= 2;
   }
@@ -115,7 +143,9 @@ export function fDistributionInverse(p: number, d1: number, d2: number): number 
   while (iter < 100) {
     const mid = (min + max) / 2;
     const val = fDistributionCDF(mid, d1, d2);
-    if (Math.abs(val - p) < tolerance) return mid;
+    if (Math.abs(val - p) < tolerance) {
+      return mid;
+    }
 
     if (val < p) {
       min = mid;
@@ -167,7 +197,9 @@ export function calculateOneWayAnova(
     group.length ? group.reduce((a, b) => a + b, 0) / group.length : 0
   );
   const variances = data.map((group, i) => {
-    if (group.length <= 1) return 0;
+    if (group.length <= 1) {
+      return 0;
+    }
     const avg = averages[i];
     // Sample variance: sum((x - mean)^2) / (n - 1)
     const sumSqDiff = group.reduce((acc, val) => acc + Math.pow(val - avg, 2), 0);

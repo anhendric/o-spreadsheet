@@ -609,7 +609,14 @@ topbarMenuRegistry
     name: _t("Console"),
     execute: (env) => env.openSidePanel("Console"),
     sequence: 100,
-    icon: "o-spreadsheet-Icon.TERMINAL", // Assuming this icon exists or similar
+    icon: "o-spreadsheet-Icon.TERMINAL",
+    separator: true,
+  })
+  .addChild("custom_functions", ["data"], {
+    name: _t("Custom Functions"),
+    execute: (env) => env.openSidePanel("CustomFunctions"),
+    sequence: 110,
+    icon: "o-spreadsheet-Icon.CODE", // Using generic code icon
     separator: true,
   });
 

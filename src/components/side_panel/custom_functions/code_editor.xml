@@ -1,0 +1,22 @@
+<templates>
+  <div t-name="o-spreadsheet-CodeEditor" class="o-code-editor" t-att-class="props.class">
+    <div class="o-ce-lines" t-ref="lines">
+      <t t-foreach="lineNumbers" t-as="line" t-key="line">
+        <div class="o-ce-line-num" t-esc="line"/>
+      </t>
+    </div>
+    <div class="o-ce-content">
+      <div class="o-ce-highlight" t-ref="highlight" t-out="highlightedCode"/>
+      <textarea
+        t-ref="textarea"
+        class="o-ce-textarea"
+        t-att-value="props.value"
+        t-on-input="onInput"
+        t-on-scroll="onScroll"
+        t-on-keydown="onKeyDown"
+        t-att-placeholder="props.placeholder"
+        spellcheck="false"
+      />
+    </div>
+  </div>
+</templates>

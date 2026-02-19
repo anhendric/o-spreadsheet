@@ -196,7 +196,9 @@ export class DrawingPlugin extends CorePlugin<DrawingState> implements DrawingSt
     const drawing = this.drawings[figureId];
     if (drawing) {
       const index = drawing.elements.findIndex((e) => e.id === elementId);
-      if (index === -1) return;
+      if (index === -1) {
+        return;
+      }
 
       const element = drawing.elements[index];
       drawing.elements.splice(index, 1);

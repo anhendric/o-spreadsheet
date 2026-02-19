@@ -77,7 +77,9 @@ export class ScenarioPlugin extends UIPlugin {
 
   private applyScenario(id: string) {
     const scenario = this.scenarios.find((s) => s.id === id);
-    if (!scenario) return;
+    if (!scenario) {
+      return;
+    }
 
     const sheetId = this.getters.getActiveSheetId();
 

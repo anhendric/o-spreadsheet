@@ -68,7 +68,9 @@ export class DrawingFigure extends Component<Props, SpreadsheetChildEnv> {
   ) {
     ev.stopPropagation(); // Prevent figure drag if clicking on element
     const element = this.drawingData?.elements.find((e) => e.id === elementId);
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     // Dispatch selection update
     if (this.drawingData?.selectedElementId !== elementId) {
@@ -107,7 +109,9 @@ export class DrawingFigure extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onPointerMove(ev: PointerEvent) {
-    if (!this.dragState) return;
+    if (!this.dragState) {
+      return;
+    }
 
     const { startX, startY, initialElement, mode, resizeHandle, pointIndex } = this.dragState;
     const dx = ev.clientX - startX;
@@ -177,7 +181,9 @@ export class DrawingFigure extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onPointerUp(ev: PointerEvent) {
-    if (!this.dragState) return;
+    if (!this.dragState) {
+      return;
+    }
 
     // Dispatch final update
     if (this.state.tempElement) {
@@ -271,8 +277,12 @@ export class DrawingFigure extends Component<Props, SpreadsheetChildEnv> {
       // Also, we shift the container if we expand it? No, just expand.
       // Actually, if we just set min-width/height, it expands to the right/bottom.
       // This is arguably fine as `overflow: visible` handles the rest, but 0px size is risky.
-      if (width === 0) width = 1;
-      if (height === 0) height = 22;
+      if (width === 0) {
+        width = 1;
+      }
+      if (height === 0) {
+        height = 22;
+      }
     } else {
       left = Math.min(element.x, element.x + element.width);
       top = Math.min(element.y, element.y + element.height);
@@ -357,13 +367,17 @@ export class DrawingFigure extends Component<Props, SpreadsheetChildEnv> {
   }
 
   getSvgContent(element: DrawingElement) {
-    if (!element.svgContent) return "";
+    if (!element.svgContent) {
+      return "";
+    }
     return markup(element.svgContent);
   }
 
   async exportDrawing() {
     const root = this.rootRef.el;
-    if (!root) return;
+    if (!root) {
+      return;
+    }
 
     // Clone the node to avoid modifying the visible DOM
     const clone = root.cloneNode(true) as HTMLElement;

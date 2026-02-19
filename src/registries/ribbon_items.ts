@@ -648,7 +648,8 @@ ribbonRegistry.addItem("data", "analysis", {
   sequence: 30,
 });
 
-ribbonRegistry.addItem("data", "analysis", {
+ribbonRegistry.addGroup("data", "code", _t("Code"), 40);
+ribbonRegistry.addItem("data", "code", {
   id: "console",
   component: ActionButton,
   props: {
@@ -660,6 +661,20 @@ ribbonRegistry.addItem("data", "analysis", {
     class: "o-hoverable-button o-toolbar-button",
   },
   sequence: 40,
+});
+
+ribbonRegistry.addItem("data", "code", {
+  id: "custom_functions",
+  component: ActionButton,
+  props: {
+    action: {
+      name: _t("Custom Functions"),
+      execute: (env: any) => env.openSidePanel("CustomFunctions"),
+      icon: "o-spreadsheet-Icon.CODE",
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 50,
 });
 
 // --- VIEW TAB ---

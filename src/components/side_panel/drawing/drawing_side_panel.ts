@@ -121,7 +121,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onChangeAttr(attr: keyof DrawingElement, value: string) {
-    if (!this.selectedElement) return;
+    if (!this.selectedElement) {
+      return;
+    }
 
     if (attr === "text" || attr === "svgContent") {
       this.env.model.dispatch("UPDATE_DRAWING_ELEMENT", {
@@ -133,7 +135,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
     }
 
     let numVal = parseInt(value);
-    if (isNaN(numVal)) return;
+    if (isNaN(numVal)) {
+      return;
+    }
 
     // Snap to grid
     numVal = this.snapToGrid(numVal);
@@ -146,7 +150,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onSaveSvg() {
-    if (!this.selectedElement || !this.svgTextarea.el) return;
+    if (!this.selectedElement || !this.svgTextarea.el) {
+      return;
+    }
     const rawContent = (this.svgTextarea.el as HTMLTextAreaElement).value;
 
     try {
@@ -181,12 +187,16 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onChangeStyle(attr: keyof DrawingElement["style"], value: string) {
-    if (!this.selectedElement) return;
+    if (!this.selectedElement) {
+      return;
+    }
     let val: string | number | undefined = value;
 
     if (attr === "strokeWidth") {
       val = parseInt(value);
-      if (isNaN(val)) return;
+      if (isNaN(val)) {
+        return;
+      }
     }
 
     const updates = { style: { ...this.selectedElement.style, [attr]: val } };
@@ -199,7 +209,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   get textStyle(): ChartStyle {
-    if (!this.selectedElement) return {};
+    if (!this.selectedElement) {
+      return {};
+    }
     const s = this.selectedElement.style;
     return {
       bold: s.bold,
@@ -212,7 +224,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   updateTextStyle(style: ChartStyle) {
-    if (!this.selectedElement) return;
+    if (!this.selectedElement) {
+      return;
+    }
     const updates = {
       style: {
         ...this.selectedElement.style,
@@ -239,7 +253,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   removeSelected() {
-    if (!this.selectedElement) return;
+    if (!this.selectedElement) {
+      return;
+    }
     this.env.model.dispatch("REMOVE_DRAWING_ELEMENT", {
       figureId: this.props.figureId,
       elementId: this.selectedElement.id,
@@ -251,7 +267,9 @@ export class DrawingSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   reorderSelected(direction: "front" | "back" | "forward" | "backward") {
-    if (!this.selectedElement) return;
+    if (!this.selectedElement) {
+      return;
+    }
     this.env.model.dispatch("REORDER_DRAWING_ELEMENT", {
       figureId: this.props.figureId,
       elementId: this.selectedElement.id,

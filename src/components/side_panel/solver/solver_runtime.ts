@@ -29,7 +29,9 @@ export function setupSolverProblem(config: SolverConfig, getters: any, sheetId: 
 
   for (const rangeXc of config.changingCells) {
     const range = getters.getRangeFromSheetXC(sheetId, rangeXc);
-    if (!range) continue;
+    if (!range) {
+      continue;
+    }
     for (let r = range.zone.top; r <= range.zone.bottom; r++) {
       for (let c = range.zone.left; c <= range.zone.right; c++) {
         paramCells.push({ col: c, row: r, xc: "" });
@@ -37,7 +39,9 @@ export function setupSolverProblem(config: SolverConfig, getters: any, sheetId: 
     }
   }
 
-  if (paramCells.length === 0) return null;
+  if (paramCells.length === 0) {
+    return null;
+  }
 
   // Initial Vector x0
   const x0 = paramCells.map((p) => {
@@ -85,8 +89,12 @@ export function createEvaluateFunction(
               // Find index in paramCells
               const idx = paramCells.findIndex((p) => p.col === c && p.row === r);
               if (idx !== -1) {
-                if (d.min !== undefined && d.min !== null) lowerBound[idx] = d.min;
-                if (d.max !== undefined && d.max !== null) upperBound[idx] = d.max;
+                if (d.min !== undefined && d.min !== null) {
+                  lowerBound[idx] = d.min;
+                }
+                if (d.max !== undefined && d.max !== null) {
+                  upperBound[idx] = d.max;
+                }
               }
             }
           }
@@ -107,7 +115,9 @@ export function createEvaluateFunction(
 
     for (const c of config.constraints) {
       const subjRange = getters.getRangeFromSheetXC(sheetId, c.param);
-      if (!subjRange) continue;
+      if (!subjRange) {
+        continue;
+      }
       const subjCell = getters.getEvaluatedCell({
         sheetId,
         col: subjRange.zone.left,
@@ -125,17 +135,24 @@ export function createEvaluateFunction(
             col: tRange.zone.left,
             row: tRange.zone.top,
           });
-          if (tCell && typeof tCell.value === "number") targetVal = tCell.value;
-          else targetVal = 0;
+          if (tCell && typeof tCell.value === "number") {
+            targetVal = tCell.value;
+          } else {
+            targetVal = 0;
+          }
         } else {
           targetVal = 0;
         }
       }
 
       if (c.op === "<=") {
-        if (subjVal > targetVal) penalty += (subjVal - targetVal) * PENALTY_WEIGHT;
+        if (subjVal > targetVal) {
+          penalty += (subjVal - targetVal) * PENALTY_WEIGHT;
+        }
       } else if (c.op === ">=") {
-        if (subjVal < targetVal) penalty += (targetVal - subjVal) * PENALTY_WEIGHT;
+        if (subjVal < targetVal) {
+          penalty += (targetVal - subjVal) * PENALTY_WEIGHT;
+        }
       } else if (c.op === "=") {
         penalty += Math.abs(subjVal - targetVal) * PENALTY_WEIGHT;
       }
@@ -155,12 +172,16 @@ export function createEvaluateFunction(
         row: objRange.zone.top,
       });
       let val = objCell ? objCell.value : 0;
-      if (typeof val !== "number") val = 0; // Handle non-numeric
+      if (typeof val !== "number") {
+        val = 0;
+      } // Handle non-numeric
 
       let error = 0;
-      if (config.goal === "min") error = val;
-      else if (config.goal === "max") error = -val;
-      else {
+      if (config.goal === "min") {
+        error = val;
+      } else if (config.goal === "max") {
+        error = -val;
+      } else {
         const t = parseFloat(config.targetValue) || 0;
         error = Math.pow(val - t, 2);
       }
@@ -175,7 +196,9 @@ export function createEvaluateFunction(
     // We will default to returning number if 1 objective to be safe/backward compatible
     // But if config has multiple objectives, we MUST return array.
 
-    if (costs.length === 1) return costs[0];
+    if (costs.length === 1) {
+      return costs[0];
+    }
     return costs;
   };
 }
@@ -202,8 +225,12 @@ export function getVariableBounds(
             // Find index in paramCells
             const idx = paramCells.findIndex((p) => p.col === c && p.row === r);
             if (idx !== -1) {
-              if (d.min !== undefined && d.min !== null) lowerBound[idx] = d.min;
-              if (d.max !== undefined && d.max !== null) upperBound[idx] = d.max;
+              if (d.min !== undefined && d.min !== null) {
+                lowerBound[idx] = d.min;
+              }
+              if (d.max !== undefined && d.max !== null) {
+                upperBound[idx] = d.max;
+              }
             }
           }
         }

@@ -17,7 +17,9 @@ export function getSelectedChartId(env: SpreadsheetChildEnv): UID | undefined {
 
 export function updateSelectedChart(env: SpreadsheetChildEnv, update: any) {
   const chartId = getSelectedChartId(env);
-  if (!chartId) return;
+  if (!chartId) {
+    return;
+  }
   const figureId = env.model.getters.getFigureIdFromChartId(chartId);
   const definition = {
     ...env.model.getters.getChartDefinition(chartId),
@@ -35,7 +37,9 @@ export function updateSelectedChart(env: SpreadsheetChildEnv, update: any) {
 
 export const changeChartType = (type: string) => (env: SpreadsheetChildEnv) => {
   const chartId = getSelectedChartId(env);
-  if (!chartId) return;
+  if (!chartId) {
+    return;
+  }
   env.getStore(MainChartPanelStore).changeChartType(chartId, type);
 };
 
@@ -110,13 +114,17 @@ export const toggleShowValues: ActionSpec = {
   name: _t("Show values"),
   execute: (env) => {
     const chartId = getSelectedChartId(env);
-    if (!chartId) return;
+    if (!chartId) {
+      return;
+    }
     const definition = env.model.getters.getChartDefinition(chartId) as any;
     updateSelectedChart(env, { showValues: !definition.showValues });
   },
   isActive: (env) => {
     const chartId = getSelectedChartId(env);
-    if (!chartId) return false;
+    if (!chartId) {
+      return false;
+    }
     const definition = env.model.getters.getChartDefinition(chartId) as any;
     return !!definition.showValues;
   },
@@ -126,13 +134,17 @@ export const toggleHumanize: ActionSpec = {
   name: _t("Humanize number"),
   execute: (env) => {
     const chartId = getSelectedChartId(env);
-    if (!chartId) return;
+    if (!chartId) {
+      return;
+    }
     const definition = env.model.getters.getChartDefinition(chartId) as any;
     updateSelectedChart(env, { humanize: !definition.humanize });
   },
   isActive: (env) => {
     const chartId = getSelectedChartId(env);
-    if (!chartId) return false;
+    if (!chartId) {
+      return false;
+    }
     const definition = env.model.getters.getChartDefinition(chartId) as any;
     return definition.humanize !== false; // default true
   },

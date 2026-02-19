@@ -4,9 +4,11 @@
       <div
         class="o-topbar-composer position-relative bg-white user-select-text d-flex"
         t-att-class="{
+          'bg-white': !props.isDisabled,
           'o-topbar-composer-readonly': env.model.getters.isReadonly(),
           'o-topbar-composer-active': focus !== 'inactive',
           'o-topbar-composer-inactive': focus === 'inactive',
+          'opacity-50 bg-light pe-none': props.isDisabled,
         }"
         t-on-click.stop="">
         <Composer

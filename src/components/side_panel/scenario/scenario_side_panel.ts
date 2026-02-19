@@ -56,7 +56,9 @@ export class ScenarioSidePanel extends Component<Props, SpreadsheetChildEnv> {
 
   editScenario(id: string) {
     const scenario = this.scenarios.find((s) => s.id === id);
-    if (!scenario) return;
+    if (!scenario) {
+      return;
+    }
 
     this.state.editingScenarioId = id;
     this.state.editingName = scenario.name;
@@ -91,7 +93,9 @@ export class ScenarioSidePanel extends Component<Props, SpreadsheetChildEnv> {
 
     for (const rangeXc of this.state.editingCells) {
       const range = this.env.model.getters.getRangeFromSheetXC(sheetId, rangeXc);
-      if (!range) continue;
+      if (!range) {
+        continue;
+      }
 
       const zone = range.zone;
       const cellCount = (zone.bottom - zone.top + 1) * (zone.right - zone.left + 1);
@@ -118,7 +122,9 @@ export class ScenarioSidePanel extends Component<Props, SpreadsheetChildEnv> {
   }
 
   saveScenario() {
-    if (!this.state.editingName) return;
+    if (!this.state.editingName) {
+      return;
+    }
 
     const cellsData: Record<string, string> = {};
     for (const v of this.state.editingValues) {

@@ -28,8 +28,12 @@ export class MarkerPreview extends Component<any, any> {
   }
 
   get cx() {
-    if (this.props.position === "start") return this.lineStart;
-    if (this.props.position === "end") return this.lineEnd;
+    if (this.props.position === "start") {
+      return this.lineStart;
+    }
+    if (this.props.position === "end") {
+      return this.lineEnd;
+    }
     return 0; // Should not happen for styled markers
   }
 
