@@ -2,6 +2,7 @@ import { FIGURE_BORDER_WIDTH } from "@odoo/o-spreadsheet-engine/constants";
 import { FigureUI, Getters, Pixel, PixelPosition, UID } from "../../types";
 
 const SNAP_MARGIN: Pixel = 5;
+const GRID_SNAP_SIZE: Pixel = 20;
 
 export type HFigureAxisType = "top" | "bottom" | "vCenter";
 export type VFigureAxisType = "right" | "left" | "hCenter";
@@ -52,6 +53,8 @@ export function snapForMove(
   const { y: viewportY, x: viewportX } = getters.getMainViewportCoordinates();
   const { scrollY, scrollX } = getters.getActiveSheetScrollInfo();
 
+  const isWhiteboard = getters.getSheet(getters.getActiveSheetId()).isWhiteboard;
+
   // If the snap cause the figure to change pane, we need to also apply the scroll as an offset
   if (horizontalSnapLine) {
     figureToSnap.y -= horizontalSnapLine.snapOffset;
@@ -64,6 +67,8 @@ export function snapForMove(
     } else if (!isBaseFigFrozenY && isSnappedFrozenY) {
       figureToSnap.y -= scrollY;
     }
+  } else if (isWhiteboard) {
+    figureToSnap.y = Math.round(figureToSnap.y / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
   }
 
   if (verticalSnapLine) {
@@ -77,6 +82,8 @@ export function snapForMove(
     } else if (!isBaseFigFrozenX && isSnappedFrozenX) {
       figureToSnap.x -= scrollX;
     }
+  } else if (isWhiteboard) {
+    figureToSnap.x = Math.round(figureToSnap.x / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
   }
 
   return { snappedFigure: figureToSnap, verticalSnapLine, horizontalSnapLine };
@@ -93,6 +100,8 @@ export function snapForResize(
   figureToSnap: FigureUI,
   otherFigures: FigureUI[]
 ): SnapReturn {
+  const isWhiteboard = getters.getSheet(getters.getActiveSheetId()).isWhiteboard;
+
   // Vertical snap line
   const verticalSnapLine = getSnapLine(
     getters,
@@ -107,6 +116,15 @@ export function snapForResize(
     } else if (resizeDirX === -1) {
       figureToSnap.x -= verticalSnapLine.snapOffset;
       figureToSnap.width += verticalSnapLine.snapOffset;
+    }
+  } else if (isWhiteboard && resizeDirX !== 0) {
+    if (resizeDirX === 1) {
+      figureToSnap.width = Math.round(figureToSnap.width / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
+    } else {
+      const right = figureToSnap.x + figureToSnap.width;
+      figureToSnap.x = Math.round(figureToSnap.x / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
+      figureToSnap.width = right - figureToSnap.x;
+      figureToSnap.width = Math.round(figureToSnap.width / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
     }
   }
 
@@ -124,6 +142,15 @@ export function snapForResize(
     } else if (resizeDirY === -1) {
       figureToSnap.y -= horizontalSnapLine.snapOffset;
       figureToSnap.height += horizontalSnapLine.snapOffset;
+    }
+  } else if (isWhiteboard && resizeDirY !== 0) {
+    if (resizeDirY === 1) {
+      figureToSnap.height = Math.round(figureToSnap.height / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
+    } else {
+      const bottom = figureToSnap.y + figureToSnap.height;
+      figureToSnap.y = Math.round(figureToSnap.y / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
+      figureToSnap.height = bottom - figureToSnap.y;
+      figureToSnap.height = Math.round(figureToSnap.height / GRID_SNAP_SIZE) * GRID_SNAP_SIZE;
     }
   }
 

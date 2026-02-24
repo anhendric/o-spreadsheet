@@ -42,6 +42,8 @@ import { CustomFunctionFullEditor } from "../side_panel/custom_functions/custom_
 import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
 import { DEFAULT_SIDE_PANEL_SIZE, SidePanelStore } from "../side_panel/side_panel/side_panel_store";
 import { SidePanels } from "../side_panel/side_panels/side_panels";
+import { WhiteboardFullEditor } from "../side_panel/whiteboard/whiteboard_full_editor";
+import { WhiteboardTabStore } from "../side_panel/whiteboard/whiteboard_tab_store";
 import { SmallBottomBar } from "../small_bottom_bar/small_bottom_bar";
 import { TopBar } from "../top_bar/top_bar";
 import { instantiateClipboard } from "./../../helpers/clipboard/navigator_clipboard_wrapper";
@@ -81,6 +83,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
     HeaderGroupContainer,
     FullScreenFigure,
     CustomFunctionFullEditor,
+    WhiteboardFullEditor,
   };
 
   sidePanel!: Store<SidePanelStore>;
@@ -93,6 +96,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
   private notificationStore!: Store<NotificationStore>;
   private composerFocusStore!: Store<ComposerFocusStore>;
   customFunctionTabStore!: Store<CustomFunctionTabStore>;
+  whiteboardTabStore!: Store<WhiteboardTabStore>;
 
   get model(): Model {
     return this.props.model;
@@ -138,6 +142,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
     this.composerFocusStore = useStore(ComposerFocusStore);
     this.sidePanel = useStore(SidePanelStore);
     this.customFunctionTabStore = useStore(CustomFunctionTabStore);
+    this.whiteboardTabStore = useStore(WhiteboardTabStore);
     const fileStore = this.model.config.external.fileStore;
 
     useSubEnv({

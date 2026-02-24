@@ -1,0 +1,36 @@
+.o-spreadsheet {
+  .o-whiteboard-full-editor-container {
+    z-index: var(--os-components-importance-whiteboard);
+  }
+
+  .o-whiteboard-canvas {
+    cursor: crosshair;
+    user-select: none;
+  }
+
+  .o-whiteboard-element {
+    cursor: move;
+  }
+
+  .o-resize-handle {
+    border-radius: 2px;
+  }
+
+  .o-point-handle {
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .o-whiteboard-toolbar {
+    background-color: #f8f9fa;
+  }
+
+  .o-whiteboard-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .o-whiteboard-item:hover {
+    background-color: #f0f2f5;
+  }
+}

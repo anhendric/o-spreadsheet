@@ -15,6 +15,7 @@ import { InsertSpecialCharacterPanel } from "../components/side_panel/insert_spe
 import { MoreFormatsPanel } from "../components/side_panel/more_formats/more_formats";
 import { PivotMeasureDisplayPanel } from "../components/side_panel/pivot/pivot_measure_display_panel/pivot_measure_display_panel";
 import { PivotSidePanel } from "../components/side_panel/pivot/pivot_side_panel/pivot_side_panel";
+import { RangeFigurePanel } from "../components/side_panel/range_figure_panel/range_figure_panel";
 import { RemoveDuplicatesPanel } from "../components/side_panel/remove_duplicates/remove_duplicates";
 import { ScenarioSidePanel } from "../components/side_panel/scenario/scenario_side_panel";
 import { SettingsPanel } from "../components/side_panel/settings/settings_panel";
@@ -252,7 +253,19 @@ sidePanelRegistry.add("Console", {
   Body: ConsolePanel,
 });
 
-sidePanelRegistry.add("CustomFunctions", {
-  title: _t("Custom Functions"),
-  Body: CustomFunctionPanel,
-});
+sidePanelRegistry
+  .add("CustomFunctionPanel", {
+    title: _t("Custom functions"),
+    Body: CustomFunctionPanel,
+  })
+  .add("RangeFigurePanel", {
+    title: _t("Range Figure"),
+    Body: RangeFigurePanel,
+    computeState: (getters: Getters, initialProps: { figureId: UID }) => {
+      const figureId = initialProps.figureId || getters.getSelectedFigureId();
+      if (!figureId || !getters.getRangeFigure(figureId)) {
+        return { isOpen: false };
+      }
+      return { isOpen: true, props: { figureId } };
+    },
+  });

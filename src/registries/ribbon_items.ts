@@ -17,10 +17,16 @@ import { NumberFormatsTool } from "../components/top_bar/number_formats_tool/num
 import { ToolBarZoom } from "../components/top_bar/zoom_editor/zoom_editor";
 import { ribbonRegistry } from "./ribbon_registry";
 
+const isNotWhiteboard = (env: any) =>
+  !env.model.getters.getSheet(env.model.getters.getActiveSheetId()).isWhiteboard;
+
+const isWhiteboard = (env: any) =>
+  !!env.model.getters.getSheet(env.model.getters.getActiveSheetId()).isWhiteboard;
+
 ribbonRegistry
   .addTab("home", _t("Home"), 10)
   .addTab("insert", _t("Insert"), 20)
-  .addTab("data", _t("Data"), 30)
+  .addTab("data", _t("Data"), 30, isNotWhiteboard)
   .addTab("view", _t("View"), 40)
   .addTab("chart", _t("Chart"), 50, (env) => !!ACTION_CHART.getSelectedChartId(env));
 
@@ -64,6 +70,7 @@ ribbonRegistry.addItem("home", "clipboard", {
     class: "o-hoverable-button o-toolbar-button o-mobile-disabled",
   },
   sequence: 40,
+  isVisible: isNotWhiteboard,
 });
 
 // Undo/Redo
@@ -94,10 +101,11 @@ ribbonRegistry.addItem("home", "undo_redo", {
     class: "o-hoverable-button o-toolbar-button",
   },
   sequence: 30,
+  isVisible: isNotWhiteboard,
 });
 
 // Styles
-ribbonRegistry.addGroup("home", "styles", _t("Styles"), 20);
+ribbonRegistry.addGroup("home", "styles", _t("Styles"), 20, isNotWhiteboard);
 ribbonRegistry.addItem("home", "styles", {
   id: "font_size",
   component: TopBarFontSizeEditor,
@@ -174,7 +182,7 @@ ribbonRegistry.addItem("home", "styles", {
 });
 
 // Alignment
-ribbonRegistry.addGroup("home", "alignment", _t("Alignment"), 30);
+ribbonRegistry.addGroup("home", "alignment", _t("Alignment"), 30, isNotWhiteboard);
 ribbonRegistry.addItem("home", "alignment", {
   id: "halign",
   component: DropdownAction,
@@ -249,7 +257,7 @@ ribbonRegistry.addItem("home", "alignment", {
 });
 
 // Number
-ribbonRegistry.addGroup("home", "number", _t("Number"), 40);
+ribbonRegistry.addGroup("home", "number", _t("Number"), 40, isNotWhiteboard);
 ribbonRegistry.addItem("home", "number", {
   id: "percent",
   component: ActionButton,
@@ -287,7 +295,7 @@ ribbonRegistry.addItem("home", "number", {
 });
 
 // Editing
-ribbonRegistry.addGroup("home", "editing", _t("Editing"), 60);
+ribbonRegistry.addGroup("home", "editing", _t("Editing"), 60, isNotWhiteboard);
 ribbonRegistry.addItem("home", "editing", {
   id: "find_replace",
   component: ActionButton,
@@ -364,8 +372,40 @@ ribbonRegistry.addItem("insert", "figures", {
   sequence: 30,
 });
 
+ribbonRegistry.addItem("insert", "figures", {
+  id: "insert_range_figure",
+  component: ActionButton,
+  isVisible: isWhiteboard,
+  props: {
+    action: {
+      name: _t("Range Figure"),
+      icon: "o-spreadsheet-Icon.RANGE_FIGURE",
+      execute: (env: any) => {
+        const sheetId = env.model.getters.getActiveSheetId();
+        const figureId = env.model.uuidGenerator.uuidv4();
+        const firstSheetId = env.model.getters.getVisibleSheetIds()[0];
+        const range = env.model.getters.getRangeDataFromXc(firstSheetId, "A1:C3");
+        env.model.dispatch("CREATE_RANGE_FIGURE", {
+          sheetId,
+          figureId,
+          col: 0,
+          row: 0,
+          offset: { x: 100, y: 100 },
+          size: { width: 300, height: 200 },
+          range,
+          displayMode: "fit",
+        });
+        env.model.dispatch("SELECT_FIGURE", { figureId });
+        env.openSidePanel("RangeFigurePanel", { figureId });
+      },
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 45,
+});
+
 // Tables
-ribbonRegistry.addGroup("insert", "tables", _t("Tables"), 20);
+ribbonRegistry.addGroup("insert", "tables", _t("Tables"), 20, isNotWhiteboard);
 ribbonRegistry.addItem("insert", "tables", {
   id: "insert_pivot",
   component: ActionButton,
@@ -386,7 +426,7 @@ ribbonRegistry.addItem("insert", "tables", {
 });
 
 // Cells
-ribbonRegistry.addGroup("insert", "cells", _t("Cells"), 30);
+ribbonRegistry.addGroup("insert", "cells", _t("Cells"), 30, isNotWhiteboard);
 ribbonRegistry.addItem("insert", "cells", {
   id: "insert_cell_shortcut",
   component: DropdownAction,
@@ -422,7 +462,7 @@ ribbonRegistry.addItem("insert", "cells", {
 });
 
 // Links
-ribbonRegistry.addGroup("insert", "links", _t("Links"), 40);
+ribbonRegistry.addGroup("insert", "links", _t("Links"), 40, isNotWhiteboard);
 ribbonRegistry.addItem("insert", "links", {
   id: "insert_link",
   component: ActionButton,
@@ -434,7 +474,7 @@ ribbonRegistry.addItem("insert", "links", {
 });
 
 // Controls
-ribbonRegistry.addGroup("insert", "controls", _t("Controls"), 50);
+ribbonRegistry.addGroup("insert", "controls", _t("Controls"), 50, isNotWhiteboard);
 ribbonRegistry.addItem("insert", "controls", {
   id: "insert_checkbox",
   component: ActionButton,
@@ -472,6 +512,7 @@ ribbonRegistry.addItem("insert", "symbols", {
     childClass: "o-hoverable-button",
   },
   sequence: 10,
+  isVisible: isNotWhiteboard,
 });
 ribbonRegistry.addItem("insert", "symbols", {
   id: "insert_equation",
@@ -515,6 +556,7 @@ ribbonRegistry.addItem("insert", "symbols", {
     class: "o-hoverable-button o-toolbar-button",
   },
   sequence: 30,
+  isVisible: isNotWhiteboard,
 });
 
 // Sheet
@@ -527,6 +569,17 @@ ribbonRegistry.addItem("insert", "sheet", {
     class: "o-hoverable-button o-toolbar-button",
   },
   sequence: 10,
+});
+ribbonRegistry.addItem("insert", "sheet", {
+  id: "insert_whiteboard",
+  component: ActionButton,
+  props: {
+    action: {
+      ...ACTION_INSERT.insertWhiteboard,
+    },
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 40,
 });
 
 // --- DATA TAB ---
@@ -669,7 +722,7 @@ ribbonRegistry.addItem("data", "code", {
   props: {
     action: {
       name: _t("Custom Functions"),
-      execute: (env: any) => env.openSidePanel("CustomFunctions"),
+      execute: (env: any) => env.openSidePanel("CustomFunctionPanel"),
       icon: "o-spreadsheet-Icon.CODE",
     },
     class: "o-hoverable-button o-toolbar-button",
@@ -680,7 +733,7 @@ ribbonRegistry.addItem("data", "code", {
 // --- VIEW TAB ---
 
 // Show
-ribbonRegistry.addGroup("view", "show", _t("Show"), 10);
+ribbonRegistry.addGroup("view", "show", _t("Show"), 10, isNotWhiteboard);
 ribbonRegistry.addItem("view", "show", {
   id: "view_gridlines",
   component: ActionButton,
@@ -721,7 +774,7 @@ ribbonRegistry.addItem("view", "zoom", {
 });
 
 // Window
-ribbonRegistry.addGroup("view", "window", _t("Window"), 30);
+ribbonRegistry.addGroup("view", "window", _t("Window"), 30, isNotWhiteboard);
 ribbonRegistry.addItem("view", "window", {
   id: "freeze_panes",
   component: DropdownAction,
@@ -743,7 +796,7 @@ ribbonRegistry.addItem("view", "window", {
 });
 
 // Outline
-ribbonRegistry.addGroup("view", "outline", _t("Outline"), 40);
+ribbonRegistry.addGroup("view", "outline", _t("Outline"), 40, isNotWhiteboard);
 ribbonRegistry.addItem("view", "outline", {
   id: "group_headers",
   component: DropdownAction,

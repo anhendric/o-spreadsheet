@@ -361,6 +361,23 @@ export const insertSheet: ActionSpec = {
   icon: "o-spreadsheet-Icon.INSERT_SHEET",
 };
 
+export const insertWhiteboard: ActionSpec = {
+  name: _t("Insert whiteboard"),
+  execute: (env) => {
+    const activeSheetId = env.model.getters.getActiveSheetId();
+    const position = env.model.getters.getSheetIds().indexOf(activeSheetId) + 1;
+    const sheetId = env.model.uuidGenerator.smallUuid();
+    env.model.dispatch("CREATE_SHEET", {
+      sheetId,
+      position,
+      name: env.model.getters.getNextSheetName(_t("Whiteboard")),
+      isWhiteboard: true,
+    });
+    env.model.dispatch("ACTIVATE_SHEET", { sheetIdFrom: activeSheetId, sheetIdTo: sheetId });
+  },
+  icon: "o-spreadsheet-Icon.WHITEBOARD",
+};
+
 function createFormulaFunctions(fnNames: string[]): ActionSpec[] {
   return fnNames.sort().map((fnName, i) => {
     return {

@@ -376,26 +376,35 @@ topbarMenuRegistry
     sequence: 100,
     icon: "o-spreadsheet-Icon.SPECIAL_CHARACTERS",
   })
-  .addChild("insert_drawing", ["insert"], {
-    name: _t("Drawing"),
-    icon: "o-spreadsheet-Icon.DRAWING", // Use Equation icon for now or similar
-    sequence: 58,
+  .addChild("insert_whiteboard", ["insert"], {
+    ...ACTION_INSERT.insertWhiteboard,
+    sequence: 110,
+  })
+  .addChild("insert_range_figure", ["insert"], {
+    name: _t("Range Figure"),
+    icon: "o-spreadsheet-Icon.RANGE_FIGURE",
+    isVisible: (env) =>
+      !!(env.model.getters as any).getSheet((env.model.getters as any).getActiveSheetId())
+        .isWhiteboard,
     execute: async (env) => {
-      const sheetId = env.model.getters.getActiveSheetId();
+      const sheetId = (env.model.getters as any).getActiveSheetId();
       const figureId = env.model.uuidGenerator.uuidv4();
-      await env.model.dispatch("CREATE_FIGURE", {
+      const firstSheetId = (env.model.getters as any).getVisibleSheetIds()[0];
+      const range = (env.model.getters as any).getRangeDataFromXc(firstSheetId, "A1:C3");
+      await env.model.dispatch("CREATE_RANGE_FIGURE", {
         sheetId,
         figureId,
-        tag: "drawing",
         col: 0,
         row: 0,
         offset: { x: 100, y: 100 },
-        size: { width: 400, height: 300 },
+        size: { width: 300, height: 200 },
+        range,
+        displayMode: "fit",
       });
-      await env.model.dispatch("CREATE_DRAWING_FIGURE", { figureId });
       env.model.dispatch("SELECT_FIGURE", { figureId });
-      env.openSidePanel("DrawingSidePanel", { figureId });
+      env.openSidePanel("RangeFigurePanel", { figureId });
     },
+    sequence: 120,
   })
 
   // ---------------------------------------------------------------------
@@ -614,7 +623,7 @@ topbarMenuRegistry
   })
   .addChild("custom_functions", ["data"], {
     name: _t("Custom Functions"),
-    execute: (env) => env.openSidePanel("CustomFunctions"),
+    execute: (env) => env.openSidePanel("CustomFunctionPanel"),
     sequence: 110,
     icon: "o-spreadsheet-Icon.CODE", // Using generic code icon
     separator: true,

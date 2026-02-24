@@ -85,6 +85,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
     "getDuplicateSheetName",
     "tryGetCellPosition",
     "isSheetLocked",
+    "getWhiteboardSheetIds",
   ] as const;
 
   readonly sheetIdsMapName: Record<string, UID | undefined> = {};
@@ -192,7 +193,8 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
           cmd.name || this.getNextSheetName(),
           cmd.cols || 26,
           cmd.rows || 100,
-          cmd.position
+          cmd.position,
+          cmd.isWhiteboard
         );
         this.history.update("sheetIdsMapName", toStandardizedSheetName(sheet.name), sheet.id);
         break;
@@ -289,6 +291,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
         },
         color: sheetData.color,
         isLocked: sheetData.isLocked,
+        isWhiteboard: sheetData.isWhiteboard,
       };
       this.orderedSheetIds.push(sheet.id);
       this.sheets[sheet.id] = sheet;
@@ -322,6 +325,9 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
       };
       if (sheet.panes.xSplit || sheet.panes.ySplit) {
         sheetData.panes = sheet.panes;
+      }
+      if (sheet.isWhiteboard) {
+        sheetData.isWhiteboard = sheet.isWhiteboard;
       }
       return sheetData;
     });
@@ -389,7 +395,11 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
   }
 
   getVisibleSheetIds(): UID[] {
-    return this.orderedSheetIds.filter(this.isSheetVisible.bind(this));
+    return this.orderedSheetIds.filter((id) => this.isSheetVisible(id));
+  }
+
+  getWhiteboardSheetIds(): UID[] {
+    return this.orderedSheetIds.filter((id) => this.sheets[id]?.isWhiteboard);
   }
 
   doesHeaderExist(sheetId: UID, dimension: Dimension, index: number) {
@@ -613,7 +623,8 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
     name: string,
     colNumber: number,
     rowNumber: number,
-    position: number
+    position: number,
+    isWhiteboard?: boolean
   ): Sheet {
     const sheet: Sheet = {
       id,
@@ -622,6 +633,7 @@ export class SheetPlugin extends CorePlugin<SheetState> implements SheetState {
       rows: createDefaultRows(rowNumber),
       areGridLinesVisible: true,
       isVisible: true,
+      isWhiteboard,
       panes: {
         xSplit: 0,
         ySplit: 0,

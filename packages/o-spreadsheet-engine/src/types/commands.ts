@@ -355,6 +355,8 @@ export const coreTypes = new Set<CoreCommandTypes>([
   "DUPLICATE_PIVOT",
 
   "UPDATE_LATEX_FIGURE",
+  "CREATE_RANGE_FIGURE",
+  "UPDATE_RANGE_FIGURE",
   "CREATE_DRAWING_FIGURE",
   "ADD_DRAWING_ELEMENT",
   "UPDATE_DRAWING_ELEMENT",
@@ -362,10 +364,18 @@ export const coreTypes = new Set<CoreCommandTypes>([
   "REORDER_DRAWING_ELEMENT",
   "SELECT_DRAWING_ELEMENT",
 
-  /** CUSTOM FUNCTIONS */
-  "ADD_CUSTOM_FUNCTION",
-  "REMOVE_CUSTOM_FUNCTION",
   "RENAME_CUSTOM_FUNCTION",
+
+  /** WHITEBOARD */
+  "ADD_WHITEBOARD",
+  "REMOVE_WHITEBOARD",
+  "RENAME_WHITEBOARD",
+  "UPDATE_WHITEBOARD_DATA",
+  "ADD_WHITEBOARD_ELEMENT",
+  "UPDATE_WHITEBOARD_ELEMENT",
+  "REMOVE_WHITEBOARD_ELEMENT",
+  "REORDER_WHITEBOARD_ELEMENT",
+  "SELECT_WHITEBOARD_ELEMENT",
 ]);
 
 export function isCoreCommand(cmd: Command): cmd is CoreCommand {
@@ -496,6 +506,7 @@ export interface CreateSheetCommand extends SheetDependentCommand {
   name: string;
   cols?: number;
   rows?: number;
+  isWhiteboard?: boolean;
 }
 
 export interface DeleteSheetCommand extends SheetDependentCommand, SheetEditingCommand {
@@ -674,6 +685,19 @@ export interface UpdateLatexFigureCommand {
   type: "UPDATE_LATEX_FIGURE";
   figureId: UID;
   latex: string;
+}
+
+export interface CreateRangeFigureCommand extends BaseFigureCommand {
+  type: "CREATE_RANGE_FIGURE";
+  range: RangeData;
+  displayMode: "fit" | "actual";
+}
+
+export interface UpdateRangeFigureCommand extends SheetDependentCommand {
+  type: "UPDATE_RANGE_FIGURE";
+  figureId: UID;
+  range?: RangeData;
+  displayMode?: "fit" | "actual";
 }
 
 //------------------------------------------------------------------------------
@@ -1350,6 +1374,8 @@ export type CoreCommand =
   | RemovePivotCommand
   | DuplicatePivotCommand
   | UpdateLatexFigureCommand
+  | CreateRangeFigureCommand
+  | UpdateRangeFigureCommand
   | CreateDrawingFigureCommand
   | AddDrawingElementCommand
   | UpdateDrawingElementCommand
@@ -1359,7 +1385,16 @@ export type CoreCommand =
   | UpdateDrawingCommand
   | AddCustomFunctionCommand
   | RemoveCustomFunctionCommand
-  | RenameCustomFunctionCommand;
+  | RenameCustomFunctionCommand
+  | AddWhiteboardCommand
+  | RemoveWhiteboardCommand
+  | RenameWhiteboardCommand
+  | UpdateWhiteboardDataCommand
+  | AddWhiteboardElementCommand
+  | UpdateWhiteboardElementCommand
+  | RemoveWhiteboardElementCommand
+  | ReorderWhiteboardElementCommand
+  | SelectWhiteboardElementCommand;
 
 export type LocalCommand =
   | RequestUndoCommand
@@ -1629,6 +1664,65 @@ export interface RenameCustomFunctionCommand {
   type: "RENAME_CUSTOM_FUNCTION";
   oldName: string;
   newName: string;
+}
+
+//------------------------------------------------------------------------------
+// Whiteboard
+//------------------------------------------------------------------------------
+
+export interface AddWhiteboardCommand {
+  type: "ADD_WHITEBOARD";
+  name: string;
+  data?: DrawingData;
+}
+
+export interface RemoveWhiteboardCommand {
+  type: "REMOVE_WHITEBOARD";
+  name: string;
+}
+
+export interface RenameWhiteboardCommand {
+  type: "RENAME_WHITEBOARD";
+  oldName: string;
+  newName: string;
+}
+
+export interface UpdateWhiteboardDataCommand {
+  type: "UPDATE_WHITEBOARD_DATA";
+  name: string;
+  updates: Partial<DrawingData>;
+}
+
+export interface AddWhiteboardElementCommand {
+  type: "ADD_WHITEBOARD_ELEMENT";
+  whiteboardName: string;
+  element: any; // Using any to avoid importing DrawingElement if it's too deep, but it's better to use correct type
+}
+
+export interface UpdateWhiteboardElementCommand {
+  type: "UPDATE_WHITEBOARD_ELEMENT";
+  whiteboardName: string;
+  elementId: string;
+  updates: any;
+}
+
+export interface RemoveWhiteboardElementCommand {
+  type: "REMOVE_WHITEBOARD_ELEMENT";
+  whiteboardName: string;
+  elementId: string;
+}
+
+export interface ReorderWhiteboardElementCommand {
+  type: "REORDER_WHITEBOARD_ELEMENT";
+  whiteboardName: string;
+  elementId: string;
+  direction: "front" | "back" | "forward" | "backward";
+}
+
+export interface SelectWhiteboardElementCommand {
+  type: "SELECT_WHITEBOARD_ELEMENT";
+  whiteboardName: string;
+  elementId: string | null;
 }
 
 export interface CommandDispatcher {

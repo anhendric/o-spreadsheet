@@ -15,6 +15,7 @@ export interface RibbonGroup {
   label: string;
   sequence: number;
   items: RibbonItem[];
+  isVisible?: (env: SpreadsheetChildEnv) => boolean;
 }
 
 export interface RibbonTab {
@@ -41,7 +42,13 @@ export class RibbonRegistry {
     return this;
   }
 
-  addGroup(tabId: string, groupId: string, label: string, sequence: number): this {
+  addGroup(
+    tabId: string,
+    groupId: string,
+    label: string,
+    sequence: number,
+    isVisible?: (env: SpreadsheetChildEnv) => boolean
+  ): this {
     const tab = this.tabs.get(tabId);
     if (!tab) {
       throw new Error(`Tab ${tabId} does not exist`);
@@ -49,7 +56,7 @@ export class RibbonRegistry {
     if (tab.groups.find((g) => g.id === groupId)) {
       throw new Error(`Group ${groupId} already exists in tab ${tabId}`);
     }
-    tab.groups.push({ id: groupId, label, sequence, items: [] });
+    tab.groups.push({ id: groupId, label, sequence, items: [], isVisible });
     return this;
   }
 

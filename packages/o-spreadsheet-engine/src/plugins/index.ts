@@ -15,11 +15,13 @@ import { ImagePlugin } from "./core/image";
 import { LatexPlugin } from "./core/latex_plugin";
 import { MergePlugin } from "./core/merge";
 import { PivotCorePlugin } from "./core/pivot";
+import { RangeFigurePlugin } from "./core/range_figure_plugin";
 import { SettingsPlugin } from "./core/settings";
 import { SheetPlugin } from "./core/sheet";
 import { SpreadsheetPivotCorePlugin } from "./core/spreadsheet_pivot";
 import { TableStylePlugin } from "./core/table_style";
 import { TablePlugin } from "./core/tables";
+import { WhiteboardPlugin } from "./core/whiteboard";
 import { CorePluginConstructor } from "./core_plugin";
 import { CoreViewPluginConstructor } from "./core_view_plugin";
 import { EvaluationPlugin } from "./ui_core_views/cell_evaluation";
@@ -83,8 +85,10 @@ export const corePluginRegistry = new Registry<CorePluginConstructor>()
   .add("spreadsheet_pivot_core", SpreadsheetPivotCorePlugin)
   .add("tableStyle", TableStylePlugin)
   .add("latex", LatexPlugin)
+  .add("range_figure", RangeFigurePlugin)
   .add("drawing", DrawingPlugin)
-  .add("custom_function", CustomFunctionPlugin);
+  .add("custom_function", CustomFunctionPlugin)
+  .add("whiteboard", WhiteboardPlugin);
 
 // Plugins which handle a specific feature, without handling any core commands
 export const featurePluginRegistry = new Registry<UIPluginConstructor>()

@@ -37,6 +37,7 @@ export class Ribbon extends Component {
   get activeGroups() {
     const groups = ribbonRegistry.getGroups(this.state.activeTab);
     return groups
+      .filter((g) => !g.isVisible || g.isVisible(this.env as any))
       .map((g) => ({
         ...g,
         items: g.items.filter((i) => !i.isVisible || i.isVisible(this.env as any)),

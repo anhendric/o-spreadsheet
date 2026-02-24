@@ -1,13 +1,16 @@
 :root {
   --os-gray-100: light-dark(#f9fafb, #1b1d26);
-  --os-gray-200: light-dark(#e7e9ed, #262a36); /* GRAY_200 */
-  --os-gray-300: light-dark(#d8dadd, #3c3e4b); /* GRAY_300 */
+  --os-gray-200: light-dark(#e7e9ed, #262a36);
+  /* GRAY_200 */
+  --os-gray-300: light-dark(#d8dadd, #3c3e4b);
+  /* GRAY_300 */
   --os-gray-400: light-dark(#ced4da, #5a5e6b);
   --os-gray-500: light-dark(#7c7f89, #6b707f);
   --os-gray-600: light-dark(#5f636f, #7e8392);
   --os-gray-700: light-dark(#374151, #b1b3bc);
   --os-gray-800: light-dark(#1f2937, #d1d1d1);
-  --os-gray-900: light-dark(#111827, #e4e4e4); /* GRAY_900 */
+  --os-gray-900: light-dark(#111827, #e4e4e4);
+  /* GRAY_900 */
 
   --os-white: light-dark(#ffffff, #000000);
   --os-black: light-dark(#000000, #ffffff);
@@ -17,8 +20,10 @@
   --os-default-font-size: 10px;
   --os-link-color: light-dark(#017e84, #02c7b5);
   --os-link-hover-color: light-dark(#01585c, #4ed8cb);
-  --os-text-body: light-dark(#374151, #e4e4e4); /* TEXT_BODY */
-  --os-text-body-muted: light-dark(#374151c2, #b1b3bcc2); /* TEXT_BODY_MUTED */
+  --os-text-body: light-dark(#374151, #e4e4e4);
+  /* TEXT_BODY */
+  --os-text-body-muted: light-dark(#374151c2, #b1b3bcc2);
+  /* TEXT_BODY_MUTED */
   --os-disabled-text-color: light-dark(#cacaca, #ffffff80);
 
   --os-button-bg: light-dark(var(--os-gray-200), var(--os-gray-300));
@@ -30,26 +35,32 @@
   --os-primary-button-hover-bg: light-dark(#624159, #7b4775);
   --os-primary-button-active-bg: light-dark(#f1edf0, #8b5185);
   --os-primary-button-text-color: light-dark(#ffffff, #ffffff);
-  --os-action-color: var(--os-link-color); /* ACTION_COLOR */
+  --os-action-color: var(--os-link-color);
+  /* ACTION_COLOR */
   --os-action-color-hover: var(--os-link-hover-color);
   --os-border-color: light-dark(var(--os-gray-300), var(--os-gray-400));
 
   --os-composer-placeholder-color: light-dark(#bdbdbd, #757a89);
-  --os-composer-assistant-color: #9b359b; /* COMPOSER_ASSISTANT_COLOR */
+  --os-composer-assistant-color: #9b359b;
+  /* COMPOSER_ASSISTANT_COLOR */
   --os-composer-assistant-background: light-dark(#f2f2f2, var(--os-gray-200));
   --os-composer-highlight-flag-color: #e6edf3;
   --os-composer-selector-flag-color: #a9a9a9;
 
-  --os-selection-border-color: #3266ca; /* SELECTION_BORDER_COLOR */
+  --os-selection-border-color: #3266ca;
+  /* SELECTION_BORDER_COLOR */
   --os-badge-selected-color: var(--os-button-active-bg);
   --os-figure-border-color: var(--os-gray-400);
   --os-background-gray-color: light-dark(#f5f5f5, var(--os-white-bg));
   --os-background-gray-color-hover: light-dark(rgba(0, 0, 0, 0.08), #ffffff40);
-  --os-frozen-pane-header-border-color: #bcbcbc; /* FROZEN_PANE_HEADER_BORDER_COLOR */
+  --os-frozen-pane-header-border-color: #bcbcbc;
+  /* FROZEN_PANE_HEADER_BORDER_COLOR */
   --os-grid-border-color: light-dark(#e2e3e3, var(--os-gray-200));
   --os-separator-color: var(--os-gray-300);
-  --os-green-arrow-color: #6aa84f; /* Same color as CF arrow icon */
-  --os-red-arrow-color: #e06666; /* Same color as CF arrow icon */
+  --os-green-arrow-color: #6aa84f;
+  /* Same color as CF arrow icon */
+  --os-red-arrow-color: #e06666;
+  /* Same color as CF arrow icon */
   --os-active-sheet-bg: light-dark(#ffffff, var(--os-gray-300));
 
   --os-alert-warning-bg: light-dark(#fbebcc, #3a2a05);
@@ -117,6 +128,7 @@
   --os-components-importance-grid-composer: 20;
   --os-components-importance-icon-picker: 25;
   --os-components-importance-top-bar-composer: 30;
+  --os-components-importance-whiteboard: 32;
   --os-components-importance-fullscreen-chart: 34;
   --os-components-importance-popover: 35;
   --os-components-importance-figure-anchor: 1000;

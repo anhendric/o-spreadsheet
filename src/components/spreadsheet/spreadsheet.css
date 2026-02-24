@@ -18,6 +18,7 @@
   .border-end {
     border-right: 1px solid var(--os-border-color) !important;
   }
+
   touch-action: pan-y;
   color: var(--os-text-body);
 
@@ -296,6 +297,40 @@
 
   .o-checkers-background {
     background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cpath%20fill%3D%22%23d9d9d9%22%20d%3D%22M5%205h5v5H5zH0V0h5%22/%3E%3C/svg%3E");
+  }
+
+  /* Whiteboard */
+  .o-whiteboard-full-editor-container {
+    z-index: 34;
+    background-color: white;
+  }
+
+  .o-whiteboard-canvas {
+    cursor: crosshair;
+    user-select: none;
+  }
+
+  .o-whiteboard-element {
+    cursor: move;
+  }
+
+  .o-resize-handle {
+    border-radius: 2px;
+    z-index: 10;
+  }
+
+  .o-point-handle {
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .o-whiteboard-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .o-whiteboard-item:hover {
+    background-color: var(--os-background-gray-color);
   }
 }
 

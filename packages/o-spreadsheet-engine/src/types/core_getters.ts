@@ -15,6 +15,7 @@ import { LatexPlugin } from "../plugins/core/latex_plugin";
 import { MergePlugin } from "../plugins/core/merge";
 import { PivotCorePlugin } from "../plugins/core/pivot";
 import { RangeAdapterPlugin } from "../plugins/core/range";
+import { RangeFigurePlugin } from "../plugins/core/range_figure_plugin";
 import { SettingsPlugin } from "../plugins/core/settings";
 import { SheetPlugin } from "../plugins/core/sheet";
 import { TablePlugin } from "../plugins/core/tables";
@@ -89,4 +90,5 @@ export type CoreGetters = PluginGetters<typeof SheetPlugin> &
   PluginGetters<typeof PivotCorePlugin> &
   PluginGetters<typeof LatexPlugin> &
   PluginGetters<typeof CustomFunctionPlugin> &
+  PluginGetters<typeof RangeFigurePlugin> &
   PluginGetters<typeof DrawingPlugin>;

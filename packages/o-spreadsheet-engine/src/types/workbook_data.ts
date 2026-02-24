@@ -64,6 +64,7 @@ export interface SheetData {
   headerGroups?: Record<Dimension, HeaderGroup[]>;
   color?: Color;
   isLocked?: boolean;
+  isWhiteboard?: boolean;
 }
 
 interface WorkbookSettings {

@@ -1,0 +1,20 @@
+<templates>
+  <t t-name="o-spreadsheet-WhiteboardFullEditor">
+    <div class="o-whiteboard-full-editor h-100 w-100 d-flex flex-column bg-white">
+      <div
+        class="o-whiteboard-canvas flex-grow-1 position-relative overflow-auto bg-light"
+        t-ref="canvas"
+        t-on-pointerdown="onCanvasMouseDown">
+        <!-- Grid pattern -->
+        <div
+          class="o-whiteboard-grid position-absolute w-100 h-100"
+          style="background-image: radial-gradient(circle at 0.5px 0.5px, #ccc 1px, transparent 0); background-size: 20px 20px; background-position: -0.5px -0.5px; pointer-events: none;"
+        />
+
+        <div class="o-figures-container-wrapper position-relative w-100 h-100">
+          <FiguresContainer/>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

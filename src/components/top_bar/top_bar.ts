@@ -22,6 +22,7 @@ import { useSpreadsheetRect } from "../helpers/position_hook";
 import { MenuPopover, MenuState } from "../menu_popover/menu_popover";
 import { Popover } from "../popover";
 import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
+import { WhiteboardTabStore } from "../side_panel/whiteboard/whiteboard_tab_store";
 import { TopBarToolStore } from "./top_bar_tool_store";
 import { topBarToolBarRegistry } from "./top_bar_tools_registry";
 
@@ -81,9 +82,11 @@ export class TopBar extends Component<Props, SpreadsheetChildEnv> {
 
   spreadsheetRect = useSpreadsheetRect();
   customFunctionTabStore!: Store<CustomFunctionTabStore>;
+  whiteboardTabStore!: Store<WhiteboardTabStore>;
 
   setup() {
     this.customFunctionTabStore = useStore(CustomFunctionTabStore);
+    this.whiteboardTabStore = useStore(WhiteboardTabStore);
     this.composerFocusStore = useStore(ComposerFocusStore);
     this.fingerprints = useStore(FormulaFingerprintStore);
     this.topBarToolStore = useStore(TopBarToolStore);

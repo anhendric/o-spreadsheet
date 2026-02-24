@@ -1,0 +1,25 @@
+<templates>
+  <div t-name="o-spreadsheet-RangeFigurePanel" class="o-side-panel">
+    <Section title="'Content'">
+      <div class="o-panel-section">
+        <label class="o-section-title">Range</label>
+        <SelectionInput
+          ranges="ranges"
+          hasSingleRange="true"
+          onSelectionChanged.bind="onRangeChanged"
+        />
+      </div>
+    </Section>
+    <Section title="'Display'">
+      <div class="o-panel-section">
+        <label class="o-section-title">Display Mode</label>
+        <RadioSelection
+          choices="displayModeChoices"
+          selectedValue="definition.displayMode"
+          onChange.bind="onDisplayModeChanged"
+          name="'displayMode'"
+        />
+      </div>
+    </Section>
+  </div>
+</templates>

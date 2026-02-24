@@ -21,6 +21,13 @@
             <CustomFunctionFullEditor functionName="customFunctionTabStore.activeTab"/>
           </div>
         </t>
+        <t t-elif="whiteboardTabStore.activeTab">
+          <div
+            class="o-whiteboard-full-editor-container"
+            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
+            <WhiteboardFullEditor whiteboardId="whiteboardTabStore.activeTab"/>
+          </div>
+        </t>
         <t t-else="">
           <div
             class="o-grid-container"

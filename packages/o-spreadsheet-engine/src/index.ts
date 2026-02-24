@@ -29,6 +29,7 @@ export { FunctionRegistry, categories } from "./functions/function_registry";
 export * from "./helpers";
 export { Model } from "./model";
 export { BasePlugin } from "./plugins/base_plugin";
+export { RangeFigureDefinition } from "./plugins/core/range_figure_plugin";
 export { Registry } from "./registry";
 export { StateObserver } from "./state_observer";
 export * from "./translation";

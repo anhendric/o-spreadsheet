@@ -1,0 +1,19 @@
+<templates>
+  <div
+    t-name="o-spreadsheet-RangeFigure"
+    class="o-figure o-range-figure h-100 w-100"
+    t-on-contextmenu.prevent="props.openContextMenu"
+    t-on-dblclick="onDoubleClick">
+    <div
+      t-if="definition"
+      t-att-class="definition.displayMode === 'actual' ? 'overflow-auto' : ''"
+      class="h-100 w-100 bg-white shadow-sm">
+      <canvas t-ref="canvas"/>
+    </div>
+    <div
+      t-else=""
+      class="d-flex justify-content-center align-items-center h-100 text-muted bg-white border">
+      <div>Select a range in the side panel</div>
+    </div>
+  </div>
+</templates>

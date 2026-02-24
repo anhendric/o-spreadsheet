@@ -8,10 +8,12 @@ import {
   getImageMenuActions,
 } from "../actions/figure_menu_actions";
 import { getLatexMenuActions } from "../actions/latex_menu_actions";
+import { getRangeMenuActions } from "../actions/range_menu_actions";
 import { CarouselFigure } from "../components/figures/figure_carousel/figure_carousel";
 import { ChartFigure } from "../components/figures/figure_chart/figure_chart";
 import { ImageFigure } from "../components/figures/figure_image/figure_image";
 import { LatexFigure } from "../components/figures/figure_latex/figure_latex";
+import { RangeFigure } from "../components/figures/figure_range/range_figure";
 import { UID } from "../types";
 
 //------------------------------------------------------------------------------
@@ -56,6 +58,13 @@ figureRegistry.add("latex", {
 figureRegistry.add("carousel", {
   Component: CarouselFigure,
   menuBuilder: getCarouselMenuActions,
+});
+figureRegistry.add("range", {
+  Component: RangeFigure,
+  SidePanelComponent: "RangeFigurePanel",
+  menuBuilder: getRangeMenuActions,
+  minFigSize: 100,
+  borderWidth: 1,
 });
 
 import { DrawingFigure } from "../components/figures/figure_drawing/figure_drawing";

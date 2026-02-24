@@ -21,6 +21,7 @@ import { Ripple } from "../../animation/ripple";
 import { ColorPicker } from "../../color_picker/color_picker";
 import { getBoundingRectAsPOJO } from "../../helpers/dom_helpers";
 import { CustomFunctionTabStore } from "../../side_panel/custom_functions/custom_function_tab_store";
+import { WhiteboardTabStore } from "../../side_panel/whiteboard/whiteboard_tab_store";
 
 interface Props {
   sheetId: string;
@@ -72,9 +73,11 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
 
   private DOMFocusableElementStore!: Store<DOMFocusableElementStore>;
   customFunctionTabStore!: Store<CustomFunctionTabStore>;
+  whiteboardTabStore!: Store<WhiteboardTabStore>;
 
   setup() {
     this.customFunctionTabStore = useStore(CustomFunctionTabStore);
+    this.whiteboardTabStore = useStore(WhiteboardTabStore);
     onPatched(() => {
       if (this.sheetNameRef.el && this.state.isEditing && this.editionState === "initializing") {
         this.editionState = "editing";
@@ -296,5 +299,9 @@ export class BottomBarSheet extends Component<Props, SpreadsheetChildEnv> {
 
   get isSheetLocked() {
     return this.env.model.getters.isSheetLocked(this.props.sheetId);
+  }
+
+  get isWhiteboard() {
+    return this.env.model.getters.getSheet(this.props.sheetId).isWhiteboard;
   }
 }
