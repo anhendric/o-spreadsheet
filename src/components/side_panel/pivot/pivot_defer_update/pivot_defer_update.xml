@@ -10,10 +10,11 @@
       />
       <div t-if="props.isDirty" class="d-flex align-items-center">
         <i
-          class="o-button-icon pe-0 fa fa-undo"
+          class="o-button-icon pe-0 o-icon-undo"
           title="Discard all changes"
-          t-on-click="() => props.discard()"
-        />
+          t-on-click="() => props.discard()">
+          <t t-call="o-spreadsheet-Icon.UNDO"/>
+        </i>
         <span
           class="o-button-link sp_apply_update small ps-2"
           title="Apply all changes"

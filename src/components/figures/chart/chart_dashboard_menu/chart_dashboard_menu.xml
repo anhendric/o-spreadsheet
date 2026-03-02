@@ -13,9 +13,10 @@
           </div>
         </t>
         <button
-          class="o-chart-dashboard-item btn text-muted lh-1 p-1 fa fa-ellipsis-v"
-          t-on-click="openContextMenu"
-        />
+          class="o-chart-dashboard-item btn text-muted lh-1 p-1 d-flex align-items-center justify-content-center o-icon-ellipsis-v"
+          t-on-click="openContextMenu">
+          <t t-call="o-spreadsheet-Icon.ELLIPSIS_V"/>
+        </button>
       </div>
       <MenuPopover
         t-if="menuState.isOpen"

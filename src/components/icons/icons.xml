@@ -50,10 +50,10 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.UNDO">
-    <svg class="o-icon">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
       <path
-        fill="currentColor"
-        d="M5.43 9.43 8 12H1V5l2.96 2.958A8.29 8.29 0 0 1 9.32 6c3.46 0 6.42 2.11 7.68 5l-2 1c-.94-2.39-3.13-3.92-5.68-4a6.57 6.57 0 0 0-3.89 1.43"
+        d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"
       />
     </svg>
   </t>
@@ -65,15 +65,13 @@
       />
     </svg>
   </t>
-  <t t-name="o-spreadsheet-Icon.CLIPBOARD">
-    <div class="o-icon">
-      <i class="fa fa-clipboard"/>
-    </div>
-  </t>
   <t t-name="o-spreadsheet-Icon.COPY">
-    <div class="o-icon">
-      <i class="fa fa-clone"/>
-    </div>
+    <svg class="o-icon" viewbox="0 0 18 18">
+      <path
+        fill="currentColor"
+        d="M14.5 15.23v1.5H3a1 1 0 0 1-1-1V3.23h1.5v11a1 1 0 0 0 1 1h10m0-3.5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h6.5a1 1 0 0 1 1 1m-9-2.5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1H15a1 1 0 0 0 1-1v-11a1 1 0 0 0-1-1"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CUT">
     <svg class="o-icon">
@@ -129,9 +127,14 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.SHOW">
-    <div class="o-icon">
-      <i class="fa fa-eye"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"
+      />
+      <path
+        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.FORMULA">
     <svg class="o-icon">
@@ -174,10 +177,11 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_ROW">
-    <svg class="o-icon">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        fill="currentColor"
-        d="M.5 2A1.5 1.5 0 0 1 2 .5h14A1.5 1.5 0 0 1 17.5 2v14a1.5 1.5 0 0 1-1.5 1.5H2A1.5 1.5 0 0 1 .5 16V2H2v3.5h14V2H2v9h14V7H2v9h14v-3.5H2"
+        stroke="currentColor"
+        style="fill:none;stroke-width:1.5;"
+        d="M15 16.5 a1.5 1.5 0 0 0 1.5 -1.5 V3 a1.5 1.5 0 0 0 -1.5 -1.5 H3 a1.5 1.5 0 0 0 -1.5 1.5 V15 a1.5 1.5 0 0 0 1.5 1.5z M1.5 6.5 H16.5 M1.5 11.5 H16.5"
       />
     </svg>
   </t>
@@ -198,10 +202,11 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_COL">
-    <svg class="o-icon">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        fill="currentColor"
-        d="M.5 2A1.5 1.5 0 0 1 2 .5h14A1.5 1.5 0 0 1 17.5 2v14a1.5 1.5 0 0 1-1.5 1.5H2A1.5 1.5 0 0 1 .5 16V2H2v14h3.5V2H2h5v14h4V2H2h10.5v14H16V2H2"
+        stroke="currentColor"
+        style="fill:none;stroke-width:1.5;"
+        d="M15 16.5 a1.5 1.5 0 0 0 1.5 -1.5 V3 a1.5 1.5 0 0 0 -1.5 -1.5 H3 a1.5 1.5 0 0 0 -1.5 1.5 V15 a1.5 1.5 0 0 0 1.5 1.5zM6.5 1.5 V16.5 M11.5 1.5 V16.5"
       />
     </svg>
   </t>
@@ -222,10 +227,11 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_CELL">
-    <svg class="o-icon">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        fill="currentColor"
-        d="M.5 2A1.5 1.5 0 0 1 2 .5h14A1.5 1.5 0 0 1 17.5 2v14a1.5 1.5 0 0 1-1.5 1.5H2A1.5 1.5 0 0 1 .5 16V2H2v14h14V2H2"
+        stroke="currentColor"
+        style="fill:none;stroke-width:1.5;"
+        d="M15 16.5 a1.5 1.5 0 0 0 1.5 -1.5 V3 a1.5 1.5 0 0 0 -1.5 -1.5 H3 a1.5 1.5 0 0 0 -1.5 1.5 V15 a1.5 1.5 0 0 0 1.5 1.5z"
       />
     </svg>
   </t>
@@ -278,14 +284,21 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_LINK">
-    <div class="o-icon">
-      <i class="fa fa-link"/>
-    </div>
+    <svg class="o-icon" fill="currentColor" viewBox="0 0 18 18">
+      <path
+        d="M6.88 13.69c.19-.19.41-.28.68-.28.27 0 .51.09.72.28.43.45.43.92 0 1.4l-.84.8c-.75.75-1.63 1.12-2.64 1.12-1.04 0-1.93-.37-2.68-1.12C1.37 15.14 1 14.26 1 13.25c0-1.04.37-1.93 1.12-2.68l2.96-2.96c.93-.9 1.89-1.42 2.88-1.54.98-.12 1.84.17 2.56.86.21.21.32.45.32.72 0 .26-.1.51-.32.72-.48.43-.95.43-1.4 0-.67-.64-1.55-.41-2.67.68l-2.93 2.92c-.35.35-.52.77-.52 1.28s.17.92.52 1.24c.35.35.76.52 1.26.52.49 0 .91-.17 1.26-.52l.84-.8m9-11.48c.75.75 1.12 1.63 1.12 2.64 0 1.04-.37 1.94-1.12 2.68l-3.16 3.16c-.99.96-1.99 1.44-3 1.44-.83 0-1.57-.33-2.24-1a.913.913 0 0 1-.28-.68c0-.27.09-.5.27-.72.19-.19.43-.28.71-.28.28 0 .51.09.7.28.66.64 1.48.48 2.44-.48l3.16-3.12c.37-.37.56-.8.56-1.28 0-.51-.19-.92-.56-1.24-.32-.35-.7-.56-1.12-.62-.43-.07-.83.07-1.2.42l-1 1c-.22.19-.45.28-.72.28-.26 0-.5-.09-.68-.28-.46-.45-.46-.92 0-1.4l1-1c.72-.72 1.56-1.06 2.54-1.02.97.04 1.83.45 2.58 1.22"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_CHECKBOX">
-    <div class="o-icon">
-      <i class="fa fa-check-square-o"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+      />
+      <path
+        d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_DROPDOWN">
     <svg class="o-icon">
@@ -296,10 +309,13 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_SHEET">
-    <svg class="o-icon" fill="currentColor">
+    <svg class="o-icon" fill="currentColor" viewBox="0 0 18 18">
       <path
-        d="M17.5 5.5V16a1.5 1.5 0 0 1-1.5 1.5H2A1.5 1.5 0 0 1 .5 16V2A1.5 1.5 0 0 1 2 .5h10.5M2 5.5h3.5V2H2m5.25 3.5h3.5V2h-3.5M2 10.75h3.5v-3.5H2m5.25 3.5h3.5v-3.5h-3.5m5.25 3.5H16v-3.5h-3.5M2 16h3.5v-3.5H2M7.25 16h3.5v-3.5h-3.5M12.5 16H16v-3.5h-3.5"
+        stroke="currentColor"
+        style="fill:none;stroke-width:1.5;stroke-linejoin:round;"
+        d="M15 16.5 a1.5 1.5 0 0 0 1.5 -1.5 V6 L12 1.5 H3 a1.5 1.5 0 0 0 -1.5 1.5 V15 a1.5 1.5 0 0 0 1.5 1.5z M1.5 6.5 H16.5 M1.5 11.5 H16.5 M6.5 1.5 V16.5 M11.5 1.5 V16.5"
       />
+      <path d="M11.5 1.5 v5 h5"/>
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.PAINT_FORMAT">
@@ -391,8 +407,8 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.IRREGULARITY_MAP">
-    <div class="o-icon">
-      <i class="fa fa-align-center fa-rotate-270"/>
+    <div class="o-icon" style="transform: rotate(270deg)">
+      <t t-call="o-spreadsheet-Icon.ALIGN_CENTER"/>
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.ALIGN_RIGHT">
@@ -574,69 +590,96 @@
   </t>
 
   <t t-name="o-spreadsheet-Icon.EDIT">
-    <div class="o-icon">
-      <i class="fa fa-pencil-square-o"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.EXTERNAL">
-    <div class="o-icon">
-      <i class="fa fa-external-link"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.UNLINK">
-    <div class="o-icon">
-      <i class="fa fa-chain-broken"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1 1 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4 4 0 0 1-.128-1.287z"
+      />
+      <path
+        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CARET_UP">
-    <div class="o-icon fa-small">
-      <i class="fa fa-caret-up"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CARET_DOWN">
-    <div class="o-icon fa-small">
-      <i class="fa fa-caret-down"/>
-    </div>
+    <svg
+      class="o-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      style="width:10px;margin-left:3px">
+      <path
+        d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CARET_RIGHT">
-    <div class="o-icon fa-small">
-      <i class="fa fa-caret-right"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CARET_LEFT">
-    <div class="o-icon fa-small">
-      <i class="fa fa-caret-left"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.TRASH">
-    <div class="o-icon">
-      <i class="fa fa-trash-o"/>
-    </div>
+    <svg class="o-cf-icon trash" viewBox="0 0 448 512">
+      <path
+        fill="currentColor"
+        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.TRASH_FILLED">
-    <div class="o-icon">
-      <i class="fa fa-trash"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+      />
+      <path
+        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.WHITEBOARD">
-    <svg class="o-icon" viewBox="0 0 512 512">
-      <g>
-        <path
-          fill="currentColor"
-          d="M469.027,68.852c7.61,0,13.78-6.17,13.78-13.78v-4.841c0-7.61-6.17-13.78-13.78-13.78H272.201V0h-32.401
-          v36.451H42.973c-7.61,0-13.78,6.17-13.78,13.78v4.841c0,7.61,6.17,13.78,13.78,13.78h10.521v230.857H42.973
-          c-7.61,0-13.78,6.17-13.78,13.78v4.84c0,7.61,6.17,13.78,13.78,13.78h10.521h186.305v66.281l-55.523,61.884
-          c-2.112-0.546-4.288-0.926-6.574-0.926c-14.539,0-26.326,11.787-26.326,26.326c0,14.539,11.786,26.326,26.326,26.326
-          s26.326-11.787,26.326-26.326c0-3.29-0.672-6.408-1.78-9.319l54.454-60.696l52.866,61.33c-0.958,2.729-1.582,5.624-1.582,8.685
-          c0,14.539,11.787,26.326,26.326,26.326c14.539,0,26.326-11.787,26.326-26.326c0-14.539-11.787-26.326-26.326-26.326
-          c-2.516,0-4.896,0.467-7.198,1.124l-53.885-62.524l-0.618-0.016l0.618-0.688h-1.029V332.11h186.306h10.52
-          c7.61,0,13.78-6.17,13.78-13.78v-4.84c0-7.61-6.17-13.78-13.78-13.78h-10.52V68.852H469.027z M77.795,299.709V68.852h356.411
-          v230.857H77.795z"
-        />
-        <rect x="150.697" y="198.132" fill="currentColor" width="48.601" height="64.802"/>
-        <rect x="231.699" y="157.631" fill="currentColor" width="48.601" height="105.303"/>
-        <rect x="312.702" y="117.13" fill="currentColor" width="48.601" height="145.804"/>
-      </g>
+    <svg class="o-icon" fill="currentColor" viewBox="0 0 18 18">
+      <path
+        stroke="currentColor"
+        style="fill:none;stroke-width:1.5"
+        d="M1.5 3A1.5 1.5 0 0 1 3 1.5h4.5v5h-6zm9-1.5H15A1.5 1.5 0 0 1 16.5 3v6.5h-6zm-9 8h6v7H3A1.5 1.5 0 0 1 1.5 15zm9 3h6V15a1.5 1.5 0 0 1-1.5 1.5h-4.5z"
+      />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.RANGE_FIGURE">
@@ -648,14 +691,20 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.REFRESH">
-    <div class="o-icon">
-      <i class="fa fa-refresh"/>
-    </div>
+    <svg class="o-cf-icon refresh" viewBox="0 0 512 512">
+      <path
+        fill="currentColor"
+        d="M440.65 12.57l4 82.77A247.16 247.16 0 0 0 255.83 8C134.73 8 33.91 94.92 12.29 209.82A12 12 0 0 0 24.09 224h49.05a12 12 0 0 0 11.67-9.26 175.91 175.91 0 0 1 317-56.94l-101.46-4.86a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12H500a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12h-47.37a12 12 0 0 0-11.98 12.57zM255.83 432a175.61 175.61 0 0 1-146-77.8l101.8 4.87a12 12 0 0 0 12.57-12v-47.4a12 12 0 0 0-12-12H12a12 12 0 0 0-12 12V500a12 12 0 0 0 12 12h47.35a12 12 0 0 0 12-12.6l-4.15-82.57A247.17 247.17 0 0 0 255.83 504c121.11 0 221.93-86.92 243.55-201.82a12 12 0 0 0-11.8-14.18h-49.05a12 12 0 0 0-11.67 9.26A175.86 175.86 0 0 1 255.83 432z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.EXCHANGE">
-    <div class="o-icon">
-      <i class="fa fa-exchange"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ARROW_DOWN">
     <svg class="o-icon arrow-down" viewBox="0 0 448 512">
@@ -756,42 +805,62 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.SORT_ASCENDING">
-    <div class="o-icon">
-      <i class="fa fa-sort-alpha-asc"/>
-    </div>
+    <svg class="o-icon" fill="currentColor">
+      <path d="m3 13-1-1-1 1 3 3 3-3-1-1-1 1V0H3"/>
+      <text x="9" y="7" class="small-text">A</text>
+      <text x="9.3" y="15" class="small-text">Z</text>
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.SORT_DESCENDING">
-    <div class="o-icon">
-      <i class="fa fa-sort-alpha-desc"/>
-    </div>
+    <svg class="o-icon" fill="currentColor">
+      <path d="m3 13.9-1-1-1 1 3 3 3-3-1-1-1 1V.9H3"/>
+      <text x="9.3" y="7.9" class="small-text">Z</text>
+      <text x="9" y="15.9" class="small-text">A</text>
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.DATA_CLEANUP">
-    <div class="o-icon">
-      <i class="fa fa-magic"/>
-    </div>
+    <svg class="o-icon" fill="currentColor">
+      <path
+        d="m13.6 6.4-2.1-2.1c-.4-.4-1-.4-1.4 0l-8.8 8.9c-.4.4-.4 1 0 1.4l2.1 2.1c.4.4 1 .4 1.4 0l8.8-8.9c.4-.4.4-1 0-1.4M8 8.5 10.5 6l1.4 1.4-2.5 2.5m3-7 1.8.8.8 1.8.8-1.8 1.8-.8-1.8-.8L14.9.4l-.8 1.8M3.5 4l1.7.7.8 1.8.8-1.8 1.8-.8-1.8-.8-.8-1.8-.8 1.8zm13.5 7.7-1.8-.8-.8-1.8-.8 1.8-1.8.8 1.8.8.8 1.8.7-1.8"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.FILTER_ICON">
-    <svg class="o-icon filter-icon" viewBox="0 0 850 850">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path
-        fill="currentColor"
-        d="M 339.667 681 L 510.333 681 L 510.333 595.667 L 339.667 595.667 L 339.667 681 Z M 41 169 L 41 254.333 L 809 254.333 L 809 169 L 41 169 Z M 169 467.667 L 681 467.667 L 681 382.333 L 169 382.333 L 169 467.667 Z"
+        d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.FILTER_ICON_ACTIVE">
-    <div class="o-icon filter-icon-active">
-      <i class="fa fa-filter"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.SEARCH">
-    <div class="o-icon">
-      <i class="fa fa-search"/>
-    </div>
+    <svg class="o-icon">
+      <path
+        fill="currentColor"
+        d="M10.75 11.25c-1 .75-2.25 1.25-3.5 1.25-3 0-5.5-2.5-5.5-5.5s2.5-5.5 5.5-5.5 5.5 2.5 5.5 5.5c0 1.25-.5 2.5-1.25 3.5l.25.25h.75l4 4-1.5 1.5-4-4v-.75l-.25-.25ZM7.25 11c2.25 0 4-1.75 4-4s-1.75-4-4-4-4 1.75-4 4 1.75 4 4 4"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ZOOM">
-    <div class="o-icon">
-      <i class="fa fa-search-plus"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"
+      />
+      <path
+        d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CHECK">
     <svg class="o-icon" viewBox="0 0 24 24">
@@ -824,8 +893,8 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.TRIANGLE_EXCLAMATION">
-    <div class="o-icon fa-small">
-      <i class="fa fa-exclamation-triangle"/>
+    <div class="o-icon o-icon-exclamation-triangle fa-small">
+      <t t-call="o-spreadsheet-Icon.EXCLAMATION_TRIANGLE"/>
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.SPLIT_TEXT">
@@ -837,8 +906,8 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ERROR">
-    <div class="o-icon">
-      <i class="fa fa-exclamation-circle"/>
+    <div class="o-icon o-icon-exclamation-circle">
+      <t t-call="o-spreadsheet-Icon.EXCLAMATION_CIRCLE"/>
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.DISPLAY_HEADER">
@@ -850,12 +919,12 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.COG">
-    <svg class="o-icon" fill="currentColor" viewBox="0 0 16 16">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path
-        d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+        d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"
       />
       <path
-        d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
+        d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"
       />
     </svg>
   </t>
@@ -975,10 +1044,10 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.PIVOT">
-    <svg class="o-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon">
       <path
         fill="currentColor"
-        d="M17 2v14H1V6h4V2h12m-1 1H6v3h10M2 7v2h3V7m-3 3v2h3v-2m-3 3v2h3v-2m1-6v2h6V7m-6 3v2h6v-2m-6 3v2h6v-2m1-6v2h3V7m-3 3v2h3v-2m-3 3v2h3v-2"
+        d="M15.5 2A1.5 1.5 0 0 1 17 3.5V14a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 1 14V7.5A1.5 1.5 0 0 1 2.5 6H5V3.5A1.5 1.5 0 0 1 6.5 2H17m-1.5 1.5h-9V6h9m-13 1.5V10H5V7.5m-2.5 4V14H5v-2.5m1.5-4V10h9V7.5m-9 4V14h9v-2.5"
       />
     </svg>
   </t>
@@ -988,15 +1057,12 @@
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.ANGLE_DOWN">
-    <div class="o-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 256">
-        <path
-          fill="currentColor"
-          d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-          transform="translate(0, 9) scale(0.5,0.5)"
-        />
-      </svg>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.INSERT_PIVOT">
     <svg class="o-icon">
@@ -1008,7 +1074,7 @@
       </defs>
       <path
         fill="currentColor"
-        d="M17 2v14H1V6h4V2h12m-1 1H6v3h10M2 7v2h3V7m-3 3v2h3v-2m-3 3v2h3v-2m1-6v2h6V7m-6 3v2h6v-2m-6 3v2h6v-2m1-6v2h3V7m-3 3v2h3v-2m-3 3v2h3v-2"
+        d="M15.5 2A1.5 1.5 0 0 1 17 3.5V14a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 1 14V7.5A1.5 1.5 0 0 1 2.5 6H5V3.5A1.5 1.5 0 0 1 6.5 2H17m-1.5 1.5h-9V6h9m-13 1.5V10H5V7.5m-2.5 4V14H5v-2.5m1.5-4V10h9V7.5m-9 4V14h9v-2.5"
         mask="url(#a)"
       />
       <path
@@ -1046,14 +1112,19 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.HIDE_SHEET">
-    <div class="o-icon">
-      <i class="fa fa-eye-slash"/>
+    <div class="o-icon o-icon-eye-slash">
+      <t t-call="o-spreadsheet-Icon.EYE_SLASH"/>
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.DOWNLOAD">
-    <div class="o-icon">
-      <i class="fa fa-download"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+      />
+      <path
+        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.CAROUSEL">
     <svg class="o-icon" viewBox="0 0 122.88 99.75">
@@ -1088,78 +1159,81 @@
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.EXPAND">
-    <svg class="o-icon" viewBox="0 0 18 18">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path
-        d="M5.876 14.076a.6.6 0 0 0 0 .848l2.7 2.7a.6.6 0 0 0 .848 0l2.7-2.7a.6.6 0 0 0-.848-.848L9.6 15.7v-3.3a.6.6 0 0 0-1.2 0v3.3l-1.676-1.624a.6.6 0 0 0-.848 0m6.248-10.152a.6.6 0 0 0 0-.848l-2.7-2.7a.6.6 0 0 0-.848 0l-2.7 2.7a.6.6 0 0 0 .848.848L8.4 2.3v3.3a.6.6 0 0 0 1.2 0V2.3l1.676 1.624a.6.6 0 0 0 .848 0M2 10a.5.5 0 0 0 0 1h14a.5.5 0 0 0 0-1M2 7a.5.5 0 0 0 0 1h14a.5.5 0 0 0 0-1"
-        fill="currentColor"
+        fill-rule="evenodd"
+        d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.DARK_MODE">
-    <div class="o-icon">
-      <i class="fa fa-moon-o"/>
+    <div class="o-icon o-icon-moon-o">
+      <t t-call="o-spreadsheet-Icon.MOON_O"/>
     </div>
   </t>
   <t t-name="o-spreadsheet-Icon.ROTATION-0">
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      transform="rotate(270)"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        d="M5 2h1v12h1.5l-2 2-2-2H5m6-5h1v5h1.5l-2 2-2-2H11M8 2l7 2.8V6L8 8.8l-.43-1.12 1.9-.7V3.8l-1.9-.7L8 1.98m2.7 2.25v2.3l2.8-1.1z"
+        d="M1.5 14v-2h11v-2l4 3-4 3v-2m-4-8V4h4V2l4 3-4 3V6m-11 3 2.8-7h1.2l2.8 7-1.12.43-.7-1.9H3.3l-.7 1.9L1.48 9m2.25-2.7h2.3l-1.1-2.8z"
         fill="currentColor"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ROTATION-45">
-    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        d="m1.95 6.879.707-.707 8.485 8.485 1.06-1.06v2.828H9.375l1.061-1.061m.706-7.778.707-.707 3.536 3.535 1.06-1.06v2.828h-2.828l1.06-1.06M4.071 4.757l6.93-2.97.848.849-2.97 6.93-1.096-.488.849-1.839-2.249-2.248-1.838.848-.488-1.096m3.5-.318 1.626 1.626 1.203-2.757z"
+        d="m.743 7.086 1.414-1.414 7.778 7.778 1.414-1.414.707 4.95-4.95-.708 1.415-1.414m2.121-7.778 1.414-1.414L14.885 8.5l1.414-1.414.707 4.95-4.95-.708 1.415-1.414m-9.9-5.657 6.93-2.97.848.849-2.97 6.93-1.096-.488.849-1.839-2.249-2.248-1.838.848-.488-1.096m3.5-.318 1.626 1.626 1.203-2.757z"
         fill="currentColor"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ROTATION-90">
-    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        d="M5 2h1v12h1.5l-2 2-2-2H5m6-5h1v5h1.5l-2 2-2-2H11M8 2l7 2.8V6L8 8.8l-.43-1.12 1.9-.7V3.8l-1.9-.7L8 1.98m2.7 2.25v2.3l2.8-1.1z"
+        d="M4 1.5h2v11h2l-3 4-3-4h2m8-4h2v4h2l-3 4-3-4h2m-3-11 7 2.8v1.2L9 8.3l-.43-1.12 1.9-.7V3.3l-1.9-.7L9 1.48m2.7 2.25v2.3l2.8-1.1z"
         fill="currentColor"
       />
     </svg>
   </t>
 
   <t t-name="o-spreadsheet-Icon.ROTATION-270">
-    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        d="M13 16h-1V4h-1.5l2-2 2 2H13M7 9H6V4H4.5l2-2 2 2H7m3 12-7-2.8V12l7-2.8.43 1.12-1.9.7v3.18l1.9.7-.43 1.12m-2.7-2.25v-2.3l-2.8 1.1z"
+        d="M14 16.5h-2v-11h-2l3-4 3 4h-2m-8 4H4v-4H2l3-4 3 4H6m3 11-7-2.8v-1.2l7-2.8.43 1.12-1.9.7v3.18l1.9.7L9 16.52m-2.7-2.25v-2.3l-2.8 1.1z"
         fill="currentColor"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.ROTATION-315">
-    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-icon" viewBox="0 0 18 18">
       <path
-        d="m6.879 16.55-.707-.707 8.485-8.485-1.06-1.06h2.828v2.828l-1.061-1.061m-7.778-.707-.707-.707 3.535-3.536-1.06-1.06h2.828v2.828l-1.06-1.06M4.757 14.429l-2.97-6.93.849-.848 6.93 2.97-.488 1.096-1.839-.849-2.248 2.249.848 1.838-1.096.488m-.318-3.5 1.626-1.626-2.757-1.203z"
+        d="m6.836 17.257-1.414-1.414L13.2 8.065l-1.414-1.414 4.95-.707-.708 4.95-1.414-1.415M6.836 7.358 5.422 5.944 8.25 3.115 6.836 1.701l4.95-.707-.708 4.95-1.414-1.415m-5.657 9.9-2.97-6.93.849-.848 6.93 2.97-.488 1.096-1.839-.849-2.248 2.249.848 1.838-1.096.488m-.318-3.5 1.626-1.626-2.757-1.203z"
         fill="currentColor"
       />
     </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.THUMB_TACK">
-    <div class="o-icon">
-      <i class="fa fa-thumb-tack"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.LOCK">
-    <div class="o-icon">
-      <i class="fa fa-lock"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.UNLOCK">
-    <div class="o-icon">
-      <i class="fa fa-unlock"/>
-    </div>
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M12 0a4 4 0 0 1 4 4v2.5h-1V4a3 3 0 1 0-6 0v2h.5A2.5 2.5 0 0 1 12 8.5v5A2.5 2.5 0 0 1 9.5 16h-7A2.5 2.5 0 0 1 0 13.5v-5A2.5 2.5 0 0 1 2.5 6H8V4a4 4 0 0 1 4-4"
+      />
+    </svg>
   </t>
   <t t-name="o-spreadsheet-Icon.GOAL_SEEK">
     <svg class="o-icon" viewBox="-1 -1 18 18">
@@ -1340,6 +1414,137 @@
       <path
         fill="currentColor"
         d="M12.7361611,0.063952038 C13.2551391,0.263360331 13.5227261,0.869148905 13.3338336,1.41701869 L8.54555162,15.3051026 C8.35665911,15.8529724 7.78281676,16.1354563 7.26383885,15.936048 C6.74486095,15.7366397 6.47727387,15.1308511 6.66616638,14.5829813 L11.4544484,0.694897379 C11.6433409,0.147027596 12.2171832,-0.135456255 12.7361611,0.063952038 Z M2.41421356,8.25614867 L5.94974747,11.9885083 C6.34027176,12.4007734 6.34027176,13.0691871 5.94974747,13.4814522 C5.55922318,13.8937173 4.9260582,13.8937173 4.53553391,13.4814522 L0.292893219,9.0026206 C-0.0976310729,8.59035554 -0.0976310729,7.9219418 0.292893219,7.50967674 L4.53553391,3.03084515 C4.9260582,2.61858008 5.55922318,2.61858008 5.94974747,3.03084515 C6.34027176,3.44311021 6.34027176,4.11152395 5.94974747,4.52378901 L2.41421356,8.25614867 Z M17.5857864,8.25614867 L14.0502525,4.52378901 C13.6597282,4.11152395 13.6597282,3.44311021 14.0502525,3.03084515 C14.4407768,2.61858008 15.0739418,2.61858008 15.4644661,3.03084515 L19.7071068,7.50967674 C20.0976311,7.9219418 20.0976311,8.59035554 19.7071068,9.0026206 L15.4644661,13.4814522 C15.0739418,13.8937173 14.4407768,13.8937173 14.0502525,13.4814522 C13.6597282,13.0691871 13.6597282,12.4007734 14.0502525,11.9885083 L17.5857864,8.25614867 Z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.ANGLE_DOUBLE_LEFT">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.ANGLE_DOUBLE_RIGHT">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"
+      />
+      <path
+        fill-rule="evenodd"
+        d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.ANGLE_LEFT">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.CIRCLE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="8"/>
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.COMPRESS">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8m7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0m-.5 11.707-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.ELLIPSIS_V">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.EXCLAMATION_CIRCLE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+      <path
+        d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.EXCLAMATION_TRIANGLE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"
+      />
+      <path
+        d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.EYE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"
+      />
+      <path
+        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.EYE_SLASH">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"
+      />
+      <path
+        d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"
+      />
+      <path
+        d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.MOON_O">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.PAINT_BRUSH">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.1 6.1 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.1 8.1 0 0 1-3.078.132 4 4 0 0 1-.562-.135 1.4 1.4 0 0 1-.466-.247.7.7 0 0 1-.204-.288.62.62 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896q.19.012.348.048c.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04M4.705 11.912a1.2 1.2 0 0 0-.419-.1c-.246-.013-.573.05-.879.479-.197.275-.355.532-.5.777l-.105.177c-.106.181-.213.362-.32.528a3.4 3.4 0 0 1-.76.861c.69.112 1.736.111 2.657-.12.559-.139.843-.569.993-1.06a3 3 0 0 0 .126-.75zm1.44.026c.12-.04.277-.1.458-.183a5.1 5.1 0 0 0 1.535-1.1c1.9-1.996 4.412-5.57 6.052-8.631-2.59 1.927-5.566 4.66-7.302 6.792-.442.543-.795 1.243-1.042 1.826-.121.288-.214.54-.275.72v.001l.575.575zm-4.973 3.04.007-.005zm3.582-3.043.002.001h-.002z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.QUESTION_CIRCLE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+      <path
+        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.SLIDERS">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        fill-rule="evenodd"
+        d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z"
+      />
+    </svg>
+  </t>
+  <t t-name="o-spreadsheet-Icon.TIMES_CIRCLE">
+    <svg class="o-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+      <path
+        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
       />
     </svg>
   </t>

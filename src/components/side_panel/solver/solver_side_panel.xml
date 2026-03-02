@@ -150,9 +150,10 @@
                       style="width: 30%; overflow:hidden;"
                     />
                     <i
-                      class="o-button-icon fa fa-trash text-danger"
-                      t-on-click="() => this.removeConstraint(constraint_index)"
-                    />
+                      class="o-button-icon o-icon-trash text-danger"
+                      t-on-click="() => this.removeConstraint(constraint_index)">
+                      <t t-call="o-spreadsheet-Icon.TRASH"/>
+                    </i>
                   </div>
                 </t>
               </t>
@@ -235,9 +236,10 @@
                       </t>
                     </span>
                     <i
-                      class="o-button-icon fa fa-trash text-danger"
-                      t-on-click="() => this.removeBound(d_index)"
-                    />
+                      class="o-button-icon o-icon-trash text-danger"
+                      t-on-click="() => this.removeBound(d_index)">
+                      <t t-call="o-spreadsheet-Icon.TRASH"/>
+                    </i>
                   </div>
                 </t>
               </t>

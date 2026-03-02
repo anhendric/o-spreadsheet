@@ -20,9 +20,10 @@
                 selectContentOnFocus="true"
               />
               <i
-                class="o-button-icon ps-3 fa fa-trash"
-                t-on-click="() => this.onDeleteGroup(group_index)"
-              />
+                class="o-button-icon ps-3 o-icon-trash"
+                t-on-click="() => this.onDeleteGroup(group_index)">
+                <t t-call="o-spreadsheet-Icon.TRASH"/>
+              </i>
             </div>
           </div>
           <div

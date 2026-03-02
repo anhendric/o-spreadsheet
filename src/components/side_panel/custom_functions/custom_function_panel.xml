@@ -25,7 +25,9 @@
           <button
             class="o-button link text-danger"
             t-on-click.stop="() => this.deleteFunction(func.name)">
-            <i class="fa fa-trash"/>
+            <i class="o-icon-trash">
+              <t t-call="o-spreadsheet-Icon.TRASH"/>
+            </i>
           </button>
         </div>
       </div>

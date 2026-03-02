@@ -19,9 +19,10 @@
               <t t-set="errorMessage" t-value="getHugeDimensionErrorMessage(col)"/>
               <i
                 t-if="errorMessage"
-                class="text-warning fa fa-exclamation-triangle"
-                t-att-title="errorMessage"
-              />
+                class="text-warning o-icon-exclamation-triangle"
+                t-att-title="errorMessage">
+                <t t-call="o-spreadsheet-Icon.TRIANGLE_EXCLAMATION"/>
+              </i>
             </t>
 
             <PivotDimensionGranularity
@@ -60,9 +61,10 @@
               <t t-set="errorMessage" t-value="getHugeDimensionErrorMessage(row)"/>
               <i
                 t-if="errorMessage"
-                class="text-warning fa fa-exclamation-triangle"
-                t-att-title="errorMessage"
-              />
+                class="text-warning o-icon-exclamation-triangle"
+                t-att-title="errorMessage">
+                <t t-call="o-spreadsheet-Icon.TRIANGLE_EXCLAMATION"/>
+              </i>
             </t>
 
             <PivotDimensionGranularity

@@ -15,9 +15,14 @@
           t-on-click.stop="openAssistant"
           t-on-pointerdown.prevent.stop=""
           t-on-pointerup.stop=""
-          class="fa-stack position-absolute translate-middle force-open-assistant fs-4">
-          <i class="fa fa-circle fa-stack-1x fa-inverse"/>
-          <i class="fa fa-question-circle fa-stack-1x"/>
+          class="o-icon-question-circle position-absolute translate-middle force-open-assistant fs-4 d-flex align-items-center justify-content-center"
+          style="width: 1em; height: 1em;">
+          <t t-call="o-spreadsheet-Icon.CIRCLE"/>
+          <div
+            class="position-absolute text-white"
+            style="font-size: 0.8em; display: flex; align-items: center; justify-content: center;">
+            <t t-call="o-spreadsheet-Icon.QUESTION_CIRCLE"/>
+          </div>
         </span>
         <div
           class="o-composer w-100 text-start"
@@ -58,9 +63,14 @@
           role="button"
           t-on-click="closeAssistant"
           t-on-pointerdown.prevent.stop=""
-          class="fa-stack position-absolute top-0 start-100 translate-middle fs-4">
-          <i class="fa fa-circle fa-stack-1x fa-inverse"/>
-          <i class="fa fa-times-circle fa-stack-1x"/>
+          class="o-icon-times-circle position-absolute top-0 start-100 translate-middle fs-4 d-flex align-items-center justify-content-center"
+          style="width: 1em; height: 1em;">
+          <t t-call="o-spreadsheet-Icon.CIRCLE"/>
+          <div
+            class="position-absolute text-white"
+            style="font-size: 0.8em; display: flex; align-items: center; justify-content: center;">
+            <t t-call="o-spreadsheet-Icon.TIMES_CIRCLE"/>
+          </div>
         </span>
         <div class="o-composer-assistant overflow-auto" t-att-style="assistantStyle">
           <FunctionDescriptionProvider

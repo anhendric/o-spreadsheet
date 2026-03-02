@@ -66,7 +66,8 @@ export class ChartDashboardMenu extends Component<Props, SpreadsheetChildEnv> {
     return {
       id: "fullScreenChart",
       label: isFullScreen ? _t("Exit Full Screen") : _t("Full Screen"),
-      class: `text-muted fa ${isFullScreen ? "fa-compress" : "fa-expand"}`,
+      class: `text-muted o-icon-${isFullScreen ? "compress" : "expand"}`,
+      preview: `o-spreadsheet-Icon.${isFullScreen ? "COMPRESS" : "EXPAND"}`,
       onClick: () => {
         this.fullScreenFigureStore.toggleFullScreenFigure(figureId);
       },

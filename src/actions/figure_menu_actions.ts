@@ -192,7 +192,7 @@ function getCopyMenuItem(
         env.notifyUser({ sticky: false, type: "success", text: copiedNotificationMessage });
       }
     },
-    icon: "o-spreadsheet-Icon.CLIPBOARD",
+    icon: "o-spreadsheet-Icon.COPY",
     isEnabledOnLockedSheet: true,
   };
 }

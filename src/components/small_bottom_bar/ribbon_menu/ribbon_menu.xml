@@ -3,10 +3,12 @@
     <div class="o-ribbon-menu d-flex flex-column" t-ref="menu">
       <div class="o-ribbon-title d-flex py-2 fw-bold">
         <div
-          class="o-previous-button px-3 py-1 mx-2 rounded"
+          class="o-previous-button px-3 py-1 mx-2 rounded d-flex align-items-center justify-content-center"
           t-on-click="onClickBack"
           t-att-title="backTitle">
-          <i class="fa fa-angle-left"/>
+          <i class="o-icon-angle-left">
+            <t t-call="o-spreadsheet-Icon.ANGLE_LEFT"/>
+          </i>
         </div>
         <span class="d-flex align-items-center" t-esc="state.title"/>
       </div>

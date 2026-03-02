@@ -30,17 +30,6 @@
     font-weight: 600;
   }
 
-  /* Specific styling for the File button in the slot */
-  .o-ribbon-file-button {
-    background-color: #107c10;
-    color: white !important;
-    font-weight: 600;
-  }
-
-  .o-ribbon-file-button:hover {
-    background-color: #0e6d0e;
-  }
-
   .o-ribbon-toolbar {
     background-color: var(--os-white-bg);
     overflow-x: auto;
@@ -60,7 +49,6 @@
     font-size: 10px;
     color: #605e5c;
     margin-top: auto;
-    padding-top: 4px;
   }
 
   /* Adjust button styles within ribbon if necessary */

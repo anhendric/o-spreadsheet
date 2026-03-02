@@ -40,7 +40,9 @@
         <div class="d-flex flex-fill align-items-center bottom-bar-menu border-top border-bottom">
           <Ripple>
             <div class="py-1 px-1 mx-2 ribbon-toggler" t-on-click="toggleRibbon">
-              <i class="o-icon fa fa-cog"/>
+              <i class="o-icon o-icon-cog">
+                <t t-call="o-spreadsheet-Icon.COG"/>
+              </i>
             </div>
           </Ripple>
           <BottomBar onClick="props.onClick"/>

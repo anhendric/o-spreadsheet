@@ -12,7 +12,9 @@
           t-if="props.onToggleCollapsePanel"
           class="o-collapse-panel o-sidePanelAction rounded"
           t-on-click="props.onToggleCollapsePanel">
-          <i class="fa fa-angle-double-right"/>
+          <i class="o-icon-angle-double-right">
+            <t t-call="o-spreadsheet-Icon.ANGLE_DOUBLE_RIGHT"/>
+          </i>
         </div>
         <div class="o-sidePanelTitle o-fw-bold ms-2" t-esc="getTitle()"/>
 
@@ -24,7 +26,9 @@
           t-if="props.isPinned"
           class="o-pin-panel o-sidePanelAction rounded active"
           t-on-click="props.onTogglePinPanel">
-          <i class="fa fa-thumb-tack"/>
+          <i class="o-icon-thumb-tack">
+            <t t-call="o-spreadsheet-Icon.THUMB_TACK"/>
+          </i>
         </div>
         <div class="o-sidePanelClose o-sidePanelAction rounded" t-on-click="props.onCloseSidePanel">
           ✕
@@ -61,13 +65,17 @@
         <div
           t-if="props.onToggleCollapsePanel"
           class="o-collapse-panel o-sidePanelAction rounded mb-1">
-          <i class="fa fa-angle-double-left"/>
+          <i class="o-icon-angle-double-left">
+            <t t-call="o-spreadsheet-Icon.ANGLE_DOUBLE_LEFT"/>
+          </i>
         </div>
         <div
           t-if="props.isPinned"
           class="o-pin-panel o-sidePanelAction ms-auto rounded active"
           t-on-click="props.onTogglePinPanel">
-          <i class="fa fa-thumb-tack"/>
+          <i class="o-icon-thumb-tack">
+            <t t-call="o-spreadsheet-Icon.THUMB_TACK"/>
+          </i>
         </div>
         <div
           class="o-sidePanelClose o-sidePanelAction rounded mb-1"

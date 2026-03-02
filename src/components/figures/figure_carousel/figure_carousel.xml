@@ -31,7 +31,9 @@
           t-att-class="{'active': menuState.isOpen}"
           t-ref="carouselTabsDropdown"
           t-on-click="toggleMenu">
-          <div class="fa fa-angle-down"/>
+          <div class="o-icon-angle-down">
+            <t t-call="o-spreadsheet-Icon.ANGLE_DOWN"/>
+          </div>
           <MenuPopover
             t-if="menuState.isOpen"
             menuId="menuId"
@@ -44,19 +46,23 @@
         <div
           t-if="env.isDashboard()"
           t-att-title="fullScreenButtonTitle"
-          class="o-carousel-full-screen-button fa o-carousel-button rounded p-1 ms-1"
+          class="o-carousel-full-screen-button o-carousel-button rounded p-1 ms-1 d-flex align-items-center justify-content-center"
           t-att-class="{
-            'fa-compress': props.isFullScreen,
-            'fa-expand': !props.isFullScreen,
+            'o-icon-compress': props.isFullScreen,
+            'o-icon-expand': !props.isFullScreen,
             'invisible': selectedCarouselItem?.type !== 'chart',
           }"
-          t-on-click="toggleFullScreen"
-        />
+          t-on-click="toggleFullScreen">
+          <t
+            t-call="{{ props.isFullScreen ? 'o-spreadsheet-Icon.COMPRESS' : 'o-spreadsheet-Icon.EXPAND' }}"
+          />
+        </div>
         <div
           t-if="!env.isDashboard()"
-          class="o-carousel-menu-button o-carousel-button fa fa-ellipsis-v rounded ms-1"
-          t-on-click="openContextMenu"
-        />
+          class="o-carousel-menu-button o-carousel-button o-icon rounded ms-1"
+          t-on-click="openContextMenu">
+          <t t-call="o-spreadsheet-Icon.ELLIPSIS_V"/>
+        </div>
       </div>
       <div
         t-if="!selectedItem"

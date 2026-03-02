@@ -17,13 +17,15 @@
               <span class="fw-bold" t-esc="scenario.name"/>
               <div class="o-scenario-actions">
                 <i
-                  class="o-button-icon fa fa-eye"
-                  t-on-click.stop="() => this.editScenario(scenario.id)"
-                />
+                  class="o-button-icon o-icon-eye"
+                  t-on-click.stop="() => this.editScenario(scenario.id)">
+                  <t t-call="o-spreadsheet-Icon.EYE"/>
+                </i>
                 <i
-                  class="o-button-icon ps-2 fa fa-trash"
-                  t-on-click.stop="() => this.deleteScenario(scenario.id)"
-                />
+                  class="o-button-icon ps-2 o-icon-trash"
+                  t-on-click.stop="() => this.deleteScenario(scenario.id)">
+                  <t t-call="o-spreadsheet-Icon.TRASH"/>
+                </i>
               </div>
             </div>
           </t>

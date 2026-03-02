@@ -34,7 +34,7 @@ export const copy: ActionSpec = {
     await env.clipboard.write(await env.model.getters.getClipboardTextAndImageContent());
   },
   isEnabledOnLockedSheet: true,
-  icon: "o-spreadsheet-Icon.CLIPBOARD",
+  icon: "o-spreadsheet-Icon.COPY",
 };
 
 export const cut: ActionSpec = {

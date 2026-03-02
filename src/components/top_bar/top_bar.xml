@@ -6,7 +6,7 @@
       <Ribbon t-if="!env.isSmall">
         <t t-set-slot="file-menu">
           <div
-            class="o-ribbon-tab o-ribbon-file-button px-3 py-1 cursor-pointer user-select-none fw-bold"
+            class="o-ribbon-tab px-3 py-1 cursor-pointer user-select-none fw-bold"
             t-on-click="(ev) => this.toggleFileMenu(ev)">
             File
           </div>
