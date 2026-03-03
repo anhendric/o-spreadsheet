@@ -23,18 +23,21 @@ export class PivotTitleSection extends Component<Props, SpreadsheetChildEnv> {
   get cogWheelMenuItems(): ActionSpec[] {
     return [
       {
+        id: "flip_axis",
         name: _t("Flip axes"),
         icon: "o-spreadsheet-Icon.EXCHANGE",
         execute: this.props.flipAxis,
         isEnabledOnLockedSheet: true,
       },
       {
+        id: "duplicate_pivot",
         name: _t("Duplicate"),
         icon: "o-spreadsheet-Icon.COPY",
         execute: () => this.duplicatePivot(),
         isEnabledOnLockedSheet: true,
       },
       {
+        id: "delete_pivot",
         name: _t("Delete"),
         icon: "o-spreadsheet-Icon.TRASH",
         execute: () => this.delete(),

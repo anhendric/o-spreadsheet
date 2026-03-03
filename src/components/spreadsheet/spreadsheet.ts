@@ -105,11 +105,7 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
   getStyle(): string {
     const properties: CSSProperties = {};
     const scrollbarWidth = this.env.model.getters.getScrollBarWidth();
-    if (this.env.isDashboard()) {
-      properties["grid-template-rows"] = `auto`;
-    } else {
-      properties["grid-template-rows"] = `min-content auto min-content`;
-    }
+    properties["grid-template-rows"] = `min-content auto min-content`;
     const columnWidth = this.sidePanel.mainPanel
       ? `${this.sidePanel.totalPanelSize || DEFAULT_SIDE_PANEL_SIZE}px`
       : "auto";
@@ -150,7 +146,6 @@ export class Spreadsheet extends Component<SpreadsheetProps, SpreadsheetChildEnv
       imageProvider: fileStore ? new ImageProvider(fileStore) : undefined,
       loadCurrencies: this.model.config.external.loadCurrencies,
       loadLocales: this.model.config.external.loadLocales,
-      isDashboard: () => this.model.getters.isDashboard(),
       openSidePanel: this.sidePanel.open.bind(this.sidePanel),
       replaceSidePanel: this.sidePanel.replace.bind(this.sidePanel),
       toggleSidePanel: this.sidePanel.toggle.bind(this.sidePanel),

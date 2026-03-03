@@ -8,6 +8,7 @@
           <t t-foreach="tabs" t-as="tab" t-key="tab.id">
             <div
               class="o-ribbon-tab px-3 py-1 cursor-pointer user-select-none"
+              t-att-data-id="tab.id"
               t-att-class="{'active fw-bold border-bottom border-primary': state.activeTab === tab.id, 'text-muted': state.activeTab !== tab.id}"
               t-on-click="() => this.selectTab(tab.id)">
               <t t-esc="tab.name"/>

@@ -237,9 +237,11 @@ describe("remove duplicate action", () => {
     });
     setSelection(model, ["B2"]);
     await nextTick();
-    await click(fixture, ".o-topbar-menu[data-id='data']");
-    await click(fixture, ".o-menu-item[data-name='data_cleanup']");
-    await click(fixture, ".o-menu-item[data-name='remove_duplicates']");
+    const dataTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+      (el) => el.textContent === "Data"
+    )!;
+    await click(dataTab);
+    await click(fixture, ".o-menu-item-button[title='Remove duplicates']");
     expect(model.getters.getSelectedZone()).toEqual(toZone("B1:B2"));
   });
 });

@@ -1027,6 +1027,9 @@ test("complete import, then export", () => {
     pivotNextId: 1,
     settings: { locale: DEFAULT_LOCALE },
     customTableStyles: {},
+    customFunctions: {},
+    drawings: {},
+    latexContent: {},
     styles: {
       1: { bold: true, textColor: "#674EA7", fontSize: 12 },
     },
@@ -1131,6 +1134,9 @@ test("import then export (figures)", () => {
     uniqueFigureIds: true,
     settings: { locale: DEFAULT_LOCALE },
     customTableStyles: {},
+    customFunctions: {},
+    drawings: {},
+    latexContent: {},
   };
   const model = new Model(modelData);
   expect(model).toExport(modelData);

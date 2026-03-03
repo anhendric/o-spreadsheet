@@ -8,8 +8,5 @@
         isFullScreen="props.isFullScreen"
       />
     </div>
-    <div t-if="env.isDashboard()" class="position-absolute top-0 end-0">
-      <ChartDashboardMenu chartId="chartId"/>
-    </div>
   </t>
 </templates>

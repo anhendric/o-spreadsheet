@@ -171,10 +171,8 @@ export class GridRenderer extends SpreadsheetStore {
         this.zonesWithPreventedAnimationsInNextFrame = [];
         break;
       case "Headers":
-        if (!this.getters.isDashboard()) {
-          this.drawHeaders(renderingContext);
-          this.drawFrozenPanesHeaders(renderingContext);
-        }
+        this.drawHeaders(renderingContext);
+        this.drawFrozenPanesHeaders(renderingContext);
         break;
     }
   }
@@ -191,9 +189,9 @@ export class GridRenderer extends SpreadsheetStore {
   private drawBackground(renderingContext: GridRenderingContext, boxes: Box[]) {
     const { ctx, thinLineWidth } = renderingContext;
 
-    const areGridLinesVisible =
-      !this.getters.isDashboard() &&
-      this.getters.getGridLinesVisibility(this.getters.getActiveSheetId());
+    const areGridLinesVisible = this.getters.getGridLinesVisibility(
+      this.getters.getActiveSheetId()
+    );
     const inset = areGridLinesVisible ? 0.1 * thinLineWidth : 0;
 
     if (areGridLinesVisible) {
@@ -581,8 +579,8 @@ export class GridRenderer extends SpreadsheetStore {
 
     const { x: offsetCorrectionX, y: offsetCorrectionY } =
       this.getters.getMainViewportCoordinates();
-    const widthCorrection = this.getters.isDashboard() ? 0 : HEADER_WIDTH;
-    const heightCorrection = this.getters.isDashboard() ? 0 : HEADER_HEIGHT;
+    const widthCorrection = HEADER_WIDTH;
+    const heightCorrection = HEADER_HEIGHT;
     ctx.lineWidth = 6 * thinLineWidth;
     ctx.strokeStyle = FROZEN_PANE_HEADER_BORDER_COLOR;
     ctx.beginPath();
@@ -612,8 +610,8 @@ export class GridRenderer extends SpreadsheetStore {
     const viewport = { left, right, top, bottom };
 
     const rect = this.getters.getVisibleRect(viewport);
-    const widthCorrection = this.getters.isDashboard() ? 0 : HEADER_WIDTH;
-    const heightCorrection = this.getters.isDashboard() ? 0 : HEADER_HEIGHT;
+    const widthCorrection = HEADER_WIDTH;
+    const heightCorrection = HEADER_HEIGHT;
     ctx.lineWidth = 6 * thinLineWidth;
     ctx.strokeStyle = FROZEN_PANE_BORDER_COLOR;
     ctx.beginPath();

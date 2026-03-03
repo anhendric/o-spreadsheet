@@ -529,7 +529,7 @@ export const TEST_COMMANDS: CommandMapping = {
     type: "UNLOCK_SHEET",
     sheetId: "Sheet1",
   },
-};
+} as any as CommandMapping;
 
 export const OT_TESTS_SINGLE_CELL_COMMANDS = [
   TEST_COMMANDS.UPDATE_CELL,

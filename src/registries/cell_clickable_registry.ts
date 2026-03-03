@@ -3,9 +3,7 @@ import { Registry } from "@odoo/o-spreadsheet-engine/registries/registry";
 import { _t } from "@odoo/o-spreadsheet-engine/translation";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { ComponentConstructor } from "@odoo/owl";
-import { ClickableCellSortIcon } from "../components/dashboard/clickable_cell_sort_icon/clickable_cell_sort_icon";
-import { canSortPivot, sortPivot } from "../helpers/pivot/pivot_menu_items";
-import { CellPosition, Getters, SortDirection } from "../types";
+import { CellPosition, Getters } from "../types";
 
 export interface CellClickableItem {
   condition: (position: CellPosition, getters: Getters) => boolean;
@@ -37,34 +35,3 @@ clickableCellRegistry.add("link", {
   },
   sequence: 5,
 });
-
-clickableCellRegistry.add("dashboard_pivot_sorting", {
-  condition: (position: CellPosition, getters: Getters) => {
-    if (!getters.isDashboard()) {
-      return false;
-    }
-    const pivotCell = getters.getPivotCellFromPosition(position);
-    return canSortPivot(getters, position) && pivotCell.type === "MEASURE_HEADER";
-  },
-  execute: (position: CellPosition, env: SpreadsheetChildEnv) => {
-    sortPivot(env, position, getNextSortDirection(env.model.getters, position));
-  },
-  component: ClickableCellSortIcon,
-  componentProps: (position: CellPosition, getters: Getters) => {
-    return {
-      position,
-      sortDirection: getters.getPivotCellSortDirection(position),
-    };
-  },
-  sequence: 2,
-});
-
-const NEXT_SORT_DIRECTION = {
-  none: "asc",
-  asc: "desc",
-  desc: "none",
-} as const;
-
-function getNextSortDirection(getters: Getters, position: CellPosition): SortDirection | "none" {
-  return NEXT_SORT_DIRECTION[getters.getPivotCellSortDirection(position) ?? "none"];
-}

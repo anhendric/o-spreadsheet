@@ -180,7 +180,7 @@ export const insertCellShiftRight: ActionSpec = {
 
 export const insertChart: ActionSpec = {
   name: _t("Chart"),
-  //execute: ACTIONS.CREATE_CHART,
+  execute: ACTIONS.CREATE_CHART,
   isEnabled: (env) => !env.isSmall,
   icon: "o-spreadsheet-Icon.INSERT_CHART",
 };
@@ -282,6 +282,7 @@ export const categoriesFunctionListMenuBuilder: ActionBuilder = () => {
 };
 
 export const insertLink: ActionSpec = {
+  id: "insert_link",
   name: _t("Link"),
   description: "Ctrl+K",
   execute: ACTIONS.INSERT_LINK,

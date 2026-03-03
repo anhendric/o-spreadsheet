@@ -141,7 +141,7 @@ export class ChartJsComponent extends Component<Props, SpreadsheetChildEnv> {
   }
 
   private get shouldAnimate(): boolean {
-    return this.env.model.getters.isDashboard();
+    return false;
   }
 
   protected createChart(chartRuntime: ChartJSRuntime) {

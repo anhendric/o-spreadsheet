@@ -670,15 +670,6 @@ describe("figures", () => {
       expect(getElStyle(".o-figure-border", "border-top-width")).toEqual(`2px`);
       expect(".o-figure-border").toHaveClass("o-selected");
     });
-
-    test("No border in dashboard mode", async () => {
-      createFigure(model, { id: "figureId" });
-      await nextTick();
-      expect(getElStyle(".o-figure-border", "border-top-width")).toEqual("1px");
-      model.updateMode("dashboard");
-      await nextTick();
-      expect(".o-figure-border").toHaveCount(0);
-    });
   });
 
   test("Selected figure isn't removed by scroll", async () => {

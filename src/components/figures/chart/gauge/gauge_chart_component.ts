@@ -2,11 +2,8 @@ import { drawGaugeChart } from "@odoo/o-spreadsheet-engine/helpers/figures/chart
 import { GaugeChartRuntime } from "@odoo/o-spreadsheet-engine/types/chart";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { Component, useEffect, useRef } from "@odoo/owl";
-import { deepEquals } from "../../../../helpers";
 import { EASING_FN } from "../../../../registries/cell_animation_registry";
-import { Store, useStore } from "../../../../store_engine";
 import { UID } from "../../../../types";
-import { ChartAnimationStore } from "../chartJs/chartjs_animation_store";
 
 const ANIMATION_DURATION = 1000;
 
@@ -24,41 +21,14 @@ export class GaugeChartComponent extends Component<Props, SpreadsheetChildEnv> {
 
   private canvas = useRef("chartContainer");
 
-  private animationStore: Store<ChartAnimationStore> | undefined;
-
   get runtime(): GaugeChartRuntime {
     return this.env.model.getters.getChartRuntime(this.props.chartId) as GaugeChartRuntime;
   }
 
   setup() {
-    if (this.env.model.getters.isDashboard()) {
-      this.animationStore = useStore(ChartAnimationStore);
-    }
-
-    let animation: Animation | null = null;
-    let lastRuntime: GaugeChartRuntime | undefined = undefined;
     useEffect(
       () => {
-        if (
-          this.env.isDashboard() &&
-          lastRuntime === undefined && // first render
-          this.animationStore?.animationPlayed[this.animationChartId] !== "gauge"
-        ) {
-          animation = this.drawGaugeWithAnimation();
-          this.animationStore?.disableAnimationForChart(this.animationChartId, "gauge");
-        } else if (
-          this.env.isDashboard() &&
-          lastRuntime !== undefined && // not first render
-          !deepEquals(this.runtime, lastRuntime)
-        ) {
-          animation = this.drawGaugeWithAnimation();
-          this.animationStore?.disableAnimationForChart(this.animationChartId, "gauge");
-        } else {
-          drawGaugeChart(this.canvasEl, this.runtime);
-        }
-
-        lastRuntime = this.runtime;
-        return () => animation?.stop();
+        drawGaugeChart(this.canvasEl, this.runtime);
       },
       () => {
         const rect = this.canvasEl.getBoundingClientRect();

@@ -603,8 +603,8 @@ describe("Composer interactions", () => {
 
   test("Pressing Enter while editing a label does not open grid composer", async () => {
     setCellContent(model, "A1", "[label](http://odoo.com)");
-    await simulateClick(".o-topbar-menu[data-id='insert']");
-    await simulateClick(".o-menu-item[data-name='insert_link']");
+    await simulateClick(".o-ribbon-tab[data-id='insert']");
+    await simulateClick(".o-menu-item-button[data-id='insert_link']");
     const editor = fixture.querySelector(".o-link-editor");
     expect(editor).toBeTruthy();
 
@@ -988,12 +988,12 @@ describe("TopBar composer", () => {
     composerEl = document.querySelector(".o-spreadsheet-topbar .o-composer");
     expect(document.activeElement).toBe(composerEl);
     expect(fixture.querySelector(".o-formula-assistant")).toBeDefined();
-    expect(fixture.querySelector(".o-spreadsheet-topbar .fa-question-circle")).toBe(null);
-    expect(fixture.querySelector(".o-spreadsheet-topbar .fa-times-circle")).not.toBe(null);
-    await simulateClick(".o-spreadsheet-topbar .fa-times-circle");
+    expect(fixture.querySelector(".o-spreadsheet-topbar .o-icon-question-circle")).toBe(null);
+    expect(fixture.querySelector(".o-spreadsheet-topbar .o-icon-times-circle")).not.toBe(null);
+    await simulateClick(".o-spreadsheet-topbar .o-icon-times-circle");
     expect(document.activeElement).toBe(composerEl);
     expect(fixture.querySelector(".o-formula-assistant")).toBe(null);
-    await simulateClick(".o-spreadsheet-topbar .fa-question-circle");
+    await simulateClick(".o-spreadsheet-topbar .o-icon-question-circle");
     expect(fixture.querySelector(".o-formula-assistant")).toBeDefined();
     expect(document.activeElement).toBe(composerEl);
   });

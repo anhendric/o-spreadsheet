@@ -135,10 +135,8 @@ export async function hoverCell(model: Model, xc: string, delay: number) {
   const zone = toZone(xc);
   const zoom = model.getters.getViewportZoomLevel();
   let { x, y, width, height } = model.getters.getVisibleRectWithZoom(zone);
-  if (!model.getters.isDashboard()) {
-    x -= HEADER_WIDTH * zoom;
-    y -= HEADER_HEIGHT * zoom;
-  }
+  x -= HEADER_WIDTH * zoom;
+  y -= HEADER_HEIGHT * zoom;
   x += width / 2;
   y += height / 2;
   triggerMouseEvent(".o-grid-overlay", "pointermove", x, y);
@@ -163,10 +161,8 @@ export async function clickCell(
     throw new Error(`You can't click on ${xc} because it is not visible`);
   }
   let { x, y, width, height } = model.getters.getVisibleRectWithZoom(zone);
-  if (!model.getters.isDashboard()) {
-    x -= HEADER_WIDTH * zoom;
-    y -= HEADER_HEIGHT * zoom;
-  }
+  x -= HEADER_WIDTH * zoom;
+  y -= HEADER_HEIGHT * zoom;
   if (option.clickInMiddle) {
     x += width / 2;
     y += height / 2;
@@ -239,10 +235,8 @@ export async function gridMouseEvent(
 ) {
   const zone = toZone(xc);
   let { x, y } = model.getters.getVisibleRect(zone);
-  if (!model.getters.isDashboard()) {
-    x -= HEADER_WIDTH;
-    y -= HEADER_HEIGHT;
-  }
+  x -= HEADER_WIDTH;
+  y -= HEADER_HEIGHT;
   triggerMouseEvent(".o-grid-overlay", type, x, y, extra);
   await nextTick();
 }

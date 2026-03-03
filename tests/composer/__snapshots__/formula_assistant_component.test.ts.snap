@@ -37,20 +37,17 @@ exports[`formula assistant appearance simple snapshot with =FUNC1( 1`] = `
         <span
           class="collapsor-arrow d-inline-block"
         >
-          <div
+          <svg
             class="o-icon"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              viewBox="0 0 224 256"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                fill="currentColor"
-                transform="translate(0, 9) scale(0.5,0.5)"
-              />
-            </svg>
-          </div>
+            <path
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+              fill-rule="evenodd"
+            />
+          </svg>
         </span>
       </div>
     </div>

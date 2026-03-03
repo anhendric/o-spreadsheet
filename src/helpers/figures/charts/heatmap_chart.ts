@@ -24,7 +24,7 @@ import { MatrixChartDefinition } from "@odoo/o-spreadsheet-engine/types/chart/ma
 import { ChartConfiguration } from "chart.js";
 import { Color, CommandResult, DataSet, Getters, RangeAdapter, UID } from "../../../types";
 import { getMatrixChartTooltip } from "./runtime";
-import { getChartDatasetValues, getTopPaddingForDashboard } from "./runtime/chart_data_extractor";
+import { getChartDatasetValues } from "./runtime/chart_data_extractor";
 import { getMatrixChartDataset } from "./runtime/chartjs_dataset";
 import { getMatrixChartLayout } from "./runtime/chartjs_layout";
 import {
@@ -451,7 +451,7 @@ export function createHeatmapChartRuntime(
         chartShowValuesPlugin: undefined,
       } as any,
       layout: getMatrixChartLayout(matrixDefinition, {
-        topPadding: getTopPaddingForDashboard(definition as any, getters),
+        topPadding: 0,
       } as any),
     },
     plugins: [heatmapChartPlugin],

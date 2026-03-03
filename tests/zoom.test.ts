@@ -73,24 +73,3 @@ describe("Spreadsheet zoom tests", () => {
     });
   });
 });
-
-describe("Dashboard zoom tests", () => {
-  describe.each(ZOOM_VALUES.map((zoom) => zoom / 100))("Zoom tests selection %s", (zoom) => {
-    beforeEach(async () => {
-      ({ model, fixture } = await mountSpreadsheet());
-      model.dispatch("SET_ZOOM", { zoom });
-      setCellContent(model, "C8", "=1/0");
-      model.updateMode("dashboard");
-      await nextTick();
-    });
-    test("can render a sheet with zoom", async () => {
-      expect(fixture.querySelector(".o-grid-overlay")).not.toBeNull();
-    });
-
-    test("can hover a cell to show its error", async () => {
-      expect(fixture.querySelector(".o-error-tooltip")).toBeNull();
-      await hoverCell(model, "C8", 400);
-      expect(fixture.querySelector(".o-error-tooltip")).toBeTruthy();
-    });
-  });
-});

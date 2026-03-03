@@ -65,6 +65,16 @@
         icon="'o-spreadsheet-Icon.TEXT_COLOR'"
         class="'o-hoverable-button o-menu-item-button'"
       />
+      <ColorPickerWidget
+        t-if="props.hasBackgroundColor"
+        currentColor="props.style.fillColor ?? props.defaultStyle?.fillColor"
+        toggleColorPicker="(ev) => this.toggleDropdownTool('fillBackgroundColorTool', ev)"
+        showColorPicker="state.activeTool === 'fillBackgroundColorTool'"
+        onColorPicked.bind="onBackgroundColorChange"
+        title.translate="Fill color"
+        icon="'o-spreadsheet-Icon.FILL_COLOR'"
+        class="'o-hoverable-button o-menu-item-button'"
+      />
     </div>
   </t>
 </templates>

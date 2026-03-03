@@ -3,7 +3,6 @@ import { xmlEscape } from "@odoo/o-spreadsheet-engine/xlsx/helpers/xml_helpers";
 import { ChartConfiguration } from "chart.js";
 import { Model, UID } from "../../../src";
 import { getCarouselMenuActions } from "../../../src/actions/figure_menu_actions";
-import { ChartAnimationStore } from "../../../src/components/figures/chart/chartJs/chartjs_animation_store";
 import { downloadFile } from "../../../src/components/helpers/dom_helpers";
 import {
   addNewChartToCarousel,
@@ -183,34 +182,6 @@ describe("Carousel figure component", () => {
     selectCarouselItem(model, "carouselId", { type: "chart", chartId });
     await nextTick();
     expect(".o-carousel-header").toHaveStyle({ "background-color": "#123456" });
-  });
-
-  test("display chart menu", async () => {
-    createCarousel(model, { items: [{ type: "carouselDataView" }] }, "carouselId");
-    addNewChartToCarousel(model, "carouselId", { type: "bar" });
-    model.updateMode("dashboard");
-    const { fixture } = await mountSpreadsheet({ model });
-    expect(".o-chart-dashboard-item").toHaveCount(0); // nothing for the data view
-    await click(fixture, ".o-carousel-tab:nth-child(2)");
-    expect(".o-chart-dashboard-item").toHaveCount(1); // ellipsis, no full screen
-  });
-
-  test("Chart animation is played at each carousel tab change", async () => {
-    createCarousel(model, { items: [] }, "carouselId");
-    const radarId = addNewChartToCarousel(model, "carouselId", { type: "radar" });
-    const barId = addNewChartToCarousel(model, "carouselId", { type: "bar" });
-    model.updateMode("dashboard");
-
-    const { fixture, env } = await mountSpreadsheet({ model });
-    const chartAnimationStore = env.getStore(ChartAnimationStore);
-    const enableAnimationSpy = jest.spyOn(chartAnimationStore, "enableAnimationForChart");
-
-    await click(fixture, ".o-carousel-tab:nth-child(2)");
-    expect(enableAnimationSpy).toHaveBeenLastCalledWith(barId);
-    await click(fixture, ".o-carousel-tab:nth-child(1)");
-    expect(enableAnimationSpy).toHaveBeenLastCalledWith(radarId);
-    await click(fixture, ".o-carousel-tab:nth-child(2)");
-    expect(enableAnimationSpy).toHaveBeenLastCalledWith(barId);
   });
 
   test("Having too many tabs will put some of them inside a dropdown", async () => {

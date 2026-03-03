@@ -338,14 +338,14 @@ describe("Context MenuPopover integration tests", () => {
   test("close contextmenu when clicking on menubar", async () => {
     await rightClickCell(model, "B1");
     expect(fixture.querySelector(".o-menu .o-menu-item[data-name='cut']")).toBeTruthy();
-    await click(fixture, ".o-topbar-topleft");
+    await click(fixture, ".o-spreadsheet-topbar");
     expect(fixture.querySelector(".o-menu")).toBeFalsy();
   });
 
   test("close contextmenu when clicking on menubar item", async () => {
     await rightClickCell(model, "B1");
     expect(fixture.querySelector(".o-menu .o-menu-item[data-name='cut']")).toBeTruthy();
-    await click(fixture, ".o-topbar-menu[data-id='insert']");
+    await click(fixture, ".o-ribbon-tab[data-id='insert']");
     expect(fixture.querySelector(".o-menu .o-menu-item[data-name='cut']")).toBeFalsy();
   });
 
@@ -696,11 +696,11 @@ describe("Context MenuPopover internal tests", () => {
       },
     ]);
     await renderContextMenu(300, 300, { menuItems });
-    expect(fixture.querySelector(".fa-search")).not.toBeNull();
+    expect(fixture.querySelector(".o-icon")).not.toBeNull();
     visible = false;
     parent.render(true);
     await nextTick();
-    expect(fixture.querySelector(".fa-search")).toBeNull();
+    expect(fixture.querySelector(".o-icon")).toBeNull();
   });
 
   test("Can change icon color", async () => {

@@ -32,9 +32,6 @@ export class ErrorToolTip extends Component<ErrorToolTipProps, SpreadsheetChildE
   }
 
   get errorOriginPositionString() {
-    if (this.env.model.getters.isDashboard()) {
-      return "";
-    }
     const evaluationError = this.evaluationError;
     const position = evaluationError?.errorOriginPosition;
     if (!position || deepEquals(position, this.props.cellPosition)) {

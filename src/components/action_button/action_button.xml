@@ -4,6 +4,7 @@
       t-if="isVisible"
       class="o-menu-item-button"
       t-att-title="title"
+      t-att-data-id="actionId"
       t-att-class="{'o-disabled': !isEnabled, active: isActive}"
       t-attf-class="{{props.class}}"
       t-on-click="onClick">

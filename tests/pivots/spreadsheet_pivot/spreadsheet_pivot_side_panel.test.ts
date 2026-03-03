@@ -52,8 +52,8 @@ describe("Spreadsheet pivot side panel", () => {
     // prettier-ignore
     const grid = {
       A1: "Customer", B1: "Product", C1: "Amount",
-      A2: "Alice",    B2: "Chair",   C2: "10",
-      A3: "Bob",      B3: "Table",   C3: "20",
+      A2: "Alice", B2: "Chair", C2: "10",
+      A3: "Bob", B3: "Table", C3: "20",
     };
     setGrid(model, grid);
 
@@ -428,7 +428,7 @@ describe("Spreadsheet pivot side panel", () => {
     expect(fixture.querySelector(".o-popover")).toBeDefined();
     await click(fixture.querySelectorAll(".o-autocomplete-value")[0]);
     expect(fixture.querySelectorAll(".pivot-dimension")).toHaveLength(1);
-    await click(fixture.querySelector(".fa-undo")!);
+    await click(fixture.querySelector(".o-icon-undo")!);
     expect(fixture.querySelectorAll(".pivot-dimension")).toHaveLength(0);
   });
 
@@ -737,7 +737,7 @@ describe("Spreadsheet pivot side panel", () => {
     env.openSidePanel("PivotSidePanel", { pivotId: "2" });
     await nextTick();
     // update the pivot
-    await click(fixture.querySelector(".pivot-measure .fa-eye")!);
+    await click(fixture.querySelector(".pivot-measure .o-icon-eye")!);
     expect(mockNotify).toHaveBeenCalledTimes(0);
   });
 
@@ -758,11 +758,11 @@ describe("Spreadsheet pivot side panel", () => {
     const pivotDimensionEls = fixture.querySelectorAll<HTMLElement>(".pivot-dimension")!;
     const validDimensionEl = pivotDimensionEls[0];
     expect(validDimensionEl.classList).not.toContain("pivot-dimension-invalid");
-    expect(validDimensionEl.querySelector(".fa-exclamation-triangle")).toBe(null);
+    expect(validDimensionEl.querySelector(".o-icon-exclamation-triangle")).toBe(null);
 
     const invalidDimensionEl = pivotDimensionEls[1];
     expect(invalidDimensionEl.classList).toContain("pivot-dimension-invalid");
-    expect(invalidDimensionEl.querySelector(".fa-exclamation-triangle")).not.toBe(null);
+    expect(invalidDimensionEl.querySelector(".o-icon-exclamation-triangle")).not.toBe(null);
   });
 
   test("Can update the name of a computed measure", async () => {
@@ -814,11 +814,11 @@ describe("Spreadsheet pivot side panel", () => {
     );
     env.openSidePanel("PivotSidePanel", { pivotId: "3" });
     await nextTick();
-    await click(fixture.querySelector(".pivot-measure .fa-eye")!);
+    await click(fixture.querySelector(".pivot-measure .o-icon-eye")!);
     expect(model.getters.getPivotCoreDefinition("3").measures).toEqual([
       { id: "amount:sum", fieldName: "amount", aggregator: "sum", isHidden: true },
     ]);
-    await click(fixture.querySelector(".pivot-measure .fa-eye-slash")!);
+    await click(fixture.querySelector(".pivot-measure .o-icon-eye-slash")!);
     expect(model.getters.getPivotCoreDefinition("3").measures).toEqual([
       { id: "amount:sum", fieldName: "amount", aggregator: "sum", isHidden: false },
     ]);
@@ -848,7 +848,7 @@ describe("Spreadsheet pivot side panel", () => {
     expect(model.getters.getPivotCoreDefinition("1").columns).toEqual([
       { fieldName: "Amount", order: "desc" },
     ]);
-    await clickAndDrag(".pivot-dimension .fa-trash", { x: 0, y: 30 }, undefined, true);
+    await clickAndDrag(".pivot-dimension .o-icon-trash", { x: 0, y: 30 }, undefined, true);
     expect(model.getters.getPivotCoreDefinition("1").columns).toEqual([
       { fieldName: "Amount", order: "desc" },
     ]);
@@ -908,14 +908,14 @@ describe("Spreadsheet pivot side panel", () => {
 
     test("Pivot sorting is removed when removing the sorted measure", async () => {
       expect(model.getters.getPivotCoreDefinition("2").sortedColumn).toEqual(sortedColumn);
-      click(fixture, ".pivot-measure .fa-trash");
+      click(fixture, ".pivot-measure .o-icon-trash");
       expect(model.getters.getPivotCoreDefinition("2").sortedColumn).toBeUndefined();
     });
 
     test("Pivot sorting is removed when removing a column", async () => {
       expect(model.getters.getPivotCoreDefinition("2").sortedColumn).toEqual(sortedColumn);
       const column = fixture.querySelectorAll(".pivot-dimension")[0];
-      click(column, ".fa-trash");
+      click(column, ".o-icon-trash");
       expect(model.getters.getPivotCoreDefinition("2").sortedColumn).toBeUndefined();
     });
   });

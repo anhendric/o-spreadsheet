@@ -5,8 +5,7 @@
       <div
         class="o-carousel-header d-flex align-items-baseline flex-shrink-0 pe-1 pe-auto"
         t-att-class="{
-          'border-bottom': env.isDashboard(),
-          'o-carousel-header-floating': !env.isDashboard() and selectedItem?.type === 'carouselDataView',
+          'o-carousel-header-floating': selectedItem?.type === 'carouselDataView',
          }"
         t-att-style="headerStyle">
         <div
@@ -44,21 +43,6 @@
           />
         </div>
         <div
-          t-if="env.isDashboard()"
-          t-att-title="fullScreenButtonTitle"
-          class="o-carousel-full-screen-button o-carousel-button rounded p-1 ms-1 d-flex align-items-center justify-content-center"
-          t-att-class="{
-            'o-icon-compress': props.isFullScreen,
-            'o-icon-expand': !props.isFullScreen,
-            'invisible': selectedCarouselItem?.type !== 'chart',
-          }"
-          t-on-click="toggleFullScreen">
-          <t
-            t-call="{{ props.isFullScreen ? 'o-spreadsheet-Icon.COMPRESS' : 'o-spreadsheet-Icon.EXPAND' }}"
-          />
-        </div>
-        <div
-          t-if="!env.isDashboard()"
           class="o-carousel-menu-button o-carousel-button o-icon rounded ms-1"
           t-on-click="openContextMenu">
           <t t-call="o-spreadsheet-Icon.ELLIPSIS_V"/>
@@ -80,12 +64,6 @@
             t-key="selectedItem.chartId"
           />
         </div>
-        <ChartDashboardMenu
-          t-if="env.isDashboard()"
-          chartId="selectedItem.chartId"
-          hasFullScreenButton="false"
-          t-key="selectedItem.chartId"
-        />
       </div>
     </div>
   </t>

@@ -1,4 +1,3 @@
-import { _t } from "@odoo/o-spreadsheet-engine";
 import { DEFAULT_CAROUSEL_TITLE_STYLE } from "@odoo/o-spreadsheet-engine/constants";
 import { getCarouselItemTitle } from "@odoo/o-spreadsheet-engine/helpers/carousel_helpers";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
@@ -15,12 +14,10 @@ import {
   MenuMouseEvent,
   Rect,
 } from "../../../types";
-import { FullScreenFigureStore } from "../../full_screen_figure/full_screen_figure_store";
 import { cellTextStyleToCss, cssPropertiesToCss } from "../../helpers";
 import { getBoundingRectAsPOJO, getRefBoundingRect } from "../../helpers/dom_helpers";
 import { MenuPopover, MenuState } from "../../menu_popover/menu_popover";
 import { ChartAnimationStore } from "../chart/chartJs/chartjs_animation_store";
-import { ChartDashboardMenu } from "../chart/chart_dashboard_menu/chart_dashboard_menu";
 
 interface Props {
   figureUI: FigureUI;
@@ -37,7 +34,7 @@ export class CarouselFigure extends Component<Props, SpreadsheetChildEnv> {
     isFullScreen: { type: Boolean, optional: true },
     openContextMenu: { type: Function, optional: true },
   };
-  static components = { ChartDashboardMenu, MenuPopover };
+  static components = { MenuPopover };
 
   private carouselTabsRef = useRef("carouselTabs");
   private carouselTabsDropdownRef = useRef("carouselTabsDropdown");
@@ -46,11 +43,9 @@ export class CarouselFigure extends Component<Props, SpreadsheetChildEnv> {
   private hiddenItems: CarouselItem[] = [];
 
   protected animationStore: Store<ChartAnimationStore> | undefined;
-  private fullScreenFigureStore!: Store<FullScreenFigureStore>;
 
   setup(): void {
     this.animationStore = useStore(ChartAnimationStore);
-    this.fullScreenFigureStore = useStore(FullScreenFigureStore);
 
     useEffect(() => {
       if (this.selectedCarouselItem?.type === "carouselDataView") {
@@ -179,16 +174,6 @@ export class CarouselFigure extends Component<Props, SpreadsheetChildEnv> {
     this.menuState.isOpen = true;
     this.menuState.anchorRect = rect;
     this.menuState.menuItems = createActions(menuItems);
-  }
-
-  toggleFullScreen() {
-    if (this.selectedCarouselItem?.type === "chart") {
-      this.fullScreenFigureStore.toggleFullScreenFigure(this.props.figureUI.id);
-    }
-  }
-
-  get fullScreenButtonTitle(): string {
-    return this.props.isFullScreen ? _t("Exit Full Screen") : _t("Full Screen");
   }
 
   get visibleCarouselItems(): CarouselItem[] {

@@ -51,7 +51,7 @@ describe("Pivot custom field panel", () => {
       customFields: { CustomField: TEST_CUSTOM_FIELD },
     });
     await openPivotSidePanel();
-    await click(fixture, ".o-pivot-custom-group  .fa-trash");
+    await click(fixture, ".o-pivot-custom-group  .o-icon-trash");
     const definition = model.getters.getPivotCoreDefinition(pivotId);
     expect(definition.customFields?.CustomField.groups).toEqual([]);
   });

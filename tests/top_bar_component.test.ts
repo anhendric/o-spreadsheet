@@ -5,7 +5,7 @@ import { Model } from "../src";
 import { CellComposerStore } from "../src/components/composer/composer/cell_composer_store";
 import { PaintFormatStore } from "../src/components/paint_format_button/paint_format_store";
 import { TopBar } from "../src/components/top_bar/top_bar";
-import { topBarToolBarRegistry } from "../src/components/top_bar/top_bar_tools_registry";
+
 import { toZone, zoneToXc } from "../src/helpers";
 import { topbarMenuRegistry } from "../src/registries/menus";
 import { topbarComponentRegistry } from "../src/registries/topbar_component_registry";
@@ -127,7 +127,6 @@ async function mountParent(
   const env = {
     ...testEnv,
     model,
-    isDashboard: () => model.getters.isDashboard(),
   };
   let parent: Component;
   ({ parent, fixture } = await mountComponent(Parent, { env }));
@@ -157,7 +156,7 @@ describe("TopBar component", () => {
   test("Menu should be closed while clicking on composer", async () => {
     await mountParent();
     expect(fixture.querySelectorAll(".o-menu").length).toBe(0);
-    await click(fixture, ".o-topbar-menu[data-id='edit']");
+    await click(fixture.querySelectorAll(".o-ribbon-tab")[0]);
     expect(fixture.querySelectorAll(".o-menu").length).toBe(1);
     await click(fixture, ".o-spreadsheet-topbar div.o-composer");
     expect(fixture.querySelectorAll(".o-menu").length).toBe(0);
@@ -355,11 +354,16 @@ describe("TopBar component", () => {
 
   describe("Filter Tool", () => {
     let model: Model;
-    const createFilterTool = '.o-menu-item-button[title="Add filters"]';
-    const removeFilterTool = '.o-menu-item-button[title="Remove selected filters"]';
+    const createFilterTool = '[title="Add filters"]';
+    const removeFilterTool = '[title="Remove selected filters"]';
 
     beforeEach(async () => {
       ({ model } = await mountParent());
+      const dataTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+        (el) => el.textContent === "Data"
+      )!;
+      await simulateClick(dataTab);
+      await nextTick();
     });
 
     test("Filter tool is enabled with single selection", async () => {
@@ -436,7 +440,7 @@ describe("TopBar component", () => {
 
   test("can set font size", async () => {
     const { model } = await mountParent();
-    const fontSizeText = fixture.getElementsByClassName("o-font-size")[1]! as HTMLInputElement;
+    const fontSizeText = fixture.querySelector(".o-font-size") as HTMLInputElement;
     expect(fontSizeText.value.trim()).toBe(DEFAULT_FONT_SIZE.toString());
     await click(fontSizeText.parentElement!);
     // ensure the input is no longer selected (not automaticly done by click in jsdom)
@@ -589,70 +593,16 @@ describe("TopBar component", () => {
     expect(fixture.querySelectorAll(".o-dropdown-content").length).toBe(0);
   });
 
-  test("Can open a Topbar menu", async () => {
+  test("Can open the File menu", async () => {
     const { parent } = await mountParent();
     expect(fixture.querySelectorAll(".o-menu")).toHaveLength(0);
     const env = parent.env;
-    const items = topbarMenuRegistry.getMenuItems();
-    const number = items.filter(
-      (item) => item.children(env).length !== 0 && item.isVisible(env)
-    ).length;
-    expect(fixture.querySelectorAll(".o-topbar-menu")).toHaveLength(number);
-    await click(fixture, ".o-topbar-menu[data-id='edit']");
+    await click(fixture.querySelectorAll(".o-ribbon-tab")[0]);
     expect(fixture.querySelectorAll(".o-menu")).toHaveLength(1);
-    const edit = getNode(["edit"], env, topbarMenuRegistry);
-    const numberChild = edit.children(parent.env).filter((item) => item.isVisible(env)).length;
+    const file = getNode(["file"], env, topbarMenuRegistry);
+    const numberChild = file.children(parent.env).filter((item) => item.isVisible(env)).length;
     expect(fixture.querySelectorAll(".o-menu-item")).toHaveLength(numberChild);
     await click(fixture, ".o-spreadsheet-topbar");
-    expect(fixture.querySelectorAll(".o-menu")).toHaveLength(0);
-  });
-
-  test("Can open a Topbar menu with pointermove", async () => {
-    const { parent } = await mountParent();
-    const env = parent.env;
-    await click(fixture, ".o-topbar-menu[data-id='edit']");
-    const edit = getNode(["edit"], env, topbarMenuRegistry);
-    let numberChild = edit.children(env).filter((item) => item.isVisible(env)).length;
-    expect(fixture.querySelectorAll(".o-menu-item")).toHaveLength(numberChild);
-    expect(fixture.querySelectorAll(".o-menu")).toHaveLength(1);
-    triggerMouseEvent(".o-topbar-menu[data-id='insert']", "mouseover");
-    await nextTick();
-    const insert = getNode(["insert"], env, topbarMenuRegistry);
-    numberChild = insert?.children(parent.env).filter((item) => item.isVisible(parent.env)).length;
-    expect(fixture.querySelectorAll(".o-menu-item")).toHaveLength(numberChild);
-    expect(fixture.querySelectorAll(".o-menu")).toHaveLength(1);
-  });
-
-  test("Can click on a menuItem do execute action and close menus", async () => {
-    const menuDefinitions = Object.assign({}, topbarMenuRegistry.content);
-    let number = 0;
-    addToRegistry(topbarMenuRegistry, "test", { name: "Test", sequence: 1 });
-    topbarMenuRegistry.addChild("testaction", ["test"], {
-      name: "TestAction",
-      sequence: 1,
-      execute: () => {
-        number++;
-      },
-    });
-    const { fixture } = await mountParent();
-    await click(fixture, ".o-topbar-menu[data-id='test']");
-    await click(fixture, ".o-menu-item");
-    expect(fixture.querySelectorAll(".o-menu-dropdown-content")).toHaveLength(0);
-    expect(number).toBe(1);
-    topbarMenuRegistry.content = menuDefinitions;
-  });
-
-  test("Opened menu parent is highlighted", async () => {
-    await mountParent();
-    expect(fixture.querySelectorAll(".o-menu")).toHaveLength(0);
-    const menuItem = fixture.querySelector(".o-topbar-menu[data-id='edit']");
-    expect(menuItem?.classList).not.toContain("active");
-    await click(fixture, ".o-topbar-menu[data-id='edit']");
-    expect(fixture.querySelectorAll(".o-menu")).toHaveLength(1);
-    expect(menuItem?.classList).toContain("active");
-    // close the menu by clicking on menu item
-    await click(fixture.querySelector('.o-menu-item[title="Copy"]')!);
-    expect(menuItem?.classList).not.toContain("active");
     expect(fixture.querySelectorAll(".o-menu")).toHaveLength(0);
   });
 
@@ -687,18 +637,6 @@ describe("TopBar component", () => {
 
     // reset Top Component Registry
     topbarComponentRegistry.content = compDefinitions;
-  });
-
-  test("Readonly spreadsheet has a specific top bar", async () => {
-    const { model } = await mountParent();
-
-    expect(fixture.querySelectorAll(".o-readonly-toolbar")).toHaveLength(0);
-    model.updateMode("readonly");
-    await nextTick();
-    expect(fixture.querySelectorAll(".o-readonly-toolbar")).toHaveLength(1);
-    await click(fixture, ".o-topbar-menu[data-id='insert']");
-    const insertMenuItems = fixture.querySelectorAll(".o-menu div.o-menu-item");
-    expect([...insertMenuItems].every((item) => item.classList.contains("disabled"))).toBeTruthy();
   });
 
   test("Cannot edit cell in a readonly spreadsheet", async () => {
@@ -765,8 +703,12 @@ describe("TopBar component", () => {
     const model = new Model({}, { external: { fileStore } });
     await mountParent(model);
     const sheetId = model.getters.getActiveSheetId();
-    await simulateClick(".o-topbar-menu[data-id='insert']");
-    await simulateClick(".o-menu-item[data-name='insert_image']");
+    const insertTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+      (el) => el.textContent === "Insert"
+    )!;
+    await simulateClick(insertTab);
+    await nextTick();
+    await simulateClick(fixture.querySelector(".o-toolbar-button[title='Image (Ctrl+O)']")!);
     expect(getFigureIds(model, sheetId)).toHaveLength(1);
   });
 
@@ -820,8 +762,7 @@ describe("Format", () => {
     expect(getCell(model, "A1")?.style).toEqual({ fillColor: "#000000" });
     expect(getCell(model, "B2")?.style).toEqual({ fillColor: "#000000" });
     expect(getCell(model, "B3")?.style).toEqual({ fillColor: "#000000" });
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_clearFormat']");
+    await click(fixture, ".o-toolbar-button[title='Clear formatting (Ctrl+<)']");
     expect(getCell(model, "A1")?.style).toBeUndefined();
     expect(getCell(model, "B2")?.style).toBeUndefined();
     expect(getCell(model, "B3")?.style).toBeUndefined();
@@ -831,8 +772,7 @@ describe("Format", () => {
 describe("TopBar - CF", () => {
   test("open sidepanel with no CF in selected zone", async () => {
     const { fixture } = await mountSpreadsheet();
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_cf']");
+    await click(fixture, ".o-toolbar-button[title='Conditional formatting']");
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-preview-list")).toBeTruthy();
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-editor")).toBeFalsy();
   });
@@ -858,8 +798,7 @@ describe("TopBar - CF", () => {
     });
     setSelection(model, ["A1:K11"]);
 
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_cf']");
+    await click(fixture, ".o-toolbar-button[title='Conditional formatting']");
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-preview-list")).toBeFalsy();
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-editor")).toBeTruthy();
   });
@@ -900,8 +839,7 @@ describe("TopBar - CF", () => {
     });
     setSelection(model, ["A1:K11"]);
 
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_cf']");
+    await click(fixture, ".o-toolbar-button[title='Conditional formatting']");
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-preview-list")).toBeTruthy();
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-editor")).toBeFalsy();
   });
@@ -931,14 +869,12 @@ describe("TopBar - CF", () => {
       ranges: toRangesData(sheetId, "F1"),
     });
     setSelection(model, ["A1:A11"]);
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_cf']");
+    await click(fixture, ".o-toolbar-button[title='Conditional formatting']");
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-preview-list")).toBeFalsy();
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-editor")).toBeTruthy();
 
     setSelection(model, ["A1:F1"]);
-    await click(fixture, ".o-topbar-menu[data-id='format']");
-    await click(fixture, ".o-menu-item[data-name='format_cf']");
+    await click(fixture, ".o-toolbar-button[title='Conditional formatting']");
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-preview-list")).toBeTruthy();
     expect(fixture.querySelector(".o-sidePanel .o-sidePanelBody .o-cf-editor")).toBeFalsy();
   });
@@ -946,8 +882,12 @@ describe("TopBar - CF", () => {
 
 test("onCancel of dropdown dv editor removes the data validation rule", async () => {
   const { fixture } = await mountSpreadsheet();
-  await click(fixture, ".o-topbar-menu[data-id='insert']");
-  await click(fixture, ".o-menu-item[data-name='insert_dropdown']");
+  const insertTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+    (el) => el.textContent === "Insert"
+  )!;
+  await simulateClick(insertTab);
+  await nextTick();
+  await simulateClick(fixture.querySelector(".o-toolbar-button[title='Dropdown list']")!);
   expect(fixture.querySelector(".o-sidePanel .o-dv-form")).toBeTruthy();
 
   await click(fixture, ".o-sidePanel .o-dv-cancel");
@@ -997,7 +937,7 @@ test("The composer helper should be closed on toggle topbar context menu", async
   await typeInComposerTopBar("=sum(");
   expect(composerStore.editionMode).not.toBe("inactive");
   expect(fixture.querySelectorAll(".o-composer-assistant")).toHaveLength(1);
-  await simulateClick(".o-topbar-topleft .o-topbar-menu");
+  await simulateClick(".o-ribbon-tab");
   expect(composerStore.editionMode).toBe("inactive");
   expect(fixture.querySelectorAll(".o-composer-assistant")).toHaveLength(0);
 });
@@ -1028,35 +968,6 @@ test("prettified formula should have the cursor", async () => {
   await nextTick();
   expect(getInputSelection().anchorNodeText).toBe("44444444");
   expect(getInputSelection().anchorOffset).toBe(4);
-});
-
-test("The menu items are orderer by their sequence", async () => {
-  addToRegistry(topbarMenuRegistry, "test", {
-    sequence: 1,
-    name: "test",
-    execute: () => {},
-  });
-  topbarMenuRegistry.addChild("second", ["test"], {
-    name: "second",
-    sequence: 2,
-    execute: () => {},
-  });
-  topbarMenuRegistry.addChild("first", ["test"], {
-    name: "first",
-    sequence: 1,
-    execute: () => {},
-  });
-  topbarMenuRegistry.addChild("third", ["test"], {
-    name: "third",
-    sequence: 3,
-    execute: () => {},
-  });
-  const { fixture } = await mountSpreadsheet();
-  await click(fixture, ".o-topbar-menu[data-id='test']");
-  const menuItems: NodeListOf<HTMLElement> = fixture.querySelectorAll(".o-menu-item");
-  expect(menuItems[0].dataset.name).toBe("first");
-  expect(menuItems[1].dataset.name).toBe("second");
-  expect(menuItems[2].dataset.name).toBe("third");
 });
 
 describe("Topbar svg icon", () => {
@@ -1097,146 +1008,4 @@ test("Clicking on a topbar button triggers two renders", async () => {
   // two renders from the model (one from the command handling and one from the collaborative session)
   expect(modelRender).toHaveBeenCalledTimes(2);
   expect(storeRender).toHaveBeenCalledTimes(0);
-});
-
-describe("Responsive Top bar behaviour", () => {
-  const categories = topBarToolBarRegistry.getCategories();
-  describe("items are hidden when the screen is resized", () => {
-    const topbarToolsWidthThresholds = [750, 650];
-    const widthThresholds = topbarToolsWidthThresholds.map((threshold, index) => [
-      threshold,
-      index,
-    ]);
-
-    test.each(widthThresholds)("Screen slightly smaller than %spx ", async (threshold, index) => {
-      spreadsheetWidth = threshold - 1;
-      await mountParent();
-      await nextTick();
-      const tools = [...fixture.querySelectorAll(".o-toolbar-tools .tool-container")].filter(
-        (element) => !element.classList.contains("d-none")
-      );
-      expect(tools.length).toBe(categories.length - (index + 1));
-    });
-
-    test("toolbar items hidden are available in a popover", async () => {
-      await mountParent();
-
-      expect(fixture.querySelector('.o-menu-item-button[title="Vertical align"]')).not.toBeNull();
-      expect(fixture.querySelector('.o-menu-item-button[title="Horizontal align"]')).not.toBeNull();
-      expect(fixture.querySelector('.o-menu-item-button[title="Wrapping"]')).not.toBeNull();
-
-      spreadsheetWidth = (categories.length - 2) * toolWidth + moreToolsContainerWidth + 1; // hides the last 2 categories
-      await nextTick();
-
-      expect(
-        fixture
-          .querySelector('.o-menu-item-button[title="Vertical align"]')
-          ?.closest(".tool-container")?.classList
-      ).toContain("d-none");
-      expect(
-        fixture
-          .querySelector('.o-menu-item-button[title="Horizontal align"]')
-          ?.closest(".tool-container")?.classList
-      ).toContain("d-none");
-      expect(
-        fixture.querySelector('.o-menu-item-button[title="Wrapping"]')?.closest(".tool-container")
-          ?.classList
-      ).toContain("d-none");
-
-      await click(fixture, ".more-tools");
-      expect(
-        fixture.querySelector('.o-popover .o-menu-item-button[title="Vertical align"]')
-      ).not.toBeNull();
-      expect(
-        fixture.querySelector('.o-popover .o-menu-item-button[title="Horizontal align"]')
-      ).not.toBeNull();
-      expect(
-        fixture.querySelector('.o-popover .o-menu-item-button[title="Wrapping"]')
-      ).not.toBeNull();
-    });
-  });
-
-  test("the popover should close when the screen is resized", async () => {
-    spreadsheetWidth = (toolWidth * categories.length) / 2;
-    const { parent } = await mountParent();
-    await nextTick();
-    await click(fixture, ".more-tools");
-    expect(fixture.querySelector(".o-popover")).not.toBeNull();
-    spreadsheetWidth += 10;
-
-    parent.render(true);
-    await nextTick();
-    expect(fixture.querySelector(".o-popover")).toBeNull();
-  });
-
-  test("the popover should close when clicking the grid", async () => {
-    spreadsheetWidth = (toolWidth * categories.length) / 2;
-    const { fixture } = await mountSpreadsheet();
-    await nextTick();
-    await click(fixture, ".more-tools");
-    expect(fixture.querySelector(".o-popover")).not.toBeNull();
-
-    await click(fixture, ".o-grid");
-    expect(fixture.querySelector(".o-popover")).toBeNull();
-  });
-
-  test("the popover should close when clicking visible tools", async () => {
-    spreadsheetWidth = (toolWidth * categories.length) / 2;
-    await mountParent();
-    await nextTick();
-    await click(fixture, ".more-tools");
-    expect(fixture.querySelector(".o-popover")).not.toBeNull();
-    await click(fixture, '.o-menu-item-button[title="Format as percent"]');
-    expect(fixture.querySelector(".o-popover")).toBeNull();
-  });
-
-  test("the popover should close when clicking top bar menus", async () => {
-    spreadsheetWidth = (toolWidth * categories.length) / 2;
-    await mountParent();
-    await nextTick();
-    await click(fixture, ".more-tools");
-    const menuInPopoverSelector = '.o-popover .o-menu-item-button[title="Vertical align"]';
-    expect(fixture.querySelector(menuInPopoverSelector)).not.toBeNull();
-    await click(fixture, ".o-topbar-menu[data-id='edit']");
-    expect(fixture.querySelector(menuInPopoverSelector)).toBeNull();
-  });
-
-  test("Use a color picker from the popover", async () => {
-    // Hide the text Style section
-    const index = categories.findIndex((category) => category === "cellStyle");
-    spreadsheetWidth = index * toolWidth + moreToolsContainerWidth + 1;
-
-    const model = new Model();
-    await mountParent(model);
-    await nextTick();
-    await click(fixture, ".more-tools");
-    await click(fixture, '.o-popover .o-menu-item-button[title="Fill Color"]');
-    await click(fixture, ".o-color-picker-line-item:nth-child(2)");
-    expect(getStyle(model, "A1").fillColor).toBe("#434343");
-  });
-
-  test("use an action button from the popover", async () => {
-    // Hide a section with an action button
-    const index = categories.findIndex((category) => category === "textStyle");
-    spreadsheetWidth = index * toolWidth + moreToolsContainerWidth + 1;
-    const model = new Model();
-    await mountParent(model);
-    await nextTick();
-    await click(fixture, ".more-tools");
-    await click(fixture, '.o-popover .o-menu-item-button[title="Strikethrough"]');
-    expect(getStyle(model, "A1").strikethrough).toBeTruthy();
-    await click(fixture, '.o-popover .o-menu-item-button[title="Strikethrough"]');
-    expect(getStyle(model, "A1").strikethrough).toBeFalsy();
-  });
-
-  test("Use a dropdown item from the popover", async () => {
-    spreadsheetWidth = 550;
-    const model = new Model();
-    await mountParent(model);
-    await nextTick();
-    await click(fixture, ".more-tools");
-    await click(fixture, '.o-popover .o-menu-item-button[title="Vertical align"]');
-    await click(fixture, '.o-popover .o-menu-item-button[title="Top"]');
-    expect(getStyle(model, "A1").verticalAlign).toBe("top");
-  });
 });

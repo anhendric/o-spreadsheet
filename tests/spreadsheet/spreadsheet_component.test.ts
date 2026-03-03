@@ -287,8 +287,8 @@ test("Notify ui correctly, with type notification correctly use notifyUser in th
 test("grid should regain focus after a topbar menu option is selected", async () => {
   ({ parent, fixture } = await mountSpreadsheet());
   expect(document.activeElement!.classList).toContain("o-composer");
-  await click(fixture, ".o-topbar-menu[data-id='format']");
-  await simulateClick(".o-menu-item[title='Bold']");
+  await click(fixture, ".o-ribbon-tab:nth-child(1)");
+  await simulateClick(`.o-toolbar-button[title="Bold (Ctrl+B)"]`);
   expect(document.activeElement!.classList).toContain("o-composer");
 });
 
@@ -450,7 +450,7 @@ test("cell popovers to be closed on clicking outside grid", async () => {
   await nextTick();
   await hoverCell(model, "A1", 400);
   expect(fixture.querySelector(".o-popover .o-error-tooltip")).not.toBeNull();
-  await simulateClick(".o-topbar-menu");
+  await simulateClick(".o-ribbon-tab:nth-child(1)");
   expect(fixture.querySelector(".o-popover .o-error-tooltip")).toBeNull();
   jest.useRealTimers();
 });

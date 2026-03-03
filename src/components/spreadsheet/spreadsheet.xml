@@ -5,56 +5,47 @@
       t-att-class="getSpreadSheetClasses()"
       t-ref="spreadsheet"
       t-att-style="getStyle()">
-      <t t-if="env.isDashboard()">
-        <SpreadsheetDashboard getGridSize.bind="getGridSize"/>
-        <FullScreenFigure/>
+      <div class="o-spreadsheet-topbar-wrapper o-two-columns">
+        <TopBar onClick="() => this.focusGrid()" dropdownMaxHeight="gridHeight"/>
+      </div>
+
+      <t t-if="customFunctionTabStore.activeTab">
+        <div
+          class="o-cf-full-editor-container"
+          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
+          <CustomFunctionFullEditor functionName="customFunctionTabStore.activeTab"/>
+        </div>
+      </t>
+      <t t-elif="whiteboardTabStore.activeTab">
+        <div
+          class="o-whiteboard-full-editor-container"
+          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
+          <WhiteboardFullEditor whiteboardId="whiteboardTabStore.activeTab"/>
+        </div>
       </t>
       <t t-else="">
-        <div class="o-spreadsheet-topbar-wrapper o-two-columns">
-          <TopBar onClick="() => this.focusGrid()" dropdownMaxHeight="gridHeight"/>
-        </div>
-
-        <t t-if="customFunctionTabStore.activeTab">
-          <div
-            class="o-cf-full-editor-container"
-            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
-            <CustomFunctionFullEditor functionName="customFunctionTabStore.activeTab"/>
+        <div
+          class="o-grid-container"
+          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}"
+          t-att-style="gridContainerStyle"
+          t-on-click="this.focusGrid">
+          <div class="o-top-left"/>
+          <div class="o-column-groups o-zoomable">
+            <HeaderGroupContainer layers="colLayers" dimension="'COL'"/>
           </div>
-        </t>
-        <t t-elif="whiteboardTabStore.activeTab">
-          <div
-            class="o-whiteboard-full-editor-container"
-            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
-            <WhiteboardFullEditor whiteboardId="whiteboardTabStore.activeTab"/>
+          <div class="o-row-groups o-zoomable">
+            <HeaderGroupContainer layers="rowLayers" dimension="'ROW'"/>
           </div>
-        </t>
-        <t t-else="">
-          <div
-            class="o-grid-container"
-            t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}"
-            t-att-style="gridContainerStyle"
-            t-on-click="this.focusGrid">
-            <div class="o-top-left"/>
-            <div class="o-column-groups o-zoomable">
-              <HeaderGroupContainer layers="colLayers" dimension="'COL'"/>
-            </div>
-            <div class="o-row-groups o-zoomable">
-              <HeaderGroupContainer layers="rowLayers" dimension="'ROW'"/>
-            </div>
-            <div class="o-group-grid overflow-hidden">
-              <Grid
-                exposeFocus="(focus) => this._focusGrid = focus"
-                getGridSize.bind="getGridSize"
-              />
-            </div>
+          <div class="o-group-grid overflow-hidden">
+            <Grid exposeFocus="(focus) => this._focusGrid = focus" getGridSize.bind="getGridSize"/>
           </div>
-        </t>
-        <SidePanels/>
-        <div class="o-spreadsheet-bottombar-wrapper o-two-columns overflow-hidden">
-          <SmallBottomBar t-if="env.isSmall" onClick="() => this.focusGrid()"/>
-          <BottomBar t-else="" onClick="() => this.focusGrid()"/>
         </div>
       </t>
+      <SidePanels/>
+      <div class="o-spreadsheet-bottombar-wrapper o-two-columns overflow-hidden">
+        <SmallBottomBar t-if="env.isSmall" onClick="() => this.focusGrid()"/>
+        <BottomBar t-else="" onClick="() => this.focusGrid()"/>
+      </div>
     </div>
   </t>
 </templates>

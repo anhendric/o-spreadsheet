@@ -329,10 +329,9 @@ function getPivotCellCollapseState(
     return { isPivotGroup: false };
   }
   const definition = getters.getPivotCoreDefinition(pivotId);
-  const isDashboard = getters.isDashboard();
 
   const fields = pivotCell.dimension === "COL" ? definition.columns : definition.rows;
-  const hasIcon = !isDashboard && pivotCell.domain.length !== fields.length;
+  const hasIcon = pivotCell.domain.length !== fields.length;
   if (!hasIcon) {
     return { isPivotGroup: false };
   }

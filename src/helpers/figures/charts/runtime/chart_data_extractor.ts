@@ -93,7 +93,7 @@ export function getBarChartData(
     axisFormats,
     labels,
     locale: getters.getLocale(),
-    topPadding: getTopPaddingForDashboard(definition, getters),
+    topPadding: 0,
   };
 }
 
@@ -178,7 +178,7 @@ export function getLineChartData(
     locale: getters.getLocale(),
     trendDataSetsValues,
     axisType,
-    topPadding: getTopPaddingForDashboard(definition, getters),
+    topPadding: 0,
   };
 }
 
@@ -210,7 +210,7 @@ export function getPieChartData(
     axisFormats: { y: dataSetFormat },
     labels,
     locale: getters.getLocale(),
-    topPadding: getTopPaddingForDashboard(definition, getters),
+    topPadding: 0,
   };
 }
 
@@ -347,24 +347,26 @@ export function getHistogramChartData(
   const max = Math.max(...allValues);
 
   let bucketSize = definition.bucketSize;
-  if (!bucketSize || bucketSize <= 0) {
-    const k = Math.ceil(Math.sqrt(allValues.length));
-    bucketSize = (max - min) / k;
+  let numBuckets: number;
+  if (bucketSize && bucketSize > 0) {
+    numBuckets = Math.floor((max - min) / bucketSize) + 1;
+  } else {
+    numBuckets = Math.ceil(Math.sqrt(allValues.length));
+    bucketSize = (max - min) / numBuckets;
     if (bucketSize === 0) {
       bucketSize = 1;
     }
   }
 
   const buckets: { min: number; max: number; label: string }[] = [];
-  let current = min;
-  while (current < max || (current === max && buckets.length === 0)) {
-    const next = current + bucketSize;
+  for (let i = 0; i < numBuckets; i++) {
+    const current = min + i * bucketSize!;
+    const next = current + bucketSize!;
     buckets.push({
       min: current,
       max: next,
       label: `${parseFloat(current.toFixed(2))} - ${parseFloat(next.toFixed(2))}`,
     });
-    current = next;
   }
 
   const datasets = dataSetsValues.map((ds, i) => {
@@ -390,7 +392,7 @@ export function getHistogramChartData(
     dataSetsValues: datasets, // These are now counts
     labels: buckets.map((b) => b.label),
     locale: getters.getLocale(),
-    topPadding: getTopPaddingForDashboard(definition, getters),
+    topPadding: 0,
     axisFormats: { x: undefined, y: undefined },
   };
 }
@@ -1064,13 +1066,4 @@ export function makeDatasetsCumulative(
     }
     return { ...dataset, data };
   });
-}
-
-export function getTopPaddingForDashboard(
-  definition: GenericDefinition<PieChartDefinition | LineChartDefinition | BarChartDefinition>,
-  getters: Getters
-) {
-  const { title, legendPosition } = definition;
-  const hasTitleOrLegendTop = (title && title.text) || legendPosition === "top";
-  return getters.isDashboard() && !hasTitleOrLegendTop ? 30 : 0;
 }

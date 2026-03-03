@@ -72,9 +72,6 @@ export class FigureComponent extends Component<Props, SpreadsheetChildEnv> {
   }
 
   private getBorderWidth(): Pixel {
-    if (this.env.isDashboard()) {
-      return 0;
-    }
     return this.isSelected ? ACTIVE_BORDER_WIDTH : this.borderWidth;
   }
 
@@ -254,9 +251,6 @@ export class FigureComponent extends Component<Props, SpreadsheetChildEnv> {
   }
 
   onContextMenu(ev: MouseEvent) {
-    if (this.env.isDashboard()) {
-      return;
-    }
     const zoomedMouseEvent = withZoom(this.env, ev);
     this.openContextMenu({
       x: zoomedMouseEvent.clientX,
@@ -288,10 +282,7 @@ export class FigureComponent extends Component<Props, SpreadsheetChildEnv> {
 
   get isFigureResizable(): boolean {
     return (
-      this.isSelected &&
-      !this.env.isMobile() &&
-      !this.env.isDashboard() &&
-      !this.env.model.getters.isCurrentSheetLocked()
+      this.isSelected && !this.env.isMobile() && !this.env.model.getters.isCurrentSheetLocked()
     );
   }
 }

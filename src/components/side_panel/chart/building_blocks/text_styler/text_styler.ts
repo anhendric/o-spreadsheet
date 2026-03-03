@@ -75,6 +75,11 @@ export class TextStyler extends Component<Props, SpreadsheetChildEnv> {
     this.closeMenus();
   }
 
+  onBackgroundColorChange(fillColor: Color) {
+    this.props.updateStyle?.({ ...this.props.style, fillColor });
+    this.closeMenus();
+  }
+
   updateAlignment(align: Align) {
     this.props.updateStyle?.({ ...this.props.style, align });
     this.closeMenus();

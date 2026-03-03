@@ -55,8 +55,12 @@ describe("link editor component", () => {
 
   test("open existing link editor from top bar menu", async () => {
     setCellContent(model, "A1", "[label](url.com)");
-    await simulateClick(".o-topbar-menu[data-id='insert']");
-    await simulateClick(".o-menu-item[data-name='insert_link']");
+    const insertTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+      (el) => el.textContent === "Insert"
+    )!;
+    await simulateClick(insertTab);
+    await nextTick();
+    await simulateClick(`.o-toolbar-button[title='Link (Ctrl+K)']`);
     const editor = fixture.querySelector(".o-link-editor");
     expect(editor).toBeTruthy();
     expect(labelInput().value).toBe("label");
@@ -64,8 +68,12 @@ describe("link editor component", () => {
   });
 
   test("open link editor from top bar menu", async () => {
-    await simulateClick(".o-topbar-menu[data-id='insert']");
-    await simulateClick(".o-menu-item[data-name='insert_link']");
+    const insertTab = Array.from(fixture.querySelectorAll<HTMLElement>(".o-ribbon-tab")).find(
+      (el) => el.textContent === "Insert"
+    )!;
+    await simulateClick(insertTab);
+    await nextTick();
+    await simulateClick(`.o-toolbar-button[title='Link (Ctrl+K)']`);
     const editor = fixture.querySelector(".o-link-editor");
     expect(editor).toBeTruthy();
     expect(labelInput().value).toBe("");

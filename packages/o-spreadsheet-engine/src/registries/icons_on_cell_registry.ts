@@ -3,7 +3,6 @@ import {
   CHECKBOX_UNCHECKED,
   CHECKBOX_UNCHECKED_HOVERED,
   getCaretDownSvg,
-  getCaretUpSvg,
   getHoveredCaretDownSvg,
   getPivotIconSvg,
   ICONS,
@@ -127,10 +126,9 @@ iconsOnCellRegistry.add("pivot_collapse", (getters, position) => {
 
   if (pivotCell.type === "HEADER" && pivotId && pivotCell.domain.length) {
     const definition = getters.getPivotCoreDefinition(pivotId);
-    const isDashboard = getters.isDashboard();
 
     const fields = pivotCell.dimension === "COL" ? definition.columns : definition.rows;
-    const hasIcon = !isDashboard && pivotCell.domain.length !== fields.length;
+    const hasIcon = pivotCell.domain.length !== fields.length;
 
     const domains = definition.collapsedDomains?.[pivotCell.dimension] ?? [];
     const isCollapsed = domains.some((domain) => deepEquals(domain, pivotCell.domain));
@@ -141,7 +139,7 @@ iconsOnCellRegistry.add("pivot_collapse", (getters, position) => {
       priority: 4,
       horizontalAlign: "left",
       size:
-        hasIcon || (!isDashboard && pivotCell.dimension === "ROW" && definition.rows.length > 1)
+        hasIcon || (pivotCell.dimension === "ROW" && definition.rows.length > 1)
           ? PIVOT_COLLAPSE_ICON_SIZE
           : 0,
       margin: hasIcon ? GRID_ICON_MARGIN * 2 + indent : indent,
@@ -152,29 +150,4 @@ iconsOnCellRegistry.add("pivot_collapse", (getters, position) => {
     };
   }
   return undefined;
-});
-
-iconsOnCellRegistry.add("pivot_dashboard_sorting", (getters, position) => {
-  if (!getters.isDashboard()) {
-    return undefined;
-  }
-  const pivotCell = getters.getPivotCellFromPosition(position);
-  if (pivotCell.type !== "MEASURE_HEADER") {
-    return undefined;
-  }
-  const sortDirection = getters.getPivotCellSortDirection(position);
-  if (sortDirection !== "asc" && sortDirection !== "desc") {
-    return undefined;
-  }
-  const cellStyle = getters.getCellComputedStyle(position);
-  return {
-    type: `pivot_dashboard_sorting_${sortDirection}`,
-    priority: 5,
-    horizontalAlign: "right",
-    size: computeTextFontSizeInPixels(cellStyle),
-    margin: 0,
-    svg: sortDirection === "asc" ? getCaretUpSvg(cellStyle) : getCaretDownSvg(cellStyle),
-    position,
-    onClick: undefined, // click is managed by ClickableCellSortIcon
-  };
 });

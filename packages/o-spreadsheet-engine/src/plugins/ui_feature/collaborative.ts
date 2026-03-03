@@ -84,9 +84,6 @@ export class CollaborativePlugin extends UIPlugin {
   }
 
   drawLayer(renderingContext: GridRenderingContext) {
-    if (this.getters.isDashboard()) {
-      return;
-    }
     const { ctx, thinLineWidth } = renderingContext;
 
     const activeSheetId = this.getters.getActiveSheetId();

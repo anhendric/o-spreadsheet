@@ -24,7 +24,7 @@
           editFigureStyle.bind="editWrapperStyle"
           openContextMenu.bind="openContextMenu"
         />
-        <div class="o-figure-menu position-absolute m-2" t-if="!env.isDashboard()">
+        <div class="o-figure-menu position-absolute m-2">
           <div
             class="o-figure-menu-item d-flex-align-items-center"
             t-if="!env.model.getters.isReadonly() and props.figureUI.tag !== 'carousel'"
@@ -40,7 +40,7 @@
             onClose="() => this.menuState.isOpen=false"
           />
         </div>
-        <div t-if="!env.isDashboard()" class="position-absolute top-0 start-0 pe-none w-100 h-100">
+        <div class="position-absolute top-0 start-0 pe-none w-100 h-100">
           <div
             class="o-figure-border pe-auto w-100 h-0 position-absolute pb-2"
             t-att-class="{'o-selected': isSelected}"

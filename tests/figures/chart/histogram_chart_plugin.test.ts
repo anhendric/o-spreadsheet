@@ -17,7 +17,7 @@ describe("histogram chart", () => {
       background: "#123456",
       title: { text: "hello there" },
       dataSets: [{ dataRange: "Sheet1!B1:B4" }],
-      legendPosition: "top",
+      legendPosition: "bottom",
       dataSetsHaveTitle: true,
       axesDesign: {},
       showValues: false,
@@ -49,7 +49,11 @@ describe("histogram chart", () => {
       A3: "8",
       A4: "9",
     });
-    createChart(model, { type: "histogram", dataSets: [{ dataRange: "A1:A4" }] }, "chartId");
+    createChart(
+      model,
+      { type: "histogram", dataSets: [{ dataRange: "A1:A4" }], dataSetsHaveTitle: false },
+      "chartId"
+    );
     const runtime = model.getters.getChartRuntime("chartId") as HistogramChartRuntime;
 
     expect(runtime.chartJsConfig.type).toBe("bar");
@@ -91,7 +95,12 @@ describe("histogram chart", () => {
     });
     createChart(
       model,
-      { type: "histogram", dataSets: [{ dataRange: "A1:A4" }], bucketSize: 2 },
+      {
+        type: "histogram",
+        dataSets: [{ dataRange: "A1:A4" }],
+        bucketSize: 2,
+        dataSetsHaveTitle: false,
+      },
       "chartId"
     );
     const runtime = model.getters.getChartRuntime("chartId") as HistogramChartRuntime;
@@ -118,6 +127,7 @@ describe("histogram chart", () => {
       {
         type: "histogram",
         dataSets: [{ dataRange: "A1:A2" }, { dataRange: "B1:B2" }],
+        dataSetsHaveTitle: false,
       },
       "chartId"
     );

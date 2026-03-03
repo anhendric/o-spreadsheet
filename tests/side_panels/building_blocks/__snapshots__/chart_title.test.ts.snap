@@ -31,6 +31,7 @@ exports[`Chart title Can render a chart title component 1`] = `
       >
         <span
           class="o-menu-item-button o-hoverable-button"
+          data-id="1"
           title="Bold"
         >
           <span
@@ -48,10 +49,12 @@ exports[`Chart title Can render a chart title component 1`] = `
           </span>
           
           
+          
         </span>
         
         <span
           class="o-menu-item-button o-hoverable-button"
+          data-id="2"
           title="Italic"
         >
           <span
@@ -69,7 +72,9 @@ exports[`Chart title Can render a chart title component 1`] = `
           </span>
           
           
+          
         </span>
+        
         
         <div
           class="o-divider border-start"
@@ -80,6 +85,7 @@ exports[`Chart title Can render a chart title component 1`] = `
         >
           <span
             class="o-menu-item-button o-hoverable-button"
+            data-id="3"
             title="Horizontal alignment"
           >
             <span
@@ -96,13 +102,18 @@ exports[`Chart title Can render a chart title component 1`] = `
               </svg>
             </span>
             
-            <div
-              class="o-icon fa-small"
+            
+            <svg
+              class="o-icon"
+              fill="currentColor"
+              style="width:10px;margin-left:3px"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <i
-                class="fa fa-caret-down"
+              <path
+                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
               />
-            </div>
+            </svg>
             
           </span>
           
@@ -129,13 +140,17 @@ exports[`Chart title Can render a chart title component 1`] = `
             />
             
             <span>
-              <div
-                class="o-icon fa-small"
+              <svg
+                class="o-icon"
+                fill="currentColor"
+                style="width:10px;margin-left:3px"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <i
-                  class="fa fa-caret-down"
+                <path
+                  d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
                 />
-              </div>
+              </svg>
             </span>
           </div>
           

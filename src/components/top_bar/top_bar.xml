@@ -7,6 +7,7 @@
         <t t-set-slot="file-menu">
           <div
             class="o-ribbon-tab px-3 py-1 cursor-pointer user-select-none fw-bold"
+            data-id="file"
             t-on-click="(ev) => this.toggleFileMenu(ev)">
             File
           </div>

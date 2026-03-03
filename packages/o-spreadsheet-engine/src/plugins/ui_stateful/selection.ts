@@ -863,9 +863,6 @@ export class GridSelectionPlugin extends UIPlugin {
   // ---------------------------------------------------------------------------
 
   drawLayer(renderingContext: GridRenderingContext) {
-    if (this.getters.isDashboard()) {
-      return;
-    }
     const { ctx, thinLineWidth } = renderingContext;
     // selection
     const zones = this.getSelectedZones();
