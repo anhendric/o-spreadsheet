@@ -2,8 +2,8 @@ import {
   MOVING_AVERAGE_TREND_LINE_XAXIS_ID,
   TREND_LINE_XAXIS_ID,
 } from "@odoo/o-spreadsheet-engine/helpers/figures/charts/chart_common";
-import { Command, UID } from "../../../../..";
 import { SpreadsheetStore } from "../../../../../stores";
+import { Command, UID } from "../../../../../types";
 
 const TREND_LINE_AXES_IDS = [TREND_LINE_XAXIS_ID, MOVING_AVERAGE_TREND_LINE_XAXIS_ID] as const;
 const ZOOMABLE_AXIS_IDS = ["x", ...TREND_LINE_AXES_IDS] as const;

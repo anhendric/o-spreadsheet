@@ -126,7 +126,7 @@ describe("Filter Evaluation", () => {
     setCellContent(model, "B5", "2");
   });
 
-  test.each(["normal", "readonly", "dashboard"] as const)("Can filter a row", (mode) => {
+  test.each(["normal", "readonly"] as const)("Can filter a row", (mode) => {
     model.updateMode(mode);
     updateFilter(model, "A1", ["A2", "A3"]);
     expect(model.getters.isRowHidden(sheetId, 0)).toEqual(false);

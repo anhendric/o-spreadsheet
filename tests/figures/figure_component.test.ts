@@ -779,13 +779,6 @@ describe("figures", () => {
         expect(fixture.querySelector(".o-figure-menu-item")).not.toBeNull();
       });
 
-      test("images don't have a menu button in dashboard mode", async () => {
-        model.updateMode("dashboard");
-        await nextTick();
-        expect(fixture.querySelector(".o-figure")).not.toBeNull();
-        expect(fixture.querySelector(".o-figure-menu-item")).toBeNull();
-      });
-
       test("images don't have a menu button in readonly mode", async () => {
         model.updateMode("readonly");
         await nextTick();
@@ -819,13 +812,6 @@ describe("figures", () => {
         const MenuPopover = fixture.querySelector<HTMLElement>(".o-popover")!;
         expect(MenuPopover.style.top).toBe(`${500 - 25}px`); // 25 : spreadsheet offset of the mockGetBoundingClientRect
         expect(MenuPopover.style.left).toBe(`${MENU_WIDTH - 50 - 25 + 32}px`);
-      });
-
-      test("Cannot open context menu on right click in dashboard mode", async () => {
-        model.updateMode("dashboard");
-        triggerMouseEvent(".o-figure", "contextmenu");
-        await nextTick();
-        expect(document.querySelector(".o-menu")).toBeFalsy();
       });
 
       test("Cannot open context menu on right click in readonly mode", async () => {

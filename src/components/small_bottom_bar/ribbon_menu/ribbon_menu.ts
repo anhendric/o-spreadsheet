@@ -6,15 +6,13 @@ import { topbarMenuRegistry } from "../../../registries/menus";
 import { cssPropertiesToCss } from "../../helpers";
 import { Menu, MenuProps } from "../../menu/menu";
 
-export const itemHeight = 40;
-
 interface State {
   menuItems: Action[];
   title: string | undefined;
   parentState: State | undefined;
 }
 
-export interface RibbonMenuProps {
+interface RibbonMenuProps {
   onClose: () => void;
   height: number;
 }

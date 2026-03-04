@@ -1,4 +1,4 @@
-import { ChartDefinition, DispatchResult, UID } from "../../..";
+import { ChartDefinition, DispatchResult, UID } from "../../../types";
 
 export interface ChartSidePanelProps<T extends ChartDefinition> {
   chartId: UID;

@@ -113,11 +113,7 @@ import {
   union,
   unquote,
 } from "./helpers/index";
-import {
-  insertTokenAfterArgSeparator,
-  insertTokenAfterLeftParenthesis,
-  makeFieldProposal,
-} from "./helpers/pivot/pivot_composer_helpers";
+import { makeFieldProposal } from "./helpers/pivot/pivot_composer_helpers";
 import { supportedPivotPositionalFormulaRegistry } from "./helpers/pivot/pivot_positional_formula_registry";
 
 import { ChartTerms } from "@odoo/o-spreadsheet-engine/components/translations_terms";
@@ -167,12 +163,12 @@ import {
 } from "@odoo/o-spreadsheet-engine/registries/repeat_transform_registry";
 import { errorTypes } from "@odoo/o-spreadsheet-engine/types/errors";
 import { CellComposerStore } from "./components/composer/composer/cell_composer_store";
-import { ClickableCellSortIcon } from "./components/dashboard/clickable_cell_sort_icon/clickable_cell_sort_icon";
+
 import { ZoomableChartJsComponent } from "./components/figures/chart/chartJs/zoomable_chart/zoomable_chartjs";
 import { GaugeChartComponent } from "./components/figures/chart/gauge/gauge_chart_component";
 import { FullScreenFigure } from "./components/full_screen_figure/full_screen_figure";
 import { NumberInput } from "./components/number_input/number_input";
-import { PivotHTMLRenderer } from "./components/pivot_html_renderer/pivot_html_renderer";
+
 import { ComboChartDesignPanel } from "./components/side_panel/chart/combo_chart/combo_chart_design_panel";
 import { FunnelChartDesignPanel } from "./components/side_panel/chart/funnel_chart_panel/funnel_chart_design_panel";
 import { GeoChartDesignPanel } from "./components/side_panel/chart/geo_chart_panel/geo_chart_design_panel";
@@ -194,7 +190,7 @@ import { getPivotHighlights } from "./helpers/pivot/pivot_highlight";
 import { pivotSidePanelRegistry } from "./helpers/pivot/pivot_side_panel_registry";
 import "./plugins";
 import { autoCompleteProviders } from "./registries/auto_completes";
-import { clickableCellRegistry } from "./registries/cell_clickable_registry";
+
 import { cellPopoverRegistry } from "./registries/cell_popovers_registry";
 import { chartComponentRegistry } from "./registries/chart_component_registry";
 import { figureRegistry } from "./registries/figures_registry";
@@ -207,7 +203,6 @@ import {
   rowMenuRegistry,
   topbarMenuRegistry,
 } from "./registries/menus";
-import { genericRepeat } from "./registries/repeat_commands_registry";
 
 import { DEFAULT_LOCALE } from "@odoo/o-spreadsheet-engine/types/locale";
 import { sidePanelRegistry } from "./registries/side_panel_registry";
@@ -319,7 +314,7 @@ export const registries = {
   chartSubtypeRegistry,
   topbarMenuRegistry,
   topbarComponentRegistry,
-  clickableCellRegistry,
+
   otRegistry,
   inverseCommandRegistry,
   urlRegistry,
@@ -382,7 +377,7 @@ export const helpers = {
   isDefined,
   isMatrix,
   lazy,
-  genericRepeat,
+
   createAction,
   createActions,
   transformRangeData,
@@ -402,8 +397,7 @@ export const helpers = {
   isDateOrDatetimeField,
   makeFieldProposal,
   periodYearToComparable,
-  insertTokenAfterArgSeparator,
-  insertTokenAfterLeftParenthesis,
+
   mergeContiguousZones,
   getPivotHighlights,
   pivotTimeAdapter,
@@ -446,7 +440,7 @@ export const components = {
   ChartPanel,
   ChartFigure,
   ChartJsComponent,
-  ClickableCellSortIcon,
+
   ZoomableChartJsComponent,
   Grid,
   GridOverlay,
@@ -481,7 +475,7 @@ export const components = {
   PivotDimensionOrder,
   PivotDimension,
   PivotLayoutConfigurator,
-  PivotHTMLRenderer,
+
   PivotDeferUpdate,
   PivotTitleSection,
   CogWheelMenu,

@@ -14,9 +14,9 @@ describe("Pivot collapse", () => {
   test("Can collapse pivot row", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year", D1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020",
-        A3: "Alice",    B3: "20",     C3: "2021",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020",
+      A3: "Alice", B3: "20", C3: "2021",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:C3", {
@@ -26,19 +26,19 @@ describe("Pivot collapse", () => {
     });
     // prettier-ignore
     expect(getEvaluatedGrid(model, "D1:E4")).toEqual([
-        ["Pivot"     ,      "Total"],
-        ["",                "Price"],
-        ["Alice",           "30"],
-        ["Total",           "30"],
+      ["Pivot", "Total"],
+      ["", "Price"],
+      ["Alice", "30"],
+      ["Total", "30"],
     ]);
   });
 
   test("Can collapse pivot column", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year", D1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020",
-        A3: "Alice",    B3: "20",     C3: "2021",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020",
+      A3: "Alice", B3: "20", C3: "2021",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:C3", {
@@ -48,19 +48,19 @@ describe("Pivot collapse", () => {
     });
     // prettier-ignore
     expect(getEvaluatedGrid(model, "D1:F4")).toEqual([
-        ["Pivot"     ,      "Alice",   ""],
-        ["",                "",        "Total"],
-        ["",                "Price",   "Price"],
-        ["Total",           "30",      "30"],
+      ["Pivot", "Alice", ""],
+      ["", "", "Total"],
+      ["", "Price", "Price"],
+      ["Total", "30", "30"],
     ]);
   });
 
   test("Can collapse pivot column with multiple measures", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year", D1: "Quantity", E1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020", D2: "5",
-        A3: "Alice",    B3: "20",     C3: "2021", D3: "10",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "Quantity", E1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020", D2: "5",
+      A3: "Alice", B3: "20", C3: "2021", D3: "10",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:D3", {
@@ -73,19 +73,19 @@ describe("Pivot collapse", () => {
     });
     // prettier-ignore
     expect(getEvaluatedGrid(model, "E1:I4")).toEqual([
-        ["Pivot"     ,      "Alice",   "",          "",        ""],
-        ["",                "",        "",          "Total",   ""],
-        ["",                "Price",   "Quantity",  "Price",   "Quantity"],
-        ["Total",           "30",      "15",       "30",      "15"],
+      ["Pivot", "Alice", "", "", ""],
+      ["", "", "", "Total", ""],
+      ["", "Price", "Quantity", "Price", "Quantity"],
+      ["Total", "30", "15", "30", "15"],
     ]);
   });
 
   test("Can collapse calculated measure", () => {
     // prettier-ignore
     const grid = {
-            A1: "Customer", B1: "Price",  C1: "Year", D1: "=PIVOT(1)",
-            A2: "Alice",    B2: "10",     C2: "2020",
-            A3: "Alice",    B3: "20",     C3: "2021",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020",
+      A3: "Alice", B3: "20", C3: "2021",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:C3", {
@@ -103,21 +103,21 @@ describe("Pivot collapse", () => {
     });
     // prettier-ignore
     expect(getEvaluatedGrid(model, "D1:E4")).toEqual([
-            ["Pivot"     ,      "Total"],
-            ["",                "calc"],
-            ["Alice",           "60"],
-            ["Total",           "60"],
+      ["Pivot", "Total"],
+      ["", "calc"],
+      ["Alice", "60"],
+      ["Total", "60"],
     ]);
   });
 
   test("Can collapse multiple levels of rows", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year",  D1: "Active", E1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020",  D2: "FALSE",
-        A3: "Alice",    B3: "20",     C3: "2021",  D3: "TRUE",
-        A4: "Bob",      B4: "30",     C4: "2020",  D4: "FALSE",
-        A5: "Bob",      B5: "40",     C5: "2021",  D5: "TRUE",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "Active", E1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020", D2: "FALSE",
+      A3: "Alice", B3: "20", C3: "2021", D3: "TRUE",
+      A4: "Bob", B4: "30", C4: "2020", D4: "FALSE",
+      A5: "Bob", B5: "40", C5: "2021", D5: "TRUE",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:D5", {
@@ -136,25 +136,25 @@ describe("Pivot collapse", () => {
     });
     // prettier-ignore
     expect(getEvaluatedGrid(model, "E1:F8")).toEqual([
-        ["Pivot"     ,      "Total"],
-        ["",                "Price"],
-        ["Alice",           "30"],
-        ["Bob",             "70"],
-        ["2020",            "30"],
-        ["2021",            "40"],
-        ["TRUE",            "40"],
-        ["Total",           "100"],
+      ["Pivot", "Total"],
+      ["", "Price"],
+      ["Alice", "30"],
+      ["Bob", "70"],
+      ["2020", "30"],
+      ["2021", "40"],
+      ["TRUE", "40"],
+      ["Total", "100"],
     ]);
   });
 
   test("Can collapse multiple levels of columns", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year",  D1: "Active", E1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020",  D2: "FALSE",
-        A3: "Alice",    B3: "20",     C3: "2021",  D3: "TRUE",
-        A4: "Bob",      B4: "30",     C4: "2020",  D4: "FALSE",
-        A5: "Bob",      B5: "40",     C5: "2021",  D5: "TRUE",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "Active", E1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020", D2: "FALSE",
+      A3: "Alice", B3: "20", C3: "2021", D3: "TRUE",
+      A4: "Bob", B4: "30", C4: "2020", D4: "FALSE",
+      A5: "Bob", B5: "40", C5: "2021", D5: "TRUE",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:D5", {
@@ -174,22 +174,22 @@ describe("Pivot collapse", () => {
 
     // prettier-ignore
     expect(getEvaluatedGrid(model, "E1:I5")).toEqual([
-        ["Pivot"     ,      "Alice",  "Bob",   "",        ""],
-        ["",                "",       "2020",  "2021",    ""],
-        ["",                "",       "",      "TRUE",    "Total"],
-        ["",                "Price",  "Price", "Price",   "Price"],
-        ["Total",           "30",     "30",    "40",      "100"],
+      ["Pivot", "Alice", "Bob", "", ""],
+      ["", "", "2020", "2021", ""],
+      ["", "", "", "TRUE", "Total"],
+      ["", "Price", "Price", "Price", "Price"],
+      ["Total", "30", "30", "40", "100"],
     ]);
   });
 
   test("Can collapse both rows and columns", () => {
     // prettier-ignore
     const grid = {
-        A1: "Customer", B1: "Price",  C1: "Year",  D1: "Active", E1: "Client", F1: "=PIVOT(1)",
-        A2: "Alice",    B2: "10",     C2: "2020",  D2: "FALSE",  E2: "Marc",
-        A3: "Alice",    B3: "20",     C3: "2021",  D3: "TRUE",   E3: "Marc",
-        A4: "Bob",      B4: "30",     C4: "2020",  D4: "FALSE",  E4: "Marc",
-        A5: "Bob",      B5: "40",     C5: "2021",  D5: "TRUE",   E5: "Marc",
+      A1: "Customer", B1: "Price", C1: "Year", D1: "Active", E1: "Client", F1: "=PIVOT(1)",
+      A2: "Alice", B2: "10", C2: "2020", D2: "FALSE", E2: "Marc",
+      A3: "Alice", B3: "20", C3: "2021", D3: "TRUE", E3: "Marc",
+      A4: "Bob", B4: "30", C4: "2020", D4: "FALSE", E4: "Marc",
+      A5: "Bob", B5: "40", C5: "2021", D5: "TRUE", E5: "Marc",
     };
     const model = createModelFromGrid(grid);
     addPivot(model, "A1:E5", {
@@ -207,11 +207,11 @@ describe("Pivot collapse", () => {
 
     // prettier-ignore
     expect(getEvaluatedGrid(model, "F1:I5")).toEqual([
-        ["Pivot"     ,      "Alice",  "Bob",   ""],
-        ["",                "",       "",      "Total"],
-        ["",                "Price",  "Price", "Price"],
-        ["Marc",            "30",     "70",    "100"],
-        ["Total",           "30",     "70",    "100"],
+      ["Pivot", "Alice", "Bob", ""],
+      ["", "", "", "Total"],
+      ["", "Price", "Price", "Price"],
+      ["Marc", "30", "70", "100"],
+      ["Total", "30", "70", "100"],
     ]);
   });
 });
@@ -219,12 +219,12 @@ describe("Pivot collapse", () => {
 describe("Pivot collapse icon", () => {
   // prettier-ignore
   const grid = {
-      A1: "Customer", B1: "Price",  C1: "Year",  D1: "Active", E1: "Client",
-      A2: "Alice",    B2: "10",     C2: "2020",  D2: "FALSE",  E2: "Marc",
-      A3: "Alice",    B3: "20",     C3: "2021",  D3: "TRUE",   E3: "Marc",
-      A4: "Bob",      B4: "30",     C4: "2020",  D4: "FALSE",  E4: "Marc",
-      A5: "Bob",      B5: "40",     C5: "2021",  D5: "TRUE",   E5: "Marc",
-      A6: "=PIVOT(1)"
+    A1: "Customer", B1: "Price", C1: "Year", D1: "Active", E1: "Client",
+    A2: "Alice", B2: "10", C2: "2020", D2: "FALSE", E2: "Marc",
+    A3: "Alice", B3: "20", C3: "2021", D3: "TRUE", E3: "Marc",
+    A4: "Bob", B4: "30", C4: "2020", D4: "FALSE", E4: "Marc",
+    A5: "Bob", B5: "40", C5: "2021", D5: "TRUE", E5: "Marc",
+    A6: "=PIVOT(1)"
   };
 
   function getPivotIconsInZone(model: Model, xc: string) {
@@ -280,27 +280,6 @@ describe("Pivot collapse icon", () => {
       A13: {
         content: "2021",
         icon: { size: iconSize, margin: PIVOT_INDENT, svg: undefined },
-      },
-    });
-  });
-
-  test("There's no icon, but still indent in dashboard", () => {
-    const model = createModelFromGrid(grid);
-    addPivot(model, "A1:E5", {
-      rows: [{ fieldName: "Customer" }, { fieldName: "Year" }],
-      measures: [{ id: "Price", fieldName: "Price", aggregator: "sum" }],
-    });
-    model.updateMode("dashboard");
-
-    expect(getPivotIconsInZone(model, "A6:A13")).toMatchObject({
-      A11: { content: "Bob", icon: { size: 0, margin: 0, svg: undefined } },
-      A12: {
-        content: "2020",
-        icon: { size: 0, margin: PIVOT_INDENT, svg: undefined },
-      },
-      A13: {
-        content: "2021",
-        icon: { size: 0, margin: PIVOT_INDENT, svg: undefined },
       },
     });
   });

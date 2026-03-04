@@ -158,12 +158,6 @@ export const customNumberFormat: ActionSpec = {
   execute: (env) => env.openSidePanel("MoreFormats", { category: "number" }),
 };
 
-export const formatNumberFullDateTime = createFormatActionSpec({
-  name: _t("Full date time"),
-  format: "dddd d mmmm yyyy hh:mm:ss a",
-  descriptionValue: EXAMPLE_DATE,
-});
-
 export const increaseDecimalPlaces: ActionSpec = {
   name: _t("Increase decimal places"),
   icon: "o-spreadsheet-Icon.INCREASE_DECIMAL",

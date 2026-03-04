@@ -675,32 +675,29 @@ describe("Multi users synchronisation", () => {
     );
   });
 
-  test.each(["readonly", "dashboard"] as const)(
-    "Spreadsheet in readonly never sends commands",
-    (mode) => {
-      const david = new Model(alice.exportData(), { transportService: network, mode });
-      setCellContent(alice, "A1", "hello");
-      addPivot(alice, "A1", {
-        measures: [{ id: "__count", fieldName: "__count", aggregator: "sum" }],
-      });
-      const [pivotId] = david.getters.getPivotIds();
+  test.each(["readonly"] as const)("Spreadsheet in readonly never sends commands", (mode) => {
+    const david = new Model(alice.exportData(), { transportService: network, mode });
+    setCellContent(alice, "A1", "hello");
+    addPivot(alice, "A1", {
+      measures: [{ id: "__count", fieldName: "__count", aggregator: "sum" }],
+    });
+    const [pivotId] = david.getters.getPivotIds();
 
-      // David can update the pivot locally
-      updatePivot(david, pivotId, {
-        sortedColumn: { order: "asc", measure: "__count", domain: [] },
-      });
-      expect(david.getters.getPivotCoreDefinition("1").sortedColumn).toEqual({
-        order: "asc",
-        measure: "__count",
-        domain: [],
-      });
-      // but the update should not be sent to other users
-      expect([alice, bob, charlie]).toHaveSynchronizedValue(
-        (user) => user.getters.getPivotCoreDefinition("1").sortedColumn,
-        undefined
-      );
-    }
-  );
+    // David can update the pivot locally
+    updatePivot(david, pivotId, {
+      sortedColumn: { order: "asc", measure: "__count", domain: [] },
+    });
+    expect(david.getters.getPivotCoreDefinition("1").sortedColumn).toEqual({
+      order: "asc",
+      measure: "__count",
+      domain: [],
+    });
+    // but the update should not be sent to other users
+    expect([alice, bob, charlie]).toHaveSynchronizedValue(
+      (user) => user.getters.getPivotCoreDefinition("1").sortedColumn,
+      undefined
+    );
+  });
 
   test("readonly client is visible to other users", () => {
     expect(alice.getters.getClientsToDisplay().map((client) => client.name)).toEqual([

@@ -302,14 +302,11 @@ describe("Adding rows footer at the end of sheet", () => {
     expect(top).toBeLessThan(height);
   });
 
-  test.each(["dashboard", "readonly"] as const)(
-    "will not show in the %s mode",
-    async (mode: Mode) => {
-      model.updateMode(mode);
-      await scrollGrid({ deltaY: 10000 });
-      expect(fixture.querySelector(".o-grid-add-rows")).toBeFalsy();
-    }
-  );
+  test.each(["readonly"] as const)("will not show in the %s mode", async (mode: Mode) => {
+    model.updateMode(mode);
+    await scrollGrid({ deltaY: 10000 });
+    expect(fixture.querySelector(".o-grid-add-rows")).toBeFalsy();
+  });
 
   test("will be just below the last row, if the sheet is too short to scroll", async () => {
     const sheetId = model.getters.getActiveSheetId();

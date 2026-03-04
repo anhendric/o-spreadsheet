@@ -10,11 +10,11 @@ import {
 import { pivotRegistry } from "@odoo/o-spreadsheet-engine/helpers/pivot/pivot_registry";
 import { cellPositions } from "@odoo/o-spreadsheet-engine/helpers/zones";
 import { _t } from "@odoo/o-spreadsheet-engine/translation";
-import { CellValueType } from "@odoo/o-spreadsheet-engine/types/cells";
+import { CellValue, CellValueType } from "@odoo/o-spreadsheet-engine/types/cells";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
+import { ActionSpec } from "../../actions/action";
 import {
   CellPosition,
-  CellValue,
   Getters,
   PivotCoreDefinition,
   PivotCustomGroup,
@@ -25,8 +25,7 @@ import {
   PivotHeaderCell,
   SortDirection,
   UID,
-} from "../..";
-import { ActionSpec } from "../../actions/action";
+} from "../../types";
 
 export const pivotProperties: ActionSpec = {
   name: _t("See pivot properties"),

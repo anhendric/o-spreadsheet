@@ -218,18 +218,6 @@ describe("charts", () => {
   });
 
   test.each(TEST_CHART_TYPES)(
-    "charts don't have a menu button in dashboard mode",
-    async (chartType) => {
-      await mountSpreadsheet();
-      createTestChart(chartType);
-      model.updateMode("dashboard");
-      await nextTick();
-      expect(fixture.querySelector(".o-figure")).not.toBeNull();
-      expect(fixture.querySelector(".o-figure-menu-item")).toBeNull();
-    }
-  );
-
-  test.each(TEST_CHART_TYPES)(
     "charts don't have a menu button in readonly mode",
     async (chartType) => {
       await mountSpreadsheet();

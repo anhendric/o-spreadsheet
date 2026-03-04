@@ -4,8 +4,8 @@ import {
   CHART_PADDING,
 } from "@odoo/o-spreadsheet-engine/constants";
 import { ChartType, Plugin } from "chart.js";
-import { Color, Locale } from "../../../..";
 import { getDefaultContextFont, humanizeNumber } from "../../../../helpers";
+import { Color, Locale } from "../../../../types";
 
 export interface ChartColorScalePluginOptions {
   position: "left" | "right" | "none";

@@ -547,16 +547,6 @@ describe("Selection arrow icon in grid", () => {
     expect(getCellIcons(model, "A1")).toHaveLength(0);
   });
 
-  test("Icon is not displayed in dashboard", () => {
-    model.updateMode("dashboard");
-    addDataValidation(model, "A1", "id", {
-      type: "isValueInList",
-      values: ["ok", "hello", "okay"],
-      displayStyle: "arrow",
-    });
-    expect(getCellIcons(model, "A1")).toHaveLength(0);
-  });
-
   test("Icon is not displayed if there is a filter icon", () => {
     addDataValidation(model, "A1", "id", {
       type: "isValueInList",

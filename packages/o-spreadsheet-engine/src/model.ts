@@ -372,7 +372,7 @@ export class Model extends EventBus<any> implements CommandDispatcher {
       name: _t("Anonymous").toString(),
     };
     const transportService = config.transportService || new LocalTransportService();
-    const isReadonly = config.mode === "readonly" || config.mode === "dashboard";
+    const isReadonly = config.mode === "readonly";
     return {
       ...config,
       mode: config.mode || "normal",

@@ -62,19 +62,6 @@ export function getLatexImage(
   });
 }
 
-export function getCachedLatexImage(
-  latex: string,
-  fontSizePx: number,
-  color: string
-): HTMLImageElement | undefined {
-  const key = `${latex}-${fontSizePx}-${color}`;
-  const item = cache.get(key);
-  if (item instanceof HTMLImageElement) {
-    return item;
-  }
-  return undefined;
-}
-
 async function loadAndRenderLatex(
   latex: string,
   fontSizePx: number,

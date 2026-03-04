@@ -183,6 +183,6 @@ export function isRootMenu(menu: Action) {
   return !menu.execute;
 }
 
-export function hasVisibleChildren(env: SpreadsheetChildEnv, menu: Action) {
+function hasVisibleChildren(env: SpreadsheetChildEnv, menu: Action) {
   return menu.children(env).some((child) => child.isVisible(env));
 }

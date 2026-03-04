@@ -258,7 +258,7 @@ export class GenericChartConfigPanel<
     this.state.datasetDispatchResult = this.props.updateChart(this.props.chartId, {
       dataSets: this.dataSets,
     });
-    if (this.state.datasetDispatchResult.isSuccessful) {
+    if (this.state.datasetDispatchResult?.isSuccessful) {
       this.dataSets = (
         this.env.model.getters.getChartDefinition(this.props.chartId) as ChartWithDataSetDefinition
       ).dataSets;

@@ -1,5 +1,5 @@
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
-import { DOMCoordinates, Pixel, Rect } from "../..";
+import { DOMCoordinates, Pixel, Rect } from "../../types";
 import { zoomCorrectedElementRect } from "./dom_helpers";
 
 export type ZoomedMouseEvent<T extends MouseEvent | PointerEvent> = {

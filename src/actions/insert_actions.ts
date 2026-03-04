@@ -180,7 +180,6 @@ export const insertCellShiftRight: ActionSpec = {
 
 export const insertChart: ActionSpec = {
   name: _t("Chart"),
-  execute: ACTIONS.CREATE_CHART,
   isEnabled: (env) => !env.isSmall,
   icon: "o-spreadsheet-Icon.INSERT_CHART",
 };

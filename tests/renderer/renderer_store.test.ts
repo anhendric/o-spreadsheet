@@ -11,18 +11,10 @@ import {
   MIN_CF_ICON_MARGIN,
   NEWLINE,
   SELECTION_BORDER_COLOR,
-  TABLE_HOVER_BACKGROUND_COLOR,
 } from "@odoo/o-spreadsheet-engine/constants";
 import { Mode } from "@odoo/o-spreadsheet-engine/types/model";
 import { Model } from "../../src";
-import { HoveredTableStore } from "../../src/components/tables/hovered_table_store";
-import {
-  blendColors,
-  fontSizeInPixels,
-  getContextFontSize,
-  toHex,
-  toZone,
-} from "../../src/helpers";
+import { fontSizeInPixels, getContextFontSize, toHex, toZone } from "../../src/helpers";
 import { FormulaFingerprintStore } from "../../src/stores/formula_fingerprints_store";
 import { GridRenderer } from "../../src/stores/grid_renderer_store";
 import { RendererStore } from "../../src/stores/renderer_store";
@@ -40,10 +32,7 @@ import {
   addColumns,
   addDataValidation,
   copy,
-  createTable,
   deleteColumns,
-  freezeColumns,
-  freezeRows,
   merge,
   paste,
   resizeColumns,
@@ -505,50 +494,6 @@ describe("renderer", () => {
 
     expect(removeOffsetOfFillStyles(fillStyle)).toEqual([
       { color: "#DC6CDF", h: 23, w: 96, x: 0, y: 0 },
-    ]);
-  });
-
-  test("fill style of hovered clickable cells goes over regular fill style", () => {
-    const { drawGridRenderer, model, container } = setRenderer(
-      new Model({ sheets: [{ colNumber: 1, rowNumber: 3 }] })
-    );
-    const background = "#DC6CDF";
-    const hoverColor = blendColors(background, TABLE_HOVER_BACKGROUND_COLOR);
-    createTable(model, "A1", { numberOfHeaders: 0 });
-    setStyle(model, "A1", { fillColor: background });
-    setCellContent(model, "A1", "Data");
-    model.updateMode("dashboard");
-
-    let fillStyle = "";
-    let fillStyles: any[] = [];
-    let fillStyleCalled = false;
-    const ctx = new MockGridRenderingContext(model, 1000, 1000, {
-      onSet: (key, value) => {
-        if (key === "fillStyle" && [background, hoverColor].includes(value)) {
-          fillStyle = value;
-          fillStyleCalled = true;
-        }
-      },
-      onFunctionCall: (val, args) => {
-        if (val === "fillRect" && fillStyleCalled) {
-          fillStyles.push({ color: fillStyle, x: args[0], y: args[1], w: args[2], h: args[3] });
-          fillStyleCalled = false;
-        }
-      },
-    });
-
-    drawGridRenderer(ctx);
-    expect(removeOffsetOfFillStyles(fillStyles)).toEqual([
-      { color: background, h: 23, w: 96, x: 0, y: 0 },
-    ]);
-
-    fillStyles = [];
-    container.get(HoveredTableStore).hover({ col: 0, row: 0 });
-    drawGridRenderer(ctx);
-
-    expect(removeOffsetOfFillStyles(fillStyles)).toEqual([
-      { color: background, h: 23, w: 96, x: 0, y: 0 },
-      { color: hoverColor, h: 23, w: 96, x: 0, y: 0 },
     ]);
   });
 
@@ -1616,7 +1561,6 @@ describe("renderer", () => {
   });
 
   test.each([
-    ["dashboard" as Mode, { x: 0, y: 0, width: DEFAULT_CELL_WIDTH, height: DEFAULT_CELL_HEIGHT }],
     ["normal" as Mode, { x: 0, y: 0, width: DEFAULT_CELL_WIDTH, height: DEFAULT_CELL_HEIGHT }],
   ])("A1 starts at the upper left corner with mode %s", (mode, expectedRect) => {
     const model = new Model({}, { mode });
@@ -1685,39 +1629,6 @@ describe("renderer", () => {
     expect(boxF1.isError).toBeTruthy();
     expect(filled[4][0]).toBe(boxF1.x + boxF1.width - 5);
     expect(filled[4][1]).toBe(boxF1.y);
-  });
-
-  test("Do not draw gridLines over colored cells in dashboard mode", () => {
-    const CellFillColor = "#fe0000";
-    const { drawGridRenderer, model } = setRenderer(
-      new Model({
-        sheets: [{ id: "Sheet1", name: "Sheet1", styles: { A1: 1, A2: 1 } }],
-        styles: { 1: { fillColor: CellFillColor } },
-      })
-    );
-
-    let strokeColors: string[];
-    const ctx = new MockGridRenderingContext(model, 1000, 1000, {
-      onFunctionCall: (val, _, renderingContext) => {
-        if (val === "strokeRect") {
-          strokeColors.push(renderingContext.ctx.strokeStyle as string);
-        }
-      },
-    });
-
-    // Default Model displaying grid lines
-    strokeColors = [];
-    drawGridRenderer(ctx);
-
-    expect(strokeColors).toContain(CELL_BORDER_COLOR);
-    expect(strokeColors).toContain(SELECTION_BORDER_COLOR);
-
-    // dashboard mode
-    model.updateMode("dashboard");
-    strokeColors = [];
-    drawGridRenderer(ctx);
-
-    expect(strokeColors).toEqual([]);
   });
 
   test("Do not draw gridLines over colored cells while hiding grid lines", () => {
@@ -2474,54 +2385,6 @@ describe("renderer", () => {
     setCellFormat(model, "A1", "dd* ");
     drawGridRenderer(ctx);
     expect(textAligns).toEqual(["left", "center"]); // center for headers
-  });
-
-  test("Each frozen pane is clipped in the grid", () => {
-    const model = new Model({ sheets: [{ colNumber: 7, rowNumber: 7 }] });
-    const { drawGridRenderer } = setRenderer(model);
-    setCellContent(model, "A1", "1");
-    freezeColumns(model, 2);
-    freezeRows(model, 1);
-    // Don't account for headers for the grid
-    model.updateMode("dashboard");
-    const spyFn = jest.fn();
-    const ctx = new MockGridRenderingContext(model, 1000, 1000, {
-      onFunctionCall: (key, args) => {
-        if (["rect", "clip"].includes(key)) {
-          spyFn(key, args);
-        }
-      },
-    });
-    drawGridRenderer(ctx);
-    expect(spyFn).toHaveBeenCalledTimes(8);
-    expect(spyFn).toHaveBeenNthCalledWith(1, "rect", [
-      0,
-      0,
-      DEFAULT_CELL_WIDTH * 2,
-      DEFAULT_CELL_HEIGHT,
-    ]);
-    expect(spyFn).toHaveBeenNthCalledWith(2, "clip", []);
-    expect(spyFn).toHaveBeenNthCalledWith(3, "rect", [
-      DEFAULT_CELL_WIDTH * 2,
-      0,
-      760,
-      DEFAULT_CELL_HEIGHT,
-    ]);
-    expect(spyFn).toHaveBeenNthCalledWith(4, "clip", []);
-    expect(spyFn).toHaveBeenNthCalledWith(5, "rect", [
-      0,
-      DEFAULT_CELL_HEIGHT,
-      DEFAULT_CELL_WIDTH * 2,
-      951,
-    ]);
-    expect(spyFn).toHaveBeenNthCalledWith(6, "clip", []);
-    expect(spyFn).toHaveBeenNthCalledWith(7, "rect", [
-      DEFAULT_CELL_WIDTH * 2,
-      DEFAULT_CELL_HEIGHT,
-      760,
-      951,
-    ]);
-    expect(spyFn).toHaveBeenNthCalledWith(8, "clip", []);
   });
 
   test("Applying style hideGridLines on a cell skips the drawing of the grid lines for this cell", () => {
