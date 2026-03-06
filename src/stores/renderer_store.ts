@@ -63,6 +63,9 @@ export class RendererStore {
     }
     this.context = context;
     for (const layer of OrderedLayers()) {
+      if ((layer === "Selection" || layer === "Autofill") && context.isFocused === false) {
+        continue;
+      }
       this.model.drawLayer(context, layer);
       this.drawLayer(context, layer, timestamp);
     }

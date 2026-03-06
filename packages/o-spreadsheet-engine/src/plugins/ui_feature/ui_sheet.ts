@@ -258,6 +258,7 @@ export class SheetUIPlugin extends UIPlugin {
   private checkSheetExists(cmd: Command): CommandResult {
     if (
       "sheetId" in cmd &&
+      cmd.sheetId &&
       this.getters.tryGetSheet(cmd.sheetId) === undefined &&
       cmd.type !== "CREATE_SHEET"
     ) {

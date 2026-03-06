@@ -36,7 +36,7 @@ export function useStore<T extends StoreConstructor>(Store: T): Store<InstanceTy
   const env: Env = useEnv();
   const container = getDependencyContainer(env);
   const store = container.get(Store);
-  return useStoreRenderProxy(container, store);
+  return useStoreRenderProxy(container.getOwningContainer(Store), store);
 }
 
 export function useLocalStore<T extends LocalStoreConstructor<any>>(

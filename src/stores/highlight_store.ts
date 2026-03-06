@@ -53,6 +53,9 @@ export class HighlightStore extends SpreadsheetStore {
   drawLayer(ctx: GridRenderingContext, layer: LayerName): void {
     if (layer === "Highlights") {
       for (const highlight of this.highlights) {
+        if (highlight.interactive && ctx.isFocused === false) {
+          continue;
+        }
         const rect = this.getters.getVisibleRect(highlight.range.zone);
         drawHighlight(ctx, highlight, rect);
       }

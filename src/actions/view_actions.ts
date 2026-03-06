@@ -2,6 +2,7 @@ import { _t } from "@odoo/o-spreadsheet-engine/translation";
 import { Dimension } from "@odoo/o-spreadsheet-engine/types/misc";
 import { SpreadsheetChildEnv } from "@odoo/o-spreadsheet-engine/types/spreadsheet_env";
 import { SidePanelStore } from "../components/side_panel/side_panel/side_panel_store";
+import { SplitViewStore } from "../components/spreadsheet/split_view_store";
 import { numberToLetters } from "../helpers";
 import { interactiveFreezeColumnsRows } from "../helpers/ui/freeze_interactive";
 import { FormulaFingerprintStore } from "../stores/formula_fingerprints_store";
@@ -366,4 +367,26 @@ export const togglePinPanel: ActionSpec = {
     env.getStore(SidePanelStore).togglePinPanel();
   },
   icon: "o-spreadsheet-Icon.THUMB_TACK",
+};
+
+export const toggleSplitView: ActionSpec = {
+  name: _t("Split view"),
+  execute: (env) => {
+    const splitViewStore = env.getStore(SplitViewStore);
+    if (!splitViewStore.isSplitView) {
+      const activeSheetId = env.model.getters.getActiveSheetId();
+      const visibleSheets = env.model.getters.getVisibleSheetIds();
+      const targetSheetId =
+        visibleSheets.length > 1
+          ? visibleSheets.find((id) => id !== activeSheetId) || activeSheetId
+          : activeSheetId;
+      splitViewStore.toggleSplitView(targetSheetId);
+    } else {
+      splitViewStore.toggleSplitView(splitViewStore.rightSheetId!);
+    }
+  },
+  isActive: (env) => {
+    return env.getStore(SplitViewStore).isSplitView;
+  },
+  icon: "o-spreadsheet-Icon.SPLIT_VIEW",
 };

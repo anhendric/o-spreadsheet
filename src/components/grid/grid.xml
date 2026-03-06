@@ -18,6 +18,8 @@
       />
       <HeadersOverlay onOpenContextMenu="(type, x, y) => this.toggleContextMenu(type, x, y)"/>
       <GridComposer
+        isFocused="props.isFocused"
+        exposeComposerInterface="(iface) => this.gridComposerInterface = iface"
         gridDims="env.model.getters.getSheetViewDimensionWithHeaders()"
         onInputContextMenu.bind="onInputContextMenu"
       />
@@ -41,12 +43,13 @@
         onMouseWheel.bind="onMouseWheel"
         onClosePopover.bind="onClosePopover"
       />
-      <t t-if="env.model.getters.isGridSelectionActive() and !env.isMobile()">
+      <t
+        t-if="env.model.getters.isGridSelectionActive() and !env.isMobile() and props.isFocused !== false">
         <Autofill position="getAutofillPosition()" isVisible="isAutofillVisible"/>
       </t>
       <t t-foreach="highlights" t-as="highlight" t-key="highlight_index">
         <t
-          t-if="highlight.interactive and highlight.range.sheetId === env.model.getters.getActiveSheetId()">
+          t-if="highlight.interactive and highlight.range.sheetId === env.model.getters.getActiveSheetId() and props.isFocused !== false">
           <Highlight range="highlight.range" color="highlight.color"/>
         </t>
       </t>

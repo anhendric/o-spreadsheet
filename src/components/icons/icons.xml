@@ -1540,4 +1540,16 @@
       />
     </svg>
   </t>
+  <t t-name="o-spreadsheet-Icon.SPLIT_VIEW">
+    <svg class="o-icon" viewBox="0 -0.5 21 21">
+      <path
+        d="M5.027 3h-2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2m10-14h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2 0M10 1v18"
+        stroke="currentColor"
+        stroke-width="2"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </t>
 </templates>

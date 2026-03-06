@@ -9,6 +9,7 @@ import { Ripple } from "../animation/ripple";
 import { useDragAndDropListItems } from "../helpers/drag_and_drop_dom_items_hook";
 import { MenuPopover, MenuState } from "../menu_popover/menu_popover";
 import { CustomFunctionTabStore } from "../side_panel/custom_functions/custom_function_tab_store";
+import { WhiteboardTabStore } from "../side_panel/whiteboard/whiteboard_tab_store";
 import { BottomBarSheet } from "./bottom_bar_sheet/bottom_bar_sheet";
 import { BottomBarStatistic } from "./bottom_bar_statistic/bottom_bar_statistic";
 
@@ -58,9 +59,11 @@ export class BottomBar extends Component<Props, SpreadsheetChildEnv> {
 
   sheetList = this.getVisibleSheets();
   customFunctionTabStore!: Store<CustomFunctionTabStore>;
+  whiteboardTabStore!: Store<WhiteboardTabStore>;
 
   setup() {
     this.customFunctionTabStore = useStore(CustomFunctionTabStore);
+    this.whiteboardTabStore = useStore(WhiteboardTabStore);
     onWillUpdateProps(() => {
       this.updateScrollState();
       const visibleSheets = this.getVisibleSheets();

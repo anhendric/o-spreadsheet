@@ -206,7 +206,7 @@ function isAxisVisible<T extends HFigureAxisType | VFigureAxisType>(
       break;
   }
 
-  return axisStartEndPositions.some(getters.isPixelPositionVisible);
+  return axisStartEndPositions.some((pos) => getters.isPixelPositionVisible(pos));
 }
 
 /**

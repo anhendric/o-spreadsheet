@@ -6,7 +6,12 @@ import { GridRenderer } from "../../stores/grid_renderer_store";
 import { RendererStore } from "../../stores/renderer_store";
 import { DOMDimension } from "../../types";
 
-export function useGridDrawing(refName: string, model: Model, canvasSize: () => DOMDimension) {
+export function useGridDrawing(
+  refName: string,
+  model: Model,
+  canvasSize: () => DOMDimension,
+  isFocused: () => boolean = () => true
+) {
   const canvasRef = useRef(refName);
   useEffect(drawGrid);
   const rendererStore = useStore(RendererStore);
@@ -22,6 +27,7 @@ export function useGridDrawing(refName: string, model: Model, canvasSize: () => 
       ctx,
       dpr,
       thinLineWidth,
+      isFocused: isFocused(),
     };
     let { width, height } = canvasSize();
     width = zoom * width;

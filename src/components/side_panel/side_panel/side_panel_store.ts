@@ -284,7 +284,10 @@ export class SidePanelStore extends SpreadsheetStore {
     return state.isOpen ? { ...state, key: state.key || componentTag } : state;
   }
 
-  changeSpreadsheetWidth(width: number) {
+  changeSpreadsheetWidth(width: number): "noStateChange" | void {
+    if (this.availableWidth === width - MIN_SHEET_VIEW_WIDTH) {
+      return "noStateChange";
+    }
     this.availableWidth = width - MIN_SHEET_VIEW_WIDTH;
     if (this.secondaryPanel && width - this.totalPanelSize < MIN_SHEET_VIEW_WIDTH) {
       this.secondaryPanel?.currentPanelProps.onCloseSidePanel?.();

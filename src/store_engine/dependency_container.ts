@@ -34,6 +34,13 @@ export class DependencyContainer extends EventBus<StoreUpdateEvent> {
     return this.dependencies.get(Store);
   }
 
+  /**
+   * Return the DependencyContainer that logically owns this store.
+   */
+  getOwningContainer<T>(Store: StoreConstructor<T>): DependencyContainer {
+    return this;
+  }
+
   instantiate<T>(Store: StoreConstructor<T>, ...args: StoreParams<StoreConstructor<T>>): T {
     return this.factory.build(Store, ...args);
   }

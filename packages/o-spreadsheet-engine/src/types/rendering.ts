@@ -95,6 +95,7 @@ export interface GridRenderingContext {
   ctx: CanvasRenderingContext2D;
   dpr: number;
   thinLineWidth: number;
+  isFocused?: boolean;
 }
 
 const LAYERS = {

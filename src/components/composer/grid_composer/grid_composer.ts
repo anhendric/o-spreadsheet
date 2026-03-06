@@ -23,6 +23,8 @@ const GRID_CELL_REFERENCE_TOP_OFFSET = 28;
 interface Props {
   gridDims: DOMDimension;
   onInputContextMenu: (event: MouseEvent) => void;
+  exposeComposerInterface?: (composerInterface: ComposerInterface) => void;
+  isFocused?: boolean;
 }
 
 /**
@@ -34,6 +36,8 @@ export class GridComposer extends Component<Props, SpreadsheetChildEnv> {
   static props = {
     gridDims: Object,
     onInputContextMenu: Function,
+    exposeComposerInterface: { type: Function, optional: true },
+    isFocused: { type: Boolean, optional: true },
   };
   static components = { Composer };
 
@@ -68,6 +72,9 @@ export class GridComposer extends Component<Props, SpreadsheetChildEnv> {
       setCurrentContent: this.composerStore.setCurrentContent,
       stopEdition: this.composerStore.stopEdition,
     };
+    if (this.props.exposeComposerInterface) {
+      this.props.exposeComposerInterface(this.composerInterface);
+    }
     this.composerFocusStore.focusComposer(this.composerInterface, { focusMode: "inactive" });
     onWillUpdateProps(() => {
       this.updateComponentPosition();
@@ -76,7 +83,7 @@ export class GridComposer extends Component<Props, SpreadsheetChildEnv> {
   }
 
   get shouldDisplayCellReference(): boolean {
-    return !this.env.isMobile() && this.isCellReferenceVisible;
+    return !this.env.isMobile() && this.isCellReferenceVisible && this.props.isFocused !== false;
   }
 
   get cellReference(): string {
@@ -132,7 +139,11 @@ export class GridComposer extends Component<Props, SpreadsheetChildEnv> {
   }
 
   get containerStyle(): string {
-    if (this.composerStore.editionMode === "inactive" || this.env.isMobile()) {
+    if (
+      this.composerStore.editionMode === "inactive" ||
+      this.env.isMobile() ||
+      this.props.isFocused === false
+    ) {
       return `z-index: -1000; opacity: 0;`; // opacity 0 for safari on ios
     }
     const _isFormula = isFormula(this.composerStore.currentContent);
@@ -194,7 +205,9 @@ export class GridComposer extends Component<Props, SpreadsheetChildEnv> {
   private updateComponentPosition() {
     const isEditing = this.composerFocusStore.activeComposer.editionMode !== "inactive";
     if (!isEditing && this.composerFocusStore.activeComposer !== this.composerInterface) {
-      this.composerFocusStore.focusComposer(this.composerInterface, { focusMode: "inactive" });
+      if (this.props.isFocused) {
+        this.composerFocusStore.focusComposer(this.composerInterface, { focusMode: "inactive" });
+      }
     }
 
     let shouldRecomputeRect = !deepEquals(

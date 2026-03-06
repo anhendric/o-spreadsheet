@@ -44,13 +44,26 @@ export class ComposerFocusStore extends SpreadsheetStore {
   }
 
   focusComposer(listener: ComposerInterface, args: Args) {
+    const focusMode = args.focusMode || "contentFocus";
+    if (
+      this.activeComposer === listener &&
+      focusMode === "inactive" &&
+      this._focusMode === "inactive" &&
+      !args.content &&
+      !args.selection
+    ) {
+      return "noStateChange";
+    }
     this.activeComposer = listener;
     if (this.getters.isReadonly()) {
       return "noStateChange";
     }
-    this._focusMode = args.focusMode || "contentFocus";
+    this._focusMode = focusMode;
     if (this._focusMode !== "inactive") {
       this.setComposerContent(args);
+    }
+    if (focusMode === "inactive" && !args.content && !args.selection) {
+      return "noStateChange";
     }
     return;
   }

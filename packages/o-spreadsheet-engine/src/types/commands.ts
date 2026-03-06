@@ -1150,12 +1150,23 @@ export interface ResizeViewportCommand {
   height: Pixel;
   gridOffsetX?: Pixel;
   gridOffsetY?: Pixel;
+  sheetId?: UID;
+  paneId?: string;
 }
 
 export interface SetViewportOffsetCommand {
   type: "SET_VIEWPORT_OFFSET";
   offsetX: Pixel;
   offsetY: Pixel;
+  sheetId?: UID;
+  paneId?: string;
+}
+
+export interface SetInactiveSheetSelectionCommand {
+  type: "SET_INACTIVE_SHEET_SELECTION";
+  sheetId: UID;
+  anchor: { cell: { col: HeaderIndex; row: HeaderIndex }; zone: Zone };
+  zones: Zone[];
 }
 
 export interface SetZoomCommand {
@@ -1181,6 +1192,7 @@ export interface MoveViewportToCellCommand {
   type: "SCROLL_TO_CELL";
   col: HeaderIndex;
   row: HeaderIndex;
+  paneId?: string;
 }
 
 /**
@@ -1459,7 +1471,8 @@ export type LocalCommand =
   | AddFigureChartToCarouselCommand
   | DuplicateCarouselChartCommand
   | UpdateCarouselActiveItemCommand
-  | PopOutChartFromCarouselCommand;
+  | PopOutChartFromCarouselCommand
+  | SetInactiveSheetSelectionCommand;
 
 export type Command = CoreCommand | LocalCommand;
 

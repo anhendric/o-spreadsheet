@@ -59,6 +59,25 @@
               </div>
             </Ripple>
           </t>
+          <t t-foreach="whiteboardTabStore.openedTabs" t-as="whiteboardId" t-key="whiteboardId">
+            <Ripple>
+              <div
+                class="o-sheet d-flex align-items-center user-select-none text-nowrap border-start border-end px-2"
+                t-att-class="{active: whiteboardTabStore.activeTab === whiteboardId}"
+                t-on-click="() => whiteboardTabStore.activateTab(whiteboardId)">
+                <span class="o-icon me-1">
+                  <t t-call="o-spreadsheet-Icon.WHITEBOARD"/>
+                </span>
+                <span class="o-sheet-name" t-esc="env.model.getters.getSheetName(whiteboardId)"/>
+                <span
+                  class="o-sheet-icon ms-2 rounded opacity-50 hover-opacity-100"
+                  tabindex="-1"
+                  t-on-click.stop="() => whiteboardTabStore.closeTab(whiteboardId)">
+                  <t t-call="o-spreadsheet-Icon.CLEAR"/>
+                </span>
+              </div>
+            </Ripple>
+          </t>
         </div>
         <div
           class="o-bottom-bar-fade-out position-absolute h-100 w-100 pe-none"

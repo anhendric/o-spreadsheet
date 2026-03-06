@@ -1,6 +1,6 @@
 <templates>
   <t t-name="o-spreadsheet-WhiteboardFullEditor">
-    <div class="o-whiteboard-full-editor h-100 w-100 d-flex flex-column bg-white">
+    <div class="o-whiteboard-full-editor h-100 w-100 d-flex flex-column bg-white border-top">
       <div
         class="o-whiteboard-canvas flex-grow-1 position-relative overflow-auto bg-light"
         t-ref="canvas"

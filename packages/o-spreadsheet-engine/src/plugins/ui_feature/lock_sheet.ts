@@ -14,7 +14,7 @@ export class LockSheetPlugin extends UIPlugin {
       return CommandResult.Success;
     }
     if (
-      ("sheetId" in cmd && this.getters.isSheetLocked(cmd.sheetId)) ||
+      ("sheetId" in cmd && cmd.sheetId && this.getters.isSheetLocked(cmd.sheetId)) ||
       (!isCoreCommand(cmd) && this.isCurrentSheetLocked())
     ) {
       return CommandResult.SheetLocked;

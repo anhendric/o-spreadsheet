@@ -235,6 +235,7 @@ describe("Composer interactions", () => {
   test("type '=' and click Cell, the cell ref should be colored", async () => {
     const composerEl = await typeInComposerGrid("=");
     expect(composerEl.textContent).toBe("=");
+    console.log("composerEl HTML:", composerEl.innerHTML);
     expect(composerEl.querySelector(".selector-flag")).toBeTruthy();
     expect(getInputSelection()).toEqual({
       anchorNodeText: "=",
@@ -917,6 +918,7 @@ describe("TopBar composer", () => {
     await click(fixture, ".o-autocomplete-dropdown > div:nth-child(2)");
     expect(composerEl.childNodes[0].textContent).toBe("=");
     expect(composerEl.childNodes[1].textContent).toBe("SIN(");
+    console.log("composerEl HTML:", composerEl.innerHTML);
     expect(composerEl.querySelector(".selector-flag")).toBeTruthy();
     expect(getInputSelection()).toEqual({
       anchorNodeText: "(",

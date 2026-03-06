@@ -774,9 +774,10 @@ ribbonRegistry.addItem("view", "zoom", {
 });
 
 // Window
-ribbonRegistry.addGroup("view", "window", _t("Window"), 30, isNotWhiteboard);
+ribbonRegistry.addGroup("view", "window", _t("Window"), 30);
 ribbonRegistry.addItem("view", "window", {
   id: "freeze_panes",
+  isVisible: isNotWhiteboard,
   component: DropdownAction,
   props: {
     parentAction: ACTION_VIEW.freezePane,
@@ -793,6 +794,15 @@ ribbonRegistry.addItem("view", "window", {
     childClass: "o-hoverable-button",
   },
   sequence: 10,
+});
+ribbonRegistry.addItem("view", "window", {
+  id: "toggle_split_view",
+  component: ActionButton,
+  props: {
+    action: ACTION_VIEW.toggleSplitView,
+    class: "o-hoverable-button o-toolbar-button",
+  },
+  sequence: 20,
 });
 
 // Outline

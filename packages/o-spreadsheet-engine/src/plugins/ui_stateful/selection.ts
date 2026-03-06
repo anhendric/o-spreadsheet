@@ -74,6 +74,7 @@ export class GridSelectionPlugin extends UIPlugin {
     "isGridSelectionActive",
     "getSelectecUnboundedZone",
     "getSelectionRangeString",
+    "getSelectionForSheet",
   ] as const;
 
   private gridSelection: {
@@ -284,6 +285,19 @@ export class GridSelectionPlugin extends UIPlugin {
         this.setSelectionMixin(this.gridSelection.anchor, this.gridSelection.zones);
         this.selectedFigureId = null;
         break;
+      case "SET_INACTIVE_SHEET_SELECTION": {
+        // Update the stored selection for a sheet that is not currently active.
+        // Used by split-view panes to maintain independent selection per pane.
+        if (cmd.sheetId === this.getters.getActiveSheetId()) {
+          // If the sheet happens to be active, update the live selection instead.
+          this.setSelectionMixin(cmd.anchor, cmd.zones);
+        } else {
+          this.sheetsData[cmd.sheetId] = {
+            gridSelection: { anchor: cmd.anchor, zones: cmd.zones },
+          };
+        }
+        break;
+      }
     }
   }
 
@@ -372,6 +386,20 @@ export class GridSelectionPlugin extends UIPlugin {
 
   getSelection(): Selection {
     return deepCopy(this.gridSelection);
+  }
+
+  getSelectionForSheet(sheetId: UID): Selection {
+    if (sheetId === this.getters.getActiveSheetId()) {
+      return this.getSelection();
+    }
+    const sheetData = this.sheetsData[sheetId];
+    if (sheetData) {
+      return deepCopy(sheetData.gridSelection);
+    }
+    return {
+      anchor: { cell: { col: 0, row: 0 }, zone: { left: 0, right: 0, top: 0, bottom: 0 } },
+      zones: [{ left: 0, right: 0, top: 0, bottom: 0 }],
+    };
   }
 
   getSelectedCells(): EvaluatedCell[] {

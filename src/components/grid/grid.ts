@@ -64,7 +64,7 @@ import {
 import { Autofill } from "../autofill/autofill";
 import { ClientTag } from "../collaborative_client_tag/collaborative_client_tag";
 import { ComposerSelection } from "../composer/composer/abstract_composer_store";
-import { ComposerFocusStore } from "../composer/composer_focus_store";
+import { ComposerFocusStore, ComposerInterface } from "../composer/composer_focus_store";
 import { GridComposer } from "../composer/grid_composer/grid_composer";
 import { GridOverlay } from "../grid_overlay/grid_overlay";
 import { GridPopover } from "../grid_popover/grid_popover";
@@ -121,6 +121,7 @@ const registries = {
 interface Props {
   exposeFocus: (focus: () => void) => void;
   getGridSize: () => DOMDimension;
+  isFocused?: boolean;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +130,7 @@ interface Props {
 export class Grid extends Component<Props, SpreadsheetChildEnv> {
   static template = "o-spreadsheet-Grid";
   static props = {
+    isFocused: { type: Boolean, optional: true },
     exposeFocus: Function,
     getGridSize: Function,
   };
@@ -186,8 +188,11 @@ export class Grid extends Component<Props, SpreadsheetChildEnv> {
     useExternalListener(document.body, "paste", this.paste);
     onMounted(() => this.focusDefaultElement());
     this.props.exposeFocus(() => this.focusDefaultElement());
-    useGridDrawing("canvas", this.env.model, () =>
-      this.env.model.getters.getSheetViewDimensionWithHeaders()
+    useGridDrawing(
+      "canvas",
+      this.env.model,
+      () => this.env.model.getters.getSheetViewDimensionWithHeaders(),
+      () => this.props.isFocused !== false
     );
     this.onMouseWheel = useWheelHandler((deltaX, deltaY) => {
       this.moveCanvas(deltaX, deltaY);
@@ -888,12 +893,28 @@ export class Grid extends Component<Props, SpreadsheetChildEnv> {
     }
   }
 
+  gridComposerInterface?: ComposerInterface;
+
   onComposerCellFocused(content?: string, selection?: ComposerSelection) {
-    this.composerFocusStore.focusActiveComposer({ content, selection, focusMode: "cellFocus" });
+    if (this.gridComposerInterface) {
+      this.composerFocusStore.focusComposer(this.gridComposerInterface, {
+        content,
+        selection,
+        focusMode: "cellFocus",
+      });
+    } else {
+      this.composerFocusStore.focusActiveComposer({ content, selection, focusMode: "cellFocus" });
+    }
   }
 
   onComposerContentFocused() {
-    this.composerFocusStore.focusActiveComposer({ focusMode: "contentFocus" });
+    if (this.gridComposerInterface) {
+      this.composerFocusStore.focusComposer(this.gridComposerInterface, {
+        focusMode: "contentFocus",
+      });
+    } else {
+      this.composerFocusStore.focusActiveComposer({ focusMode: "contentFocus" });
+    }
   }
 
   get staticTables(): Table[] {
@@ -902,6 +923,10 @@ export class Grid extends Component<Props, SpreadsheetChildEnv> {
   }
 
   get displaySelectionHandler() {
-    return this.env.isMobile() && this.composerFocusStore.activeComposer.editionMode === "inactive";
+    return (
+      this.env.isMobile() &&
+      this.composerFocusStore.activeComposer.editionMode === "inactive" &&
+      this.props.isFocused !== false
+    );
   }
 }

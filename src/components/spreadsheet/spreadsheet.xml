@@ -6,46 +6,34 @@
       t-ref="spreadsheet"
       t-att-style="getStyle()">
       <div class="o-spreadsheet-topbar-wrapper o-two-columns">
-        <TopBar onClick="() => this.focusGrid()" dropdownMaxHeight="gridHeight"/>
+        <TopBar onClick="this.focusGrid" dropdownMaxHeight="gridHeight"/>
       </div>
 
-      <t t-if="customFunctionTabStore.activeTab">
-        <div
-          class="o-cf-full-editor-container"
-          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
-          <CustomFunctionFullEditor functionName="customFunctionTabStore.activeTab"/>
-        </div>
-      </t>
-      <t t-elif="whiteboardTabStore.activeTab">
-        <div
-          class="o-whiteboard-full-editor-container"
-          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
-          <WhiteboardFullEditor whiteboardId="whiteboardTabStore.activeTab"/>
-        </div>
-      </t>
-      <t t-else="">
-        <div
-          class="o-grid-container"
-          t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}"
-          t-att-style="gridContainerStyle"
-          t-on-click="this.focusGrid">
-          <div class="o-top-left"/>
-          <div class="o-column-groups o-zoomable">
-            <HeaderGroupContainer layers="colLayers" dimension="'COL'"/>
-          </div>
-          <div class="o-row-groups o-zoomable">
-            <HeaderGroupContainer layers="rowLayers" dimension="'ROW'"/>
-          </div>
-          <div class="o-group-grid overflow-hidden">
-            <Grid exposeFocus="(focus) => this._focusGrid = focus" getGridSize.bind="getGridSize"/>
-          </div>
-        </div>
-      </t>
-      <SidePanels/>
-      <div class="o-spreadsheet-bottombar-wrapper o-two-columns overflow-hidden">
-        <SmallBottomBar t-if="env.isSmall" onClick="() => this.focusGrid()"/>
-        <BottomBar t-else="" onClick="() => this.focusGrid()"/>
+      <div
+        class="d-flex w-100 flex-grow-1 overflow-hidden"
+        t-att-class="{'o-two-columns': !sidePanel.isMainPanelOpen}">
+        <SpreadsheetPane
+          t-key="'left'"
+          sheetId="leftSheetId"
+          paneId="'left'"
+          isFocused="!splitViewStore.isSplitView || splitViewStore.focusedPane === 'left'"
+          onFocus="this.focusLeftPane"
+          exposeFocusGrid="(focus) => this.paneFocusGrids.left = focus"
+        />
+
+        <t t-if="splitViewStore.isSplitView">
+          <div class="border-start border-2 border-dark"/>
+          <SpreadsheetPane
+            t-key="'right'"
+            sheetId="rightSheetId"
+            paneId="'right'"
+            isFocused="splitViewStore.focusedPane === 'right'"
+            onFocus="this.focusRightPane"
+            exposeFocusGrid="(focus) => this.paneFocusGrids.right = focus"
+          />
+        </t>
       </div>
+      <SidePanels/>
     </div>
   </t>
 </templates>

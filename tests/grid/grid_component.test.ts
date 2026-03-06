@@ -1728,6 +1728,7 @@ describe("Events on Grid update viewport correctly", () => {
     extendMockGetBoundingClientRect({
       "o-spreadsheet": () => ({ x: 0, y: 0, width: 800, height: 650 }),
       "o-grid": () => ({ x: 0, y: 0, width: 800, height: 650 }),
+      "o-grid-container": () => ({ x: 0, y: 0, width: 800, height: 650 }),
     });
     // force a triggering of all resizeObservers to ensure the grid is resized
     //@ts-ignore

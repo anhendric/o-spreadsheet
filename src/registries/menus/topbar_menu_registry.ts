@@ -214,6 +214,10 @@ topbarMenuRegistry
     ...ACTION_VIEW.togglePinPanel,
     sequence: 6,
   })
+  .addChild("toggle_split_view", ["view"], {
+    ...ACTION_VIEW.toggleSplitView,
+    sequence: 7,
+  })
   .addChild("view_irregularity_map", ["view"], {
     ...ACTION_VIEW.irregularityMap,
     sequence: 40,
