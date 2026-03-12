@@ -19,46 +19,6 @@ const { topbarMenuRegistry } = o_spreadsheet.registries;
 const { useStoreProvider } = o_spreadsheet.stores;
 
 const uuidGenerator = new o_spreadsheet.helpers.UuidGenerator();
-
-topbarMenuRegistry.addChild("download_as", ["file"], {
-  name: "Save as ...",
-  sequence: 20,
-  icon: "o-spreadsheet-Icon.EXPORT_XLSX",
-});
-
-topbarMenuRegistry.addChild("download_as_xlsx", ["file", "download_as"], {
-  name: "Excel (*.xlsx)",
-  sequence: 10,
-  execute: async (env) => {
-    const doc = await env.model.exportXLSX();
-    const zip = new JSZip();
-    for (const file of doc.files) {
-      if (file.imageSrc) {
-        const fetchedImage = await fetch(file.imageSrc).then((response) => response.blob());
-        zip.file(file.path, fetchedImage);
-      } else {
-        zip.file(file.path, file.content.replaceAll(` xmlns=""`, ""));
-      }
-    }
-    zip.generateAsync({ type: "blob" }).then(function (blob) {
-      saveAs(blob, doc.name);
-    });
-  },
-  isEnabledOnLockedSheet: true,
-});
-
-topbarMenuRegistry.addChild("download_as_json", ["file", "download_as"], {
-  name: "JSON (*.json)",
-  sequence: 20,
-  execute: async (env) => {
-    const data = env.model.exportData();
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    saveAs(blob, "spreadsheet.json");
-  },
-  isEnabledOnLockedSheet: true,
-});
-
 let start;
 
 class Demo extends Component {

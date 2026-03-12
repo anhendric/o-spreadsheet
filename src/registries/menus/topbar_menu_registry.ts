@@ -2,6 +2,7 @@ import { ZOOM_VALUES } from "@odoo/o-spreadsheet-engine/constants";
 import { _t } from "@odoo/o-spreadsheet-engine/translation";
 import * as ACTION_DATA from "../../actions/data_actions";
 import * as ACTION_EDIT from "../../actions/edit_actions";
+import * as ACTION_FILE from "../../actions/file_actions";
 import * as ACTION_FORMAT from "../../actions/format_actions";
 import * as ACTION_INSERT from "../../actions/insert_actions";
 import * as ACTIONS from "../../actions/menu_items_actions";
@@ -30,6 +31,10 @@ topbarMenuRegistry
     isEnabled: (env) => !env.isSmall,
     isEnabledOnLockedSheet: true,
     icon: "o-spreadsheet-Icon.COG",
+  })
+  .addChild("save_as", ["file"], {
+    ...ACTION_FILE.saveAs,
+    sequence: 50,
   })
 
   // ---------------------------------------------------------------------
